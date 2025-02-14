@@ -3,6 +3,7 @@ import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/constants/app_icons.dart';
 import 'package:healthai/constants/welcome_data.dart';
 import 'package:healthai/screens/home_screen.dart';
+import 'package:healthai/screens/welcome_screen.dart';
 import 'package:heroicons/heroicons.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -25,7 +26,7 @@ class _WelcomePageState extends State<WelcomePage> {
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
       );
     }
   }

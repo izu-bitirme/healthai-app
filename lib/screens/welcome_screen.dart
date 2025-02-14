@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
+import 'package:healthai/pages/auth/login_page.dart';
 import 'package:healthai/pages/welcome/welcome_page.dart';
+import 'package:healthai/screens/home_screen.dart';
 import 'package:healthai/styles/custom_safearea.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -16,7 +18,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     double horizontalPadding = screenWidth * 0.05; 
-    double verticalPadding = screenHeight * 0.06;
+    double verticalPadding = screenHeight * 0.03;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -46,7 +48,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height:60,),
+                SizedBox(height:screenHeight * 0.06),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor:AppColors.primaryColor,
@@ -56,7 +58,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +76,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ],
                   ),
                 ),
-              
+                 SizedBox(height:screenHeight * 0.05),
+                //login or sing text  "Already have an account? Sign In."
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Already have an account? ',
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                      },
+                      child: const Text(
+                        'Sign In',
+                        style: TextStyle(fontSize: 16, color: AppColors.primaryColor),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

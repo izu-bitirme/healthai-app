@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:healthai/pages/welcome/welcome_page.dart';
 import 'package:healthai/screens/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // Ekranın yönlendirilmesi
     Timer(const Duration(seconds: 2), () { // Süreyi kısalttık
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+        MaterialPageRoute(builder: (context) => const WelcomePage()),
       );
     });
   }

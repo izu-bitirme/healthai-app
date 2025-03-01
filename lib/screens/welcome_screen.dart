@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/pages/auth/login_page.dart';
-import 'package:healthai/pages/welcome/welcome_page.dart';
 import 'package:healthai/screens/home_screen.dart';
-import 'package:healthai/styles/custom_safearea.dart';
+import 'package:healthai/services/app_status.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -57,7 +56,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    await AppStatus.setFirstOpen(isFirstOpen: false);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                   },
                   child: Row(

@@ -18,6 +18,12 @@ class AppColors {
 
 
   static const Color textColor = Color(0xFF1F2937);
+  static const Color textPrimaryDark = Color(0xFF201D67);
   static const Color textColorLight = Color(0xFF4B5563);
   static const Color textColorGray = Color(0xFF9E9E9E);
+
+  static const Color dividerColor = Color(0xFFEEEEEE);
+
+  static const Color iconColorGray = Color(0xFF848A94);
 }
+

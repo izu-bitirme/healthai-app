@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:healthai/constants/app_colors.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // İkinci sayfaya geçiş yapılıyor
-            Navigator.pushNamed(context, '/second');
-          },
-          child: Text('Go to Second Page'),
-        ),
-      ),
+      backgroundColor: AppColors.backgroundColor,
+      body: SafeArea(child: Center(child: Text('Go to Second Page'))),
     );
   }
 }

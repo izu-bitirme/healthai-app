@@ -5,12 +5,13 @@ import 'package:healthai/constants/app_respons.dart';
 import 'package:healthai/widgets/auth/modal.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
-  void _handleLogin(BuildContext context) {
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
+
+  void _handleSignUp(BuildContext context) {
     ModalDialog.show(
       context,
-      title: 'Giriş Yapılıyor',
+      title: 'Kayıt Yapılıyor',
       message: 'Lütfen Bekleyiniz',
       imagePath: 'assets/images/auth/success.png',
       autoCloseSeconds: 2,
@@ -18,14 +19,14 @@ class LoginPage extends StatelessWidget {
 
     Future.delayed(Duration(seconds: 2), () {
       if (context.mounted) {
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, '/login');
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final responsive = Responsive(context); // Responsive nesnesi oluşturuldu
+    final responsive = Responsive(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -34,25 +35,25 @@ class LoginPage extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: responsive.widthFactor(0.08),
-            ), // Responsive yatay padding
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(height: responsive.heightFactor(0.02)),
-
                 IconButton(
                   onPressed: () => Navigator.pop(context),
+
                   icon: HugeIcon(
                     icon: HugeIcons.strokeRoundedArrowLeft01,
                     color: AppColors.iconColorGray,
                     size: responsive.widthFactor(0.08),
                   ),
                 ),
-                SizedBox(height: responsive.heightFactor(0.03)),
+                SizedBox(height: responsive.heightFactor(0.02)),
 
                 Text(
-                  "Welcome back 👋",
+                  "Create an Account 🎉",
                   style: TextStyle(
                     fontSize: responsive.fontSize(28),
                     fontWeight: FontWeight.bold,
@@ -61,7 +62,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: responsive.heightFactor(0.01)),
 
                 Text(
-                  "Please enter your email & password to log in.",
+                  "Fill in the details below to sign up.",
                   style: TextStyle(
                     fontSize: responsive.fontSize(14),
                     color: Colors.grey.shade600,
@@ -69,61 +70,23 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(height: responsive.heightFactor(0.03)),
 
-                const Text("Email address"),
+                const Text("Full Name"),
                 SizedBox(height: responsive.heightFactor(0.005)),
+                _buildTextField("Full Name", Icons.person, responsive),
+                SizedBox(height: responsive.heightFactor(0.02)),
 
-                SizedBox(
-                  height: responsive.heightFactor(0.07), // Responsive yükseklik
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "Email",
-                      filled: true,
-                      fillColor: Colors.grey.shade200,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          responsive.widthFactor(0.1),
-                        ),
-                        borderSide: BorderSide.none,
-                      ),
-                      prefixIcon: Icon(
-                        Icons.email,
-                        color: Colors.grey,
-                        size: responsive.widthFactor(0.06),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: responsive.heightFactor(0.025)),
+                const Text("Email Address"),
+                SizedBox(height: responsive.heightFactor(0.005)),
+                _buildTextField("Email", Icons.email, responsive),
+                SizedBox(height: responsive.heightFactor(0.02)),
 
                 const Text("Password"),
                 SizedBox(height: responsive.heightFactor(0.005)),
-
-                SizedBox(
-                  height: responsive.heightFactor(0.07), // Responsive yükseklik
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "Password",
-                      filled: true,
-                      fillColor: Colors.grey.shade200,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          responsive.widthFactor(0.1),
-                        ),
-                        borderSide: BorderSide.none,
-                      ),
-                      prefixIcon: Icon(
-                        Icons.lock,
-                        color: Colors.grey,
-                        size: responsive.widthFactor(0.06),
-                      ),
-                      suffixIcon: Icon(
-                        Icons.visibility,
-                        color: Colors.grey,
-                        size: responsive.widthFactor(0.06),
-                      ),
-                    ),
-                  ),
+                _buildTextField(
+                  "Password",
+                  Icons.lock,
+                  responsive,
+                  isPassword: true,
                 ),
 
                 Row(
@@ -135,72 +98,12 @@ class LoginPage extends StatelessWidget {
                       side: BorderSide(color: AppColors.primaryColor),
                       onChanged: (bool? value) {},
                     ),
-                    const Text("Remember me"),
+                    const Text("I agree to the Terms & Conditions"),
                   ],
                 ),
                 SizedBox(height: responsive.heightFactor(0.01)),
-
                 Divider(color: AppColors.dividerColor, thickness: 0.8),
                 SizedBox(height: responsive.heightFactor(0.01)),
-
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/reset-password');
-                  },
-                  child: Center(
-                    child: Text(
-                      "Forgot password?",
-                      style: TextStyle(
-                        color: AppColors.textPrimaryDark,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: responsive.heightFactor(0.01)),
-
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/signup');
-                  },
-                  child: Center(
-                    child: Text(
-                      "Don't have an account? Sign up",
-                      style: TextStyle(
-                        color: AppColors.textPrimaryDark,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: responsive.heightFactor(0.03)),
-
-                Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: AppColors.dividerColor,
-                        thickness: 0.8,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: responsive.widthFactor(0.02),
-                      ),
-                      child: Text(
-                        "or continue with",
-                        style: TextStyle(color: Colors.grey.shade600),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: AppColors.dividerColor,
-                        thickness: 0.8,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: responsive.heightFactor(0.025)),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -259,12 +162,11 @@ class LoginPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Divider(color: AppColors.dividerColor, thickness: 0.5),
                 SizedBox(height: responsive.heightFactor(0.02)),
 
                 SizedBox(
                   width: double.infinity,
-                  height: responsive.heightFactor(0.07), // Responsive yükseklik
+                  height: responsive.heightFactor(0.07),
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       backgroundColor: AppColors.primaryColor,
@@ -274,9 +176,9 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onPressed: () => _handleLogin(context),
+                    onPressed: () => _handleSignUp(context),
                     child: Text(
-                      "Log in",
+                      "Sign Up",
                       style: TextStyle(
                         fontSize: responsive.fontSize(18),
                         color: Colors.white,
@@ -285,10 +187,60 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: responsive.heightFactor(0.02)),
+                SizedBox(height: responsive.heightFactor(0.01)),
+
+                Center(
+                  child: InkWell(
+                    onTap: () => _handleSignUp(context),
+                    child: Text(
+                      "Already have an account? Log in",
+                      style: TextStyle(
+                        color: AppColors.textPrimaryDark,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: responsive.heightFactor(0.03)),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(
+    String hint,
+    IconData icon,
+    Responsive responsive, {
+    bool isPassword = false,
+  }) {
+    return SizedBox(
+      height: responsive.heightFactor(0.07),
+      child: TextField(
+        obscureText: isPassword,
+        decoration: InputDecoration(
+          hintText: hint,
+          filled: true,
+          fillColor: Colors.grey.shade200,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(responsive.widthFactor(0.1)),
+            borderSide: BorderSide.none,
+          ),
+          prefixIcon: Icon(
+            icon,
+            color: Colors.grey,
+            size: responsive.widthFactor(0.06),
+          ),
+          suffixIcon:
+              isPassword
+                  ? Icon(
+                    Icons.visibility,
+                    color: Colors.grey,
+                    size: responsive.widthFactor(0.06),
+                  )
+                  : null,
         ),
       ),
     );

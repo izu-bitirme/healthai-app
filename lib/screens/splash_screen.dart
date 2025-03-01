@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:healthai/pages/welcome/welcome_page.dart';
+import 'package:healthai/screens/home_screen.dart';
 import 'package:healthai/screens/welcome_screen.dart';
+import 'package:healthai/services/app_status.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -26,11 +28,13 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     });
 
-    // Ekranın yönlendirilmesi
-    Timer(const Duration(seconds: 2), () { // Süreyi kısalttık
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const WelcomePage()),
-      );
+    AppStatus.isFirstOpen().then((bool isFirstOpen) {
+      Timer(Duration(seconds: 3), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => isFirstOpen ? WelcomeScreen() : HomeScreen()), 
+        );
+      });
     });
   }
 

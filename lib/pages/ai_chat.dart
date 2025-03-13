@@ -40,7 +40,6 @@ class _ChatAiPageState extends State<ChatAiPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              // Üst Kısım: Başlık ve Geri Butonu
               Padding(
                 padding: const EdgeInsets.only(
                   top: 0,
@@ -65,7 +64,7 @@ class _ChatAiPageState extends State<ChatAiPage> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 48), // Simetri için boşluk
+                    SizedBox(width: 48), 
                   ],
                 ),
               ),
@@ -116,12 +115,12 @@ class _ChatAiPageState extends State<ChatAiPage> {
                   child: Consumer<AiChatProvider>(
                     builder: (context, chatProvider, child) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
-                        _scrollToBottom(); // Yeni mesaj geldiğinde en alta kaydır
+                        _scrollToBottom(); //
                       });
 
                       return ListView.builder(
                         controller:
-                            _scrollController, // ScrollController bağlandı
+                            _scrollController, 
                         itemCount:
                             chatProvider.messages.length +
                             (chatProvider.isTyping ? 1 : 0),

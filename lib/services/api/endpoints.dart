@@ -8,10 +8,8 @@ class EndPoints {
   };
 
   
-// auth api
   static const Map login = {
     "url": "token/",
-    // "login_required": false,
     "method": "POST",
   };
 

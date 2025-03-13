@@ -13,7 +13,7 @@ class ModalDialog extends StatelessWidget {
     required this.title,
     required this.message,
     required this.imagePath,
-    this.autoCloseSeconds = 2, // Varsayılan kapanma süresi
+    this.autoCloseSeconds = 2, 
   }) : super(key: key);
 
   static void show(
@@ -35,7 +35,6 @@ class ModalDialog extends StatelessWidget {
           ),
     );
 
-    // Otomatik kapatma
     Future.delayed(Duration(seconds: autoCloseSeconds), () {
       if (context.mounted) {
         Navigator.pop(context);
@@ -53,11 +52,9 @@ class ModalDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Başarı görseli
             Image.asset(imagePath, height: 180),
             SizedBox(height: 20),
 
-            // Başarı mesajı
             Text(
               title,
               style: TextStyle(
@@ -74,7 +71,6 @@ class ModalDialog extends StatelessWidget {
             ),
             SizedBox(height: 20),
 
-            // Yükleme animasyonu
             SizedBox(
               height: 50,
               child: LoadingIndicator(

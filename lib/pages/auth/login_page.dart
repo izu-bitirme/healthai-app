@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final responsive = Responsive(context); // Responsive nesnesi oluşturuldu
+    final responsive = Responsive(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -34,7 +34,7 @@ class LoginPage extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: responsive.widthFactor(0.08),
-            ), // Responsive yatay padding
+            ), 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -73,7 +73,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: responsive.heightFactor(0.005)),
 
                 SizedBox(
-                  height: responsive.heightFactor(0.07), // Responsive yükseklik
+                  height: responsive.heightFactor(0.07),
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: "Email",
@@ -99,7 +99,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: responsive.heightFactor(0.005)),
 
                 SizedBox(
-                  height: responsive.heightFactor(0.07), // Responsive yükseklik
+                  height: responsive.heightFactor(0.07), 
                   child: TextField(
                     obscureText: true,
                     decoration: InputDecoration(
@@ -208,7 +208,7 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       height: responsive.heightFactor(
                         0.06,
-                      ), // Responsive yükseklik
+                      ), 
                       child: IconButton(
                         icon: Image.asset(
                           'assets/images/auth/google.png',
@@ -235,7 +235,7 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       height: responsive.heightFactor(
                         0.06,
-                      ), // Responsive yükseklik
+                      ),
                       child: IconButton(
                         icon: Image.asset(
                           'assets/images/auth/apple.png',
@@ -264,7 +264,7 @@ class LoginPage extends StatelessWidget {
 
                 SizedBox(
                   width: double.infinity,
-                  height: responsive.heightFactor(0.07), // Responsive yükseklik
+                  height: responsive.heightFactor(0.07),
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       backgroundColor: AppColors.primaryColor,

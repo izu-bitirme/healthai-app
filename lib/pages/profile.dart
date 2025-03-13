@@ -1,83 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthai/constants/app_colors.dart';
+import 'package:healthai/constants/app_respons.dart';
 import 'package:healthai/widgets/custom_app_bar.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final responsive = Responsive(context);
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.primaryColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomAppBar(title: "deneme",iconButton:IconButton(onPressed: (){}, icon: HugeIcon(icon: HugeIcons.strokeRoundedAddCircleHalfDot,color: AppColors.backgroundColor,)),bgColor:AppColors.primaryColor),
-            Stack(
-              children: [
-               
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            CustomAppBar(title: "deneme", bgColor: AppColors.primaryColor),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(color: AppColors.primaryColor),
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundImage: AssetImage(
+                      "assets/images/auth/profile.png",
+                    ),
                   ),
-                  child: Column(
-                    children: [
-                      _buildSection("CONTACT", [
-                        _buildListTile(Icons.person, "Profile"),
-                        _buildListTile(Icons.settings, "Settings"),
-                        _buildListTile(Icons.help, "Help"),
-                        _buildListTile(Icons.logout, "Logout"),
-                      ]),
-                      _buildSection("ACCOUNT", [
-                        _buildListTile(Icons.person, "Profile"),
-                        _buildListTile(Icons.settings, "Settings"),
-                        _buildListTile(Icons.help, "Help"),
-                        _buildListTile(Icons.logout, "Logout"),
-                      ]),
-                      _buildSection("OTHERS", [
-                        _buildListTile(Icons.person, "Profile"),
-                        _buildListTile(Icons.settings, "Settings"),
-                        _buildListTile(Icons.help, "Help"),
-                        _buildListTile(Icons.logout, "Logout"),
-                      ]),
-                    ],
+
+                  SizedBox(height: 10),
+                  Text(
+                    "Tonald Drump",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(color: AppColors.primaryColor),
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage(
-                          "assets/images/auth/profile.png",
-                        ),
-                      ),
-            
-                      SizedBox(height: 10),
-                      Text(
-                        "Tonald Drump",
-                        style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        "Junior Full Stack Developer",
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    "Junior Full Stack Developer",
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      color: Colors.white70,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              child: Column(
+                children: [
+                  _buildSection("CONTACT", [
+                    _buildListTile(Icons.person, "Profile"),
+                    _buildListTile(Icons.settings, "Settings"),
+                    _buildListTile(Icons.help, "Help"),
+                    _buildListTile(Icons.logout, "Logout"),
+                  ]),
+                  _buildSection("ACCOUNT", [
+                    _buildListTile(Icons.person, "Profile"),
+                    _buildListTile(Icons.settings, "Settings"),
+                    _buildListTile(Icons.help, "Help"),
+                    _buildListTile(Icons.logout, "Logout"),
+                  ]),
+                  _buildSection("OTHERS", [
+                    _buildListTile(Icons.person, "Profile"),
+                    _buildListTile(Icons.settings, "Settings"),
+                    _buildListTile(Icons.help, "Help"),
+                    _buildListTile(Icons.logout, "Logout"),
+                  ]),
+                ],
+              ),
             ),
           ],
         ),
@@ -91,6 +88,8 @@ class ProfilePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 10),
+
           Text(
             title,
             style: GoogleFonts.poppins(

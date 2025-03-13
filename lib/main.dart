@@ -29,7 +29,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => SplashScreen(), // Ana sayfa burada tanımlandı
+        '/': (context) => SplashScreen(), 
         '/home': (context) => HomePage(),
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignUpPage(),

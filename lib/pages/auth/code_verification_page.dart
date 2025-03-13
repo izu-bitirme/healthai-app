@@ -11,7 +11,7 @@ class VerificationPage extends StatefulWidget {
 class _VerificationPageState extends State<VerificationPage> {
   TextEditingController otpController = TextEditingController();
   int endTime =
-      DateTime.now().millisecondsSinceEpoch + 60000; // 60 saniye geri sayım
+      DateTime.now().millisecondsSinceEpoch + 60000; 
 
   @override
   Widget build(BuildContext context) {

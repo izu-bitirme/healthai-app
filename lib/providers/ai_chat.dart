@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:healthai/services/api/http_request.dart';
 
 class AiChatProvider extends ChangeNotifier {
-  List<Map<String, String>> messages = []; // Mesajları tutan liste
-  bool isTyping = false; // "Typing..." efekti için
+  List<Map<String, String>> messages = []; 
+  bool isTyping = false; 
 
   void clearChat() {
     messages.clear();

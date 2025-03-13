@@ -23,13 +23,7 @@ class TaskPage extends StatelessWidget {
                     "Today Task",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  Row(
-                    children: [
-                      Icon(HugeIcons.strokeRoundedPenTool01),
-                      SizedBox(width: 10),
-                      Icon(HugeIcons.strokeRoundedCalendar02),
-                    ],
-                  ),
+                  SizedBox(width: 10),
                 ],
               ),
               SizedBox(height: 10),

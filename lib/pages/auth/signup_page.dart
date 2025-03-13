@@ -111,7 +111,7 @@ class SignUpPage extends StatelessWidget {
                     SizedBox(
                       height: responsive.heightFactor(
                         0.06,
-                      ), // Responsive yükseklik
+                      ), 
                       child: IconButton(
                         icon: Image.asset(
                           'assets/images/auth/google.png',
@@ -138,7 +138,7 @@ class SignUpPage extends StatelessWidget {
                     SizedBox(
                       height: responsive.heightFactor(
                         0.06,
-                      ), // Responsive yükseklik
+                      ), 
                       child: IconButton(
                         icon: Image.asset(
                           'assets/images/auth/apple.png',

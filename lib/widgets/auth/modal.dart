@@ -9,12 +9,12 @@ class ModalDialog extends StatelessWidget {
   final int autoCloseSeconds;
 
   const ModalDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.message,
     required this.imagePath,
     this.autoCloseSeconds = 2, 
-  }) : super(key: key);
+  });
 
   static void show(
     BuildContext context, {

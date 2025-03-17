@@ -6,8 +6,10 @@ import 'package:hugeicons/hugeicons.dart';
 class CustomAppBar extends StatelessWidget {
   final String title;
   final Color bgColor;
-  const CustomAppBar({Key? key, required this.title, required this.bgColor})
-    : super(key: key);
+  final Color? textColor;
+  final Widget? Icon;
+  final VoidCallback? linkTap;
+  const CustomAppBar({super.key, required this.title, required this.bgColor , this.textColor , this.Icon , this.linkTap});
 
   @override
   Widget build(BuildContext context) {
@@ -16,30 +18,26 @@ class CustomAppBar extends StatelessWidget {
       padding: EdgeInsets.only(top: responsive.heightFactor(0.05), left: responsive.widthFactor(0.05), right: responsive.widthFactor(0.05)),
       width: double.infinity,
       height: responsive.heightFactor(0.14),
-      color: AppColors.primaryColor,
+      color: bgColor,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
-            onTap: () => Navigator.pop(context),
+            onTap: linkTap,
             child: Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
                 color: const Color.fromARGB(255, 255, 255, 255)
               ),
-              child: HugeIcon(
-                icon: HugeIcons.strokeRoundedArrowLeft01,
-                color: AppColors.primaryColor,
-                size: 24.0,
-              ),
+              child: Icon ?? const HugeIcon(icon:HugeIcons.strokeRoundedArrowLeft01, color: AppColors.primaryColor, size: 24.0,),
             ),
           ),
 
           Text(title,
           style: TextStyle(
-            color: Colors.white,
+            color: textColor ?? Colors.white,
             fontSize: responsive.heightFactor(0.025),
             fontWeight: FontWeight.bold
           ),

@@ -4,6 +4,8 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
 class VerificationPage extends StatefulWidget {
+  const VerificationPage({super.key});
+
   @override
   _VerificationPageState createState() => _VerificationPageState();
 }
@@ -84,7 +86,7 @@ class _VerificationPageState extends State<VerificationPage> {
             ),
             const SizedBox(height: 30),
 
-            Container(
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {

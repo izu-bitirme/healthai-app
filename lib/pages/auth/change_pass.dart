@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 
 class ChangePasswordPage extends StatefulWidget {
+  const ChangePasswordPage({super.key});
+
   @override
   _ChangePasswordPageState createState() => _ChangePasswordPageState();
 }

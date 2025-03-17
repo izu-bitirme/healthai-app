@@ -1,27 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/constants/app_respons.dart';
+import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/widgets/auth/modal.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+  SignUpPage({super.key});
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
 
-  void _handleSignUp(BuildContext context) {
-    ModalDialog.show(
-      context,
-      title: 'Kayıt Yapılıyor',
-      message: 'Lütfen Bekleyiniz',
-      imagePath: 'assets/images/auth/success.png',
-      autoCloseSeconds: 2,
+  void _handleSignUp(BuildContext context) async {
+    final userProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    bool isSuccess = await userProvider.register(
+      email: emailController.text,
+      password: passwordController.text,
+      username: usernameController.text,
     );
 
-    Future.delayed(Duration(seconds: 2), () {
-      if (context.mounted) {
-        Navigator.pushNamed(context, '/login');
-      }
-    });
+    if (isSuccess) {
+      ModalDialog.show(
+        context,
+        title: 'Kayıt Yapılıyor',
+        message: 'Lütfen Bekleyiniz',
+        imagePath: 'assets/images/auth/success.png',
+        autoCloseSeconds: 2,
+      );
+
+      Future.delayed(Duration(seconds: 2), () {
+        if (context.mounted) {
+          Navigator.pushNamed(context, '/login');
+        }
+      });
+    }
   }
 
   @override
@@ -72,12 +87,22 @@ class SignUpPage extends StatelessWidget {
 
                 const Text("Full Name"),
                 SizedBox(height: responsive.heightFactor(0.005)),
-                _buildTextField("Full Name", Icons.person, responsive),
+                _buildTextField(
+                  "Full Name",
+                  Icons.person,
+                  responsive,
+                  controller: usernameController,
+                ),
                 SizedBox(height: responsive.heightFactor(0.02)),
 
                 const Text("Email Address"),
                 SizedBox(height: responsive.heightFactor(0.005)),
-                _buildTextField("Email", Icons.email, responsive),
+                _buildTextField(
+                  "Email",
+                  Icons.email,
+                  responsive,
+                  controller: emailController,
+                ),
                 SizedBox(height: responsive.heightFactor(0.02)),
 
                 const Text("Password"),
@@ -87,6 +112,7 @@ class SignUpPage extends StatelessWidget {
                   Icons.lock,
                   responsive,
                   isPassword: true,
+                  controller: passwordController,
                 ),
 
                 Row(
@@ -109,9 +135,7 @@ class SignUpPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: responsive.heightFactor(
-                        0.06,
-                      ), 
+                      height: responsive.heightFactor(0.06),
                       child: IconButton(
                         icon: Image.asset(
                           'assets/images/auth/google.png',
@@ -136,9 +160,7 @@ class SignUpPage extends StatelessWidget {
                     SizedBox(width: responsive.widthFactor(0.05)),
 
                     SizedBox(
-                      height: responsive.heightFactor(
-                        0.06,
-                      ), 
+                      height: responsive.heightFactor(0.06),
                       child: IconButton(
                         icon: Image.asset(
                           'assets/images/auth/apple.png',
@@ -215,11 +237,13 @@ class SignUpPage extends StatelessWidget {
     IconData icon,
     Responsive responsive, {
     bool isPassword = false,
+    TextEditingController? controller,
   }) {
     return SizedBox(
       height: responsive.heightFactor(0.07),
       child: TextField(
         obscureText: isPassword,
+        controller: controller,
         decoration: InputDecoration(
           hintText: hint,
           filled: true,

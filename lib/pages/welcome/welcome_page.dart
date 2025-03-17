@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
-import 'package:healthai/constants/app_icons.dart';
 import 'package:healthai/constants/welcome_data.dart';
-import 'package:healthai/screens/home_screen.dart';
 import 'package:healthai/screens/welcome_screen.dart';
 import 'package:heroicons/heroicons.dart';
 

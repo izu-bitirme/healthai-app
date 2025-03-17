@@ -5,6 +5,8 @@ import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ChatAiPage extends StatefulWidget {
+  const ChatAiPage({super.key});
+
   @override
   _ChatAiPageState createState() => _ChatAiPageState();
 }
@@ -200,7 +202,6 @@ class _ChatAiPageState extends State<ChatAiPage> {
                       if (_controller.text.isNotEmpty) {
                         context.read<AiChatProvider>().sendMessage(
                           _controller.text,
-                          selectedModel: "brooqs/mistral-turkish-v2",
                         );
                         _controller.clear();
                       }

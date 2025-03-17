@@ -51,6 +51,8 @@ dependencies:
   group_button: ^5.3.4
   adaptive_dialog: ^2.4.0
   loading_indicator: ^3.1.1
+  flutter_form_builder: ^10.0.1
+  image_picker: ^1.1.2
 
   
 dev_dependencies:

@@ -87,7 +87,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
                       },
                       child: const Text(
                         'Sign In',

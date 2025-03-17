@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:healthai/services/api/endpoints.dart';
+import 'package:healthai/services/api/http_request.dart';
+import 'endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'api_response.dart';
 
@@ -15,9 +16,14 @@ class Api {
     return apiHost + url;
   }
 
-  static Map<String, String> getHeaders() {
+  static Future<String> getToken() async {
+    return await login();
+  }
+
+  static Future<Map<String, String>> getHeaders() async {
     return {
       "Content-Type": "application/json",
+      "Authorization": "Bearer ${await getToken()}",
     };
   }
 
@@ -28,45 +34,42 @@ class Api {
   }) async {
     String method = endpoint.containsKey('method') ? endpoint['method'] : "GET";
     String url = getUrl(endpoint, params);
-    Map<String, String> headers = getHeaders();
+    Map<String, String> headers = endpoint.containsKey('login_required')
+        ? endpoint['login_required']
+            ? await Api.getHeaders()
+            : {"Content-Type": "application/json"}
+        : {"Content-Type": "application/json"};
 
     late http.Response response;
 
     try {
-      Uri uri = Uri.parse(url);
-      if (method == "GET" && body.isNotEmpty) {
-        uri = uri.replace(queryParameters: body.map((key, value) => MapEntry(key, value.toString())));
-      }
-
       if (method == "GET") {
-        response = await http.get(uri, headers: headers);
+        response = await http.get(
+          Uri.parse(url),
+          headers: headers,
+        );
       } else if (method == "DELETE") {
-        response = await http.delete(uri, headers: headers, body: jsonEncode(body));
-      } else if (method == "PUT") {
-        response = await http.put(uri, headers: headers, body: jsonEncode(body));
-      } else if (method == "PATCH") {
-        response = await http.patch(uri, headers: headers, body: jsonEncode(body));
+        response = await http.delete(
+          Uri.parse(url),
+          headers: headers,
+          body: jsonEncode(body),
+        );
       } else {
-        response = await http.post(uri, headers: headers, body: jsonEncode(body));
-      }
-
-      if (response.statusCode != 200) {
-        return ApiResponse(
-          data: {},
-          success: false,
-          title: 'Error',
-          message: 'Server error: ${response.statusCode} - ${response.body}',
+        response = await http.post(
+          Uri.parse(url),
+          headers: headers,
+          body: jsonEncode(body),
         );
       }
-
-      return ApiResponse.fromResponse(response);
     } catch (e) {
       return ApiResponse(
         data: {},
         success: false,
         title: 'Error',
-        message: 'An error occurred: ${e.toString()}',
+        message: 'Please  try your internet connection and try again later',
       );
     }
+
+    return ApiResponse.fromResponse(response);
   }
 }

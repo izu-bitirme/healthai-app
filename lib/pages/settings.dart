@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthai/constants/app_colors.dart';
-import 'package:healthai/constants/app_respons.dart';
 import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/widgets/custom_app_bar.dart';
-import 'package:hugeicons/hugeicons.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -13,7 +10,6 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final responsive = Responsive(context);
     final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       backgroundColor: AppColors.primaryColor,

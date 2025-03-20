@@ -7,13 +7,14 @@ Future<String> getLLMChat(String message, {String? selectedModel}) async {
     EndPoints.chatBot,
     params:  [message, selectedModel],
   );
-
   if (response.success) {
     return response.data['message'];
   } else {
     return "Bir hata oluştu, lütfen tekrar deneyin.";
   }
+
 }
+
 
 Future<String> login() async {
   ApiResponse response = await Api.send(

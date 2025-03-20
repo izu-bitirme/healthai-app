@@ -34,20 +34,18 @@ class Api {
   }) async {
     String method = endpoint.containsKey('method') ? endpoint['method'] : "GET";
     String url = getUrl(endpoint, params);
-    Map<String, String> headers = endpoint.containsKey('login_required')
-        ? endpoint['login_required']
-            ? await Api.getHeaders()
-            : {"Content-Type": "application/json"}
-        : {"Content-Type": "application/json"};
+    Map<String, String> headers =
+        endpoint.containsKey('login_required')
+            ? endpoint['login_required']
+                ? await Api.getHeaders()
+                : {"Content-Type": "application/json"}
+            : {"Content-Type": "application/json"};
 
     late http.Response response;
 
     try {
       if (method == "GET") {
-        response = await http.get(
-          Uri.parse(url),
-          headers: headers,
-        );
+        response = await http.get(Uri.parse(url), headers: headers);
       } else if (method == "DELETE") {
         response = await http.delete(
           Uri.parse(url),

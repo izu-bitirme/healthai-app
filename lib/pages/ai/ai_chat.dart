@@ -35,6 +35,7 @@ class _ChatAiPageState extends State<ChatAiPage> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedModel = Provider.of<AiChatProvider>(context).selectedModel;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -57,7 +58,7 @@ class _ChatAiPageState extends State<ChatAiPage> {
                     ),
                     Expanded(
                       child: Text(
-                        "Qubiko AI",
+                        selectedModel.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,

@@ -31,7 +31,7 @@ class CustomAppBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
                 color: const Color.fromARGB(255, 255, 255, 255)
               ),
-              child: Icon ?? const HugeIcon(icon:HugeIcons.strokeRoundedArrowLeft01, color: AppColors.primaryColor, size: 24.0,),
+              child: Icon ?? HugeIcon(icon:HugeIcons.strokeRoundedArrowLeft01, color: AppColors.primaryColor, size: 24.0,),
             ),
           ),
 

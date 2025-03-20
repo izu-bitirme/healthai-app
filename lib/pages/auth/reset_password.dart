@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
-
-import 'package:healthai/pages/auth/code_verification_page.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class ResetPasswordPage extends StatelessWidget {

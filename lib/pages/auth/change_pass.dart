@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
+import 'package:healthai/widgets/auth/modal.dart';
 
 class ChangePasswordPage extends StatefulWidget {
+  const ChangePasswordPage({super.key});
+
   @override
   _ChangePasswordPageState createState() => _ChangePasswordPageState();
 }
@@ -10,7 +13,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   bool _isObscured1 = true;
   bool _isObscured2 = true;
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +37,43 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 style: TextStyle(fontSize: 14, color: Colors.black54),
               ),
               SizedBox(height: 24),
-              _buildPasswordField("New Password", _passwordController, _isObscured1, () {
-                setState(() {
-                  _isObscured1 = !_isObscured1;
-                });
-              }),
+              _buildPasswordField(
+                "New Password",
+                _passwordController,
+                _isObscured1,
+                () {
+                  setState(() {
+                    _isObscured1 = !_isObscured1;
+                  });
+                },
+              ),
               SizedBox(height: 16),
-              _buildPasswordField("Confirm New Password", _confirmPasswordController, _isObscured2, () {
-                setState(() {
-                  _isObscured2 = !_isObscured2;
-                });
-              }),
+              _buildPasswordField(
+                "Confirm New Password",
+                _confirmPasswordController,
+                _isObscured2,
+                () {
+                  setState(() {
+                    _isObscured2 = !_isObscured2;
+                  });
+                },
+              ),
               Spacer(),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  ModalDialog.show(
+                    context,
+                    title: 'Sifre Değiştiriliyor',
+                    message: 'Lütfen Bekleyiniz',
+                    imagePath: 'assets/images/auth/success.png',
+                    autoCloseSeconds: 2,
+                  );
+                  Future.delayed(Duration(seconds: 2), () {
+                    if (context.mounted) {
+                      Navigator.pushNamed(context, '/settings');
+                    }
+                  });
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF5A4FCF),
                   shape: RoundedRectangleBorder(
@@ -54,7 +81,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   ),
                   minimumSize: Size(double.infinity, 50),
                 ),
-                child: Text("Continue", style: TextStyle(fontSize: 16, color: Colors.white)),
+                child: Text(
+                  "Continue",
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
               ),
             ],
           ),
@@ -63,11 +93,19 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     );
   }
 
-  Widget _buildPasswordField(String label, TextEditingController controller, bool isObscured, VoidCallback toggleVisibility) {
+  Widget _buildPasswordField(
+    String label,
+    TextEditingController controller,
+    bool isObscured,
+    VoidCallback toggleVisibility,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        Text(
+          label,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
         SizedBox(height: 8),
         TextField(
           controller: controller,
@@ -76,7 +114,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             filled: true,
             fillColor: Colors.grey[100],
             suffixIcon: IconButton(
-              icon: Icon(isObscured ? Icons.visibility_off : Icons.visibility, color: Colors.blueAccent),
+              icon: Icon(
+                isObscured ? Icons.visibility_off : Icons.visibility,
+                color: Colors.blueAccent,
+              ),
               onPressed: toggleVisibility,
             ),
             border: OutlineInputBorder(
@@ -89,7 +130,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(32),
-              borderSide: BorderSide(color: AppColors.cardPrimaryColor, width: 2),
+              borderSide: BorderSide(
+                color: AppColors.cardPrimaryColor,
+                width: 2,
+              ),
             ),
           ),
         ),

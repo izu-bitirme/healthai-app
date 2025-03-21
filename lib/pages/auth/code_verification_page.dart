@@ -4,6 +4,8 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
 class VerificationPage extends StatefulWidget {
+  const VerificationPage({super.key});
+
   @override
   _VerificationPageState createState() => _VerificationPageState();
 }
@@ -11,7 +13,7 @@ class VerificationPage extends StatefulWidget {
 class _VerificationPageState extends State<VerificationPage> {
   TextEditingController otpController = TextEditingController();
   int endTime =
-      DateTime.now().millisecondsSinceEpoch + 60000; // 60 saniye geri sayım
+      DateTime.now().millisecondsSinceEpoch + 60000; 
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +86,7 @@ class _VerificationPageState extends State<VerificationPage> {
             ),
             const SizedBox(height: 30),
 
-            Container(
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {

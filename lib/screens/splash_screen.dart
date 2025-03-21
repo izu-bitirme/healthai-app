@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:healthai/pages/welcome/welcome_page.dart';
 import 'package:healthai/screens/home_screen.dart';
-import 'package:healthai/screens/welcome_screen.dart';
 import 'package:healthai/services/app_status.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,18 +12,17 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  double _scale = 0.5; // Başlangıçta küçük
-  double _opacity = 0.0; // Başlangıçta opaklık sıfır
+  double _scale = 0.5; 
+  double _opacity = 0.0; 
 
   @override
   void initState() {
     super.initState();
 
-    // Animasyon başlangıcı
     Future.delayed(Duration(milliseconds: 500), () {
       setState(() {
-        _scale = 1.2; // Daha hızlı büyüme için biraz daha büyük
-        _opacity = 1.0; // Opaklık görünür olacak
+        _scale = 1.2; 
+        _opacity = 1.0;
       });
     });
 
@@ -32,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Timer(Duration(seconds: 3), () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => isFirstOpen ? WelcomeScreen() : HomeScreen()), 
+          MaterialPageRoute(builder: (context) => isFirstOpen ? WelcomePage() : HomeScreen()), 
         );
       });
     });
@@ -49,14 +47,14 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AnimatedScale(
-                scale: _scale, // Skalayı animasyonla değiştir
-                duration: const Duration(milliseconds: 800), // Daha hızlı büyüme
-                curve: Curves.easeInOut, // Akıcı geçiş için
+                scale: _scale, 
+                duration: const Duration(milliseconds: 800), 
+                curve: Curves.easeInOut,
                 child: AnimatedOpacity(
-                  opacity: _opacity, // Opaklık animasyonu
-                  duration: const Duration(milliseconds: 800), // Hızlı geçiş
+                  opacity: _opacity,
+                  duration: const Duration(milliseconds: 800), 
                   child: Image.asset(
-                    'assets/images/app-icon.png', // Logo
+                    'assets/images/app-icon.png', 
                     width: 75,
                     height: 75,
                   ),
@@ -64,16 +62,16 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               const SizedBox(height: 20),
               AnimatedScale(
-                scale: _scale, // Skalayı animasyonla değiştir
-                duration: const Duration(milliseconds: 800), // Daha hızlı büyüme
-                curve: Curves.easeInOut, // Akıcı geçiş için
+                scale: _scale,  
+                duration: const Duration(milliseconds: 800),  
+                curve: Curves.easeInOut,  
                 child: AnimatedOpacity(
-                  opacity: _opacity, // Opaklık animasyonu
-                  duration: const Duration(milliseconds: 800), // Hızlı geçiş
+                  opacity: _opacity,  
+                  duration: const Duration(milliseconds: 800),  
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: const Text(
-                      'HealthAI', // Uygulama adı
+                      'HealthAI', 
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,

@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/constants/app_respons.dart';
+import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/widgets/auth/modal.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
-  void _handleLogin(BuildContext context) {
+   final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  _handleLogin(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    authProvider.login(email, password).then((response) async {
+      if (response.success) {
+       _loginModal(context);
+        return;
+      }
+    });
+  }
+  
+  LoginPage({super.key});
+ 
+  
+  void _loginModal(BuildContext context) {
     ModalDialog.show(
       context,
       title: 'Giriş Yapılıyor',
@@ -18,14 +38,14 @@ class LoginPage extends StatelessWidget {
 
     Future.delayed(Duration(seconds: 2), () {
       if (context.mounted) {
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/home');
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final responsive = Responsive(context); // Responsive nesnesi oluşturuldu
+    final responsive = Responsive(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -34,7 +54,7 @@ class LoginPage extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: responsive.widthFactor(0.08),
-            ), // Responsive yatay padding
+            ), 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -73,8 +93,10 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: responsive.heightFactor(0.005)),
 
                 SizedBox(
-                  height: responsive.heightFactor(0.07), // Responsive yükseklik
+                  height: responsive.heightFactor(0.07),
                   child: TextField(
+                    controller: emailController,
+
                     decoration: InputDecoration(
                       hintText: "Email",
                       filled: true,
@@ -99,8 +121,9 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: responsive.heightFactor(0.005)),
 
                 SizedBox(
-                  height: responsive.heightFactor(0.07), // Responsive yükseklik
+                  height: responsive.heightFactor(0.07), 
                   child: TextField(
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: "Password",
@@ -208,7 +231,7 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       height: responsive.heightFactor(
                         0.06,
-                      ), // Responsive yükseklik
+                      ), 
                       child: IconButton(
                         icon: Image.asset(
                           'assets/images/auth/google.png',
@@ -235,7 +258,7 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       height: responsive.heightFactor(
                         0.06,
-                      ), // Responsive yükseklik
+                      ),
                       child: IconButton(
                         icon: Image.asset(
                           'assets/images/auth/apple.png',
@@ -264,7 +287,7 @@ class LoginPage extends StatelessWidget {
 
                 SizedBox(
                   width: double.infinity,
-                  height: responsive.heightFactor(0.07), // Responsive yükseklik
+                  height: responsive.heightFactor(0.07),
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       backgroundColor: AppColors.primaryColor,

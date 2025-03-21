@@ -1,10 +1,11 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
-import 'package:healthai/pages/ai_chat.dart';
 import 'package:healthai/pages/home_page.dart';
-import 'package:healthai/pages/profile.dart';
-import 'package:healthai/pages/task_page.dart';
+import 'package:healthai/pages/tasks/my_task.dart';
+import 'package:healthai/pages/settings.dart';
+import 'package:healthai/pages/socket/doctors_page.dart';
+import 'package:healthai/pages/tasks/task_page.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -39,11 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: PageView(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
-        children: [HomePage(), TaskPage(), ChatAiPage(), ProfilePage()],
+        children: [HomePage(), TaskPage(), MyDoctors(), SettingsScreen()],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, "/chat-ai");
+          Navigator.pushNamed(context, "/welcome-chat");
         },
         backgroundColor: AppColors.primaryColor,
         child: HugeIcon(

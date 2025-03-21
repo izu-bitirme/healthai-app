@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
-import 'package:healthai/constants/app_icons.dart';
 import 'package:healthai/constants/welcome_data.dart';
-import 'package:healthai/screens/home_screen.dart';
 import 'package:healthai/screens/welcome_screen.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -66,14 +64,14 @@ class _WelcomePageState extends State<WelcomePage> {
                     child: Container(
                       margin: EdgeInsets.symmetric(
                         horizontal: 2,
-                      ), // Parçalar arasında boşluk
-                      height: 4, // Yükseklik
+                      ), 
+                      height: 4, 
                       decoration: BoxDecoration(
                         color:
                             index < currentIndex + 1
                                 ? AppColors
-                                    .primaryColor // Doldurulmuş parçalar
-                                : AppColors.primaryColorLight, // Boş parçalar
+                                    .primaryColor 
+                                : AppColors.primaryColorLight, 
                         borderRadius: BorderRadius.circular(14),
                       ),
                     ),

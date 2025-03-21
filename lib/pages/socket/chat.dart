@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
-import 'package:healthai/providers/ai_chat.dart';
+import 'package:healthai/providers/doctor_chat.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+
+import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
 
-class ChatAiPage extends StatefulWidget {
+class ChatPage extends StatefulWidget {
+  const ChatPage({super.key});
+
   @override
-  _ChatAiPageState createState() => _ChatAiPageState();
+  _ChatPageState createState() => _ChatPageState();
 }
 
-class _ChatAiPageState extends State<ChatAiPage> {
+class _ChatPageState extends State<ChatPage> {
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
@@ -40,7 +44,6 @@ class _ChatAiPageState extends State<ChatAiPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              // Üst Kısım: Başlık ve Geri Butonu
               Padding(
                 padding: const EdgeInsets.only(
                   top: 0,
@@ -55,32 +58,43 @@ class _ChatAiPageState extends State<ChatAiPage> {
                       onPressed: () => Navigator.pop(context),
                     ),
                     Expanded(
-                      child: Text(
-                        "Qubiko AI",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: AssetImage("assets/images/doctor.png"), // Doktor resmi
+                            radius: 20,
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            "Dr. Drake Boeson",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(width: 48), // Simetri için boşluk
+                    SizedBox(width: 48), 
                   ],
                 ),
               ),
 
-              if (Provider.of<AiChatProvider>(context)
+              if (Provider.of<ChatProvider>(context)
                   .messages
                   .isEmpty)
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.auto_awesome, size: 50, color: Colors.grey),
+                      HugeIcon(icon: HugeIcons.strokeRoundedBubbleChat, color: Colors.black54, size: 48.0,),
                       SizedBox(height: 10),
                       Text(
-                        "Capabilities",
+                        "Start a conversation",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -89,39 +103,39 @@ class _ChatAiPageState extends State<ChatAiPage> {
                       ),
                       SizedBox(height: 20),
                       _capabilityBox(
-                        "Answer all your questions.",
-                        "(Just ask me anything you like!)",
+                        "Ask about your health concerns.",
+                        "(Dr. Drake is here to help!)",
                       ),
                       _capabilityBox(
-                        "Generate all the text you want.",
-                        "(essays, articles, reports, stories, & more)",
+                        "Discuss your symptoms.",
+                        "(Get advice on what to do next)",
                       ),
                       _capabilityBox(
-                        "Conversational AI.",
-                        "(I can talk to you like a natural human)",
+                        "Get medical advice.",
+                        "(Professional guidance at your fingertips)",
                       ),
                       SizedBox(height: 20),
                       Text(
-                        "These are just a few examples of what I can do.",
+                        "Dr. Drake is ready to assist you.",
                         style: TextStyle(color: Colors.black38),
                       ),
                     ],
                   ),
                 ),
 
-              if (Provider.of<AiChatProvider>(context)
+              if (Provider.of<ChatProvider>(context)
                   .messages
                   .isNotEmpty) 
                 Expanded(
-                  child: Consumer<AiChatProvider>(
+                  child: Consumer<ChatProvider>(
                     builder: (context, chatProvider, child) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
-                        _scrollToBottom(); // Yeni mesaj geldiğinde en alta kaydır
+                        _scrollToBottom(); 
                       });
 
                       return ListView.builder(
                         controller:
-                            _scrollController, // ScrollController bağlandı
+                            _scrollController, 
                         itemCount:
                             chatProvider.messages.length +
                             (chatProvider.isTyping ? 1 : 0),
@@ -157,13 +171,13 @@ class _ChatAiPageState extends State<ChatAiPage> {
                               decoration: BoxDecoration(
                                 color:
                                     message['role'] == "user"
-                                        ? AppColors.primaryColorLight
-                                        : AppColors.cardGreyColor,
+                                        ? AppColors.cardPrimaryColor
+                                        : Colors.grey[300],
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Text(
                                 message['text']!,
-                                style: TextStyle(color: AppColors.textColor),
+                                style: TextStyle(color:  message['role'] == "user" ? Colors.white : Colors.black),
                               ),
                             ),
                           );
@@ -180,7 +194,7 @@ class _ChatAiPageState extends State<ChatAiPage> {
                     child: TextField(
                       controller: _controller,
                       decoration: InputDecoration(
-                        hintText: "Ask me anything...",
+                        hintText: "Type your message...",
                         filled: true,
                         hintStyle: TextStyle(color: Colors.grey),
                         fillColor: Colors.grey[100],
@@ -199,15 +213,15 @@ class _ChatAiPageState extends State<ChatAiPage> {
                   GestureDetector(
                     onTap: () {
                       if (_controller.text.isNotEmpty) {
-                        context.read<AiChatProvider>().sendMessage(
+                        context.read<ChatProvider>().sendMessage(
                           _controller.text,
-                          selectedModel: "brooqs/mistral-turkish-v2",
+                          role: "user",
                         );
                         _controller.clear();
                       }
                     },
                     child: CircleAvatar(
-                      backgroundColor: AppColors.primaryColor,
+                      backgroundColor: AppColors.primaryColor.withOpacity(0.8),
                       radius: 24,
                       child: Icon(Icons.send, color: Colors.white),
                     ),

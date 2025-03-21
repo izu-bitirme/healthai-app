@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
-import 'package:hugeicons/hugeicons.dart';
+
 class TaskPage extends StatelessWidget {
+  const TaskPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,13 +25,7 @@ class TaskPage extends StatelessWidget {
                     "Today Task",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  Row(
-                    children: [
-                      Icon(HugeIcons.strokeRoundedPenTool01),
-                      SizedBox(width: 10),
-                      Icon(HugeIcons.strokeRoundedCalendar02),
-                    ],
-                  ),
+                  SizedBox(width: 10),
                 ],
               ),
               SizedBox(height: 10),

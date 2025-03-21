@@ -14,4 +14,5 @@ class AppStatus {
     SharedPreferences sp = await SharedPreferences.getInstance();
     sp.setBool(isFirstOpenKey, isFirstOpen);
   }
+  
 }

@@ -2,9 +2,10 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/pages/home_page.dart';
+import 'package:healthai/pages/tasks/my_task.dart';
 import 'package:healthai/pages/settings.dart';
 import 'package:healthai/pages/socket/doctors_page.dart';
-import 'package:healthai/pages/task_page.dart';
+import 'package:healthai/pages/tasks/task_page.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -39,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: PageView(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
-        children: [HomePage(), TaskPage(), MyDoctors(), SettingsPage()],
+        children: [HomePage(), TaskPage(), MyDoctors(), SettingsScreen()],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

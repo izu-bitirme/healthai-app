@@ -20,56 +20,64 @@ class WelcomeChat extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: chatProvider.aiModels.isEmpty ? Center( child: CircularProgressIndicator(),) : Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children:
-        [
+      body:
+          chatProvider.aiModels.isEmpty
+              ? Center(child: CircularProgressIndicator())
+              : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   SizedBox(height: 10),
                   CustomAppBar(
-                    title: "Qubiko AI",
+                    title: "Health AI",
                     bgColor: Colors.white,
-                    Icon: HugeIcon(
-                      icon: HugeIcons.strokeRoundedChatGpt,
-                      color: AppColors.primaryColor,
-                      size: 24.0,
+                    Icon: InkWell(
+                      onTap: () => Navigator.pop(context),
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedArrowLeft01,
+                        color: AppColors.textColor,
+                        size: 28.0,
+                      ),
                     ),
                     textColor: AppColors.textColor,
-                    linkTap: () {
-                      CustomModal.show(
+                    linkIcon: InkWell(
+                      onTap : (){
+                        CustomModal.show(
                         context: context,
                         title: 'Select Your LLM Model ✨',
                         children: [
-                          for(String chatModel in chatProvider.aiModels)
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                chatProvider.setAiModel(chatModel);
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context, '/chat-ai');
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  side: BorderSide(color: AppColors.primaryColor),
+                          for (String chatModel in chatProvider.aiModels)
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  chatProvider.setAiModel(chatModel);
+                                  Navigator.pop(context);
+                                  Navigator.pushNamed(context, '/chat-ai');
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    side: BorderSide(
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 14,
+                                    horizontal: 30,
+                                  ),
                                 ),
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 14,
-                                  horizontal: 30,
-                                ),
-                              ),
-                              child: Text(
-                                chatModel,
-                                style: GoogleFonts.poppins(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black87,
+                                child: Text(
+                                  chatModel,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black87,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
                         ],
                         buttonText: 'Tamam',
                         onButtonTap: () {
@@ -77,7 +85,13 @@ class WelcomeChat extends StatelessWidget {
                         },
                         isDismissible: false,
                       );
-                    },
+                      },
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedChatGpt,
+                        color: AppColors.textColor,
+                        size: 24.0,
+                      ),
+                    ),
                   ),
                   Spacer(),
                   Icon(
@@ -91,7 +105,7 @@ class WelcomeChat extends StatelessWidget {
                     style: TextStyle(fontSize: 26, fontWeight: FontWeight.w600),
                   ),
                   Text(
-                    'Qubiko AI 👋',
+                    'Health AI 👋',
                     style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
@@ -125,7 +139,7 @@ class WelcomeChat extends StatelessWidget {
                   ),
                   SizedBox(height: responsive.heightFactor(0.12)),
                 ],
-      ),
+              ),
     );
   }
 }

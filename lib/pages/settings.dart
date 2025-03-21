@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/providers/user_provider.dart';
+import 'package:healthai/widgets/auth/modal.dart';
 import 'package:healthai/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,10 @@ class SettingsPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomAppBar(title: "Profile Page", bgColor: AppColors.primaryColor),
+            CustomAppBar(
+              title: "Profile Page",
+              bgColor: AppColors.primaryColor,
+            ),
             Container(
               width: double.infinity,
               decoration: BoxDecoration(color: AppColors.primaryColor),
@@ -62,24 +66,78 @@ class SettingsPage extends StatelessWidget {
                       onTap: () {
                         Navigator.pushNamed(context, "/profile");
                       },
-                      child: _buildListTile(Icons.person, "Profile"),
+                      child: _buildListTile(Icons.person_outline, "Profile"),
                     ),
-                    _buildListTile(Icons.settings, "Settings"),
-                    _buildListTile(Icons.help, "Help"),
-                  ]),
-                  _buildSection("Settings", [
-                    _buildListTile(Icons.settings, "Q&A"),
-                    _buildListTile(Icons.help, "About Us"),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/settings");
+                      },
+                      child: _buildListTile(
+                        Icons.settings_outlined,
+                        "Settings",
+                      ),
+                    ),
+
                     _buildListTile(
                       Icons.logout,
                       "Logout",
                       onTap: () async {
                         await authProvider.logout();
-                        Navigator.pushReplacementNamed(context, '/login');
+                        ModalDialog.show(
+                          context,
+                          title: 'Logout',
+                          message: 'You have successfully logged out',
+                          imagePath: 'assets/images/auth/success.png',
+                          autoCloseSeconds: 2,
+                        );
+                        Future.delayed(Duration(seconds: 2), () {
+                          if (context.mounted) {
+                            Navigator.pushReplacementNamed(context, '/login');
+                          }
+                        });
                       },
                     ),
                   ]),
-                  SizedBox(height: 200,)
+
+                  _buildSection("Settings", [
+                    _buildListTile(Icons.support_agent, "Help"),
+
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/faq");
+                      },
+
+                      child: _buildListTile(
+                        Icons.question_mark_outlined,
+                        "Q&A",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/privacy");
+                      },
+                      child: _buildListTile(
+                        Icons.privacy_tip_outlined,
+                        "Privacy Policy",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/terms");
+                      },
+                      child: _buildListTile(
+                        Icons.security_outlined,
+                        "Terms & Conditions",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/about");
+                      },
+                      child: _buildListTile(Icons.info_sharp, "About Us"),
+                    ),
+                  ]),
+                  SizedBox(height: 200),
                 ],
               ),
             ),

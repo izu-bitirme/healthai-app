@@ -57,14 +57,22 @@ class _ChatAiPageState extends State<ChatAiPage> {
                       onPressed: () => Navigator.pop(context),
                     ),
                     Expanded(
-                      child: Text(
-                        selectedModel.toString(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(selectedModel==null ? "assets/images/llama.png" :"assets/images/$selectedModel.png", width: 35, height: 35),
+                          SizedBox(width: 8),
+                          Text(
+                            selectedModel==null ? "llamma 3.2" :selectedModel.toString() ,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(width: 48), 

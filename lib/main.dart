@@ -10,6 +10,7 @@ import 'package:healthai/pages/tasks/my_task.dart';
 import 'package:healthai/pages/settings/about.dart';
 import 'package:healthai/pages/settings/faq.dart';
 import 'package:healthai/pages/settings/privacy.dart';
+import 'package:healthai/pages/settings.dart';
 import 'package:healthai/pages/settings/profile.dart';
 import 'package:healthai/pages/settings/settings.dart';
 import 'package:healthai/pages/settings/terms.dart';

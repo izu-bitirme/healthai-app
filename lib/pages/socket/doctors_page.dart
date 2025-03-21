@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/widgets/custom_app_bar.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class MyDoctors extends StatelessWidget {
   final List<Map<String, dynamic>> doctors = [
@@ -129,7 +130,7 @@ class MyDoctors extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: 12,
+                                  horizontal: 8,
                                   vertical: 8,
                                 ),
                               ),
@@ -142,18 +143,16 @@ class MyDoctors extends StatelessWidget {
                             Row(
                               children: [
                                 IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.chat_bubble,
-                                    color: AppColors.primaryColor,
-                                  ),
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/chat');
+                                  },
+                                  icon: HugeIcon(icon: HugeIcons.strokeRoundedBubbleChat, color: AppColors.primaryColor),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.favorite_border,
-                                    color: AppColors.primaryColor,
-                                  ),
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/call');
+                                  },
+                                  icon: HugeIcon(icon: HugeIcons.strokeRoundedCall, color: AppColors.primaryColor),
                                 ),
                               ],
                             ),

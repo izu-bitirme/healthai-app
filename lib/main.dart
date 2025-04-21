@@ -6,7 +6,6 @@ import 'package:healthai/pages/auth/code_verification_page.dart';
 import 'package:healthai/pages/auth/login_page.dart';
 import 'package:healthai/pages/auth/reset_password.dart';
 import 'package:healthai/pages/auth/signup_page.dart';
-import 'package:healthai/pages/socket/call.dart';
 import 'package:healthai/pages/socket/chat.dart';
 import 'package:healthai/pages/tasks/my_task.dart';
 import 'package:healthai/pages/settings/about.dart';
@@ -17,10 +16,12 @@ import 'package:healthai/pages/settings/profile.dart';
 import 'package:healthai/pages/settings/settings.dart';
 import 'package:healthai/pages/settings/terms.dart';
 import 'package:healthai/providers/ai_chat.dart';
-import 'package:healthai/providers/doctor_chat.dart';
+import 'package:healthai/providers/doctor.dart';
+import 'package:healthai/providers/socket_chat.dart';
 import 'package:healthai/providers/profile_provider.dart';
 import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/providers/widgets_providers.dart';
+import 'package:healthai/screens/call_screen.dart';
 import 'package:healthai/screens/home_screen.dart';
 import 'package:healthai/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,8 @@ void main() {
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => ChatProvider()),
+        ChangeNotifierProvider(create: (_) => DoctorProvider()),
+
       ],
       child: ToastificationWrapper(child: App()),
     ),
@@ -65,8 +67,6 @@ class App extends StatelessWidget {
         '/privacy': (context) => PrivacyPolicyPage(),
         '/terms': (context) => TermsConditionsPage(),
         '/my-tasks': (context) => MyTasksPage(),
-        '/chat': (context) => ChatPage(),
-        '/call': (context) => VoiceCallPage(),
       },
       debugShowCheckedModeBanner: false,
     );

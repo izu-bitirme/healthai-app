@@ -56,6 +56,9 @@ dependencies:
   percent_indicator: ^4.2.4
   fl_chart: ^0.70.2
   syncfusion_flutter_calendar: ^28.2.12
+  web_socket_channel: ^2.4.0
+  zego_uikit_prebuilt_call: ^4.16.28
+
 
 
 

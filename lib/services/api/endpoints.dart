@@ -8,7 +8,18 @@ class EndPoints {
     "login_required": true,
   };
 
-  
+  static const Map videoCall = {
+    "url": "socket/video-call/?receiver_id=$paramIdentifier",
+    "method": "GET",
+    "login_required": true,
+  };
+
+  static const Map doctorList = {
+    "url": "user/doctors/",
+    "method": "GET",
+    "login_required": true,
+  };
+
   static const Map login = {
     "url": "auth/token/",
     "method": "POST",

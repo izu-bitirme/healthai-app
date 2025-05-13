@@ -15,7 +15,6 @@ Future<String> getLLMChat(String message, {String? selectedModel}) async {
 
 }
 
-
 Future<String> login() async {
   ApiResponse response = await Api.send(
     EndPoints.login,

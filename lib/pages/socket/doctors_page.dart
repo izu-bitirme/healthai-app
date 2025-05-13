@@ -1,165 +1,209 @@
+// pages/doctors.dart
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
+import 'package:healthai/models/auth/user.dart';
+import 'package:healthai/pages/socket/chat.dart';
+import 'package:healthai/providers/doctor.dart';
+import 'package:healthai/providers/user_provider.dart';
+import 'package:healthai/screens/call_screen.dart';
 import 'package:healthai/widgets/custom_app_bar.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:provider/provider.dart';
+import 'package:healthai/providers/socket_chat.dart';
+import 'package:healthai/models/doctor.dart';
 
 class MyDoctors extends StatelessWidget {
-  final List<Map<String, dynamic>> doctors = [
-    {
-      'name': 'Dr. Rodger Struck',
-      'specialty': 'Heart Surgeon, London, England',
-      'rating': 4.8,
-      'image': 'assets/images/doctor.png',
-    },
-    {
-      'name': 'Dr. Kathy Pacheco',
-      'specialty': 'Heart Surgeon, London, England',
-      'rating': 4.8,
-      'image': 'assets/images/doctor.png',
-    },
-    {
-      'name': 'Dr. Lorri Warf',
-      'specialty': 'General Dentist',
-      'rating': 4.8,
-      'image': 'assets/images/doctor.png',
-    },
-    {
-      'name': 'Dr. Chris Glasser',
-      'specialty': 'Heart Surgeon, London, England',
-      'rating': 4.8,
-      'image': 'assets/images/doctor.png',
-    },
-    {
-      'name': 'Dr. Kenneth Allen',
-      'specialty': 'General Dentist',
-      'rating': 4.8,
-      'image': 'assets/images/doctor.png',
-    },
-  ];
-
-  MyDoctors({super.key});
+  const MyDoctors({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CustomAppBar(title: "My Doctors", bgColor: AppColors.primaryColor),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                itemCount: doctors.length,
-                itemBuilder: (context, index) {
-                  final doctor = doctors[index];
-                  return Container(
-                    margin: EdgeInsets.symmetric(vertical: 8),
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade200,
-                          blurRadius: 5,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor:  Colors.transparent,
-                          backgroundImage: AssetImage(doctor['image']),
-                        ),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Consumer<DoctorProvider>(
+                builder: (context, provider, _) {
+                  if (provider.doctors.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: provider.doctors.length,
+                    itemBuilder: (context, index) {
+                      final DoctorModel doctor = provider.doctors[index];
+                      final doctorId =
+                          doctor.id ?? 0; // Provide default value if null
+                      final doctorName =
+                          doctor.fullName ??
+                          doctor.username ??
+                          'Unknown Doctor';
+                      final doctorImage = 'assets/images/doctor.png';
+
+                      return ChangeNotifierProvider(
+                        create:
+                            (_) => ChatProvider(
+                              userId: 1,
+                              receiverId: doctorId,
+                              roomName: 'room_1_$doctorId',
+                            ),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.shade200,
+                                blurRadius: 5,
+                                spreadRadius: 2,
+                              ),
+                            ],
+                          ),
+                          child: Row(
                             children: [
-                              Text(
-                                doctor['name'],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: AssetImage(doctorImage),
                               ),
-                              SizedBox(height: 4),
-                              Text(
-                                doctor['specialty'],
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              SizedBox(height: 6),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                    size: 18,
-                                  ),
-                                  SizedBox(width: 4),
-                                  Text(
-                                    doctor['rating'].toString(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      doctorName,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
                                     ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      doctor.specialty ??
+                                          'General Practitioner',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      children: const [
+                                        Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                          size: 18,
+                                        ),
+                                        SizedBox(width: 4),
+                                        Text(
+                                          "4.8",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Randevu sistemi eklenecekse buraya
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 8,
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Appointment',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder:
+                                                  (
+                                                    context,
+                                                  ) => ChangeNotifierProvider(
+                                                    create:
+                                                        (_) => ChatProvider(
+                                                          userId: 1,
+                                                          receiverId: doctorId,
+                                                          roomName:
+                                                              'room_1_$doctorId',
+                                                        ),
+                                                    child: ChatPage(
+                                                      doctorId: doctorId,
+                                                      doctorName: doctorName,
+                                                      doctorImage: doctorImage,
+                                                      roomName:
+                                                          doctor.username ??
+                                                          'chat_room',
+                                                    ),
+                                                  ),
+                                            ),
+                                          );
+                                        },
+                                        icon: HugeIcon(
+                                          icon:
+                                              HugeIcons.strokeRoundedBubbleChat,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder:
+                                                  (context) => CallPage(
+                                                    doctorId:
+                                                        doctorId.toString(),
+                                                    doctorName: doctorName,
+                                                    userId: '3',
+                                                    userName: 'Patient Name',
+                                                  ),
+                                            ),
+                                          );
+                                        },
+                                        icon: HugeIcon(
+                                          icon: HugeIcons.strokeRoundedCall,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             ],
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 8,
-                                ),
-                              ),
-                              child: Text(
-                                'Appointment',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/chat');
-                                  },
-                                  icon: HugeIcon(icon: HugeIcons.strokeRoundedBubbleChat, color: AppColors.primaryColor),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/call');
-                                  },
-                                  icon: HugeIcon(icon: HugeIcons.strokeRoundedCall, color: AppColors.primaryColor),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   );
                 },
               ),

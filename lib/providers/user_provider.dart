@@ -1,40 +1,33 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:healthai/models/auth/profile.dart';
+import 'package:healthai/models/auth/user.dart';
 import 'package:healthai/services/api/api.dart';
 import 'package:healthai/services/api/api_response.dart';
 import 'package:healthai/services/api/endpoints.dart';
 import 'package:healthai/services/token.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool _isLoggedIn = false;
-  ProfileModel? profile;
-
-  String? userId;
-
   bool get isLoading => _isLoggedIn;
 
   Future<ApiResponse> login(String email, String password) async {
-    ApiResponse response = await Api.send(EndPoints.login, body: {
-      'username': email,
-      'password': password,
-    });
+    ApiResponse response = await Api.send(
+      EndPoints.login,
+      body: {'username': email, 'password': password},
+    );
 
     if (response.success) {
       await TokenService.saveTokens(response.data);
       _isLoggedIn = true;
-      if (profile?.email == email) {
-        userId = profile?.id as String?;
-      }
     }
     return response;
   }
-
   refreshToken() async {
-    ApiResponse response = await Api.send(EndPoints.refreshToken, body: {
-      'refresh': await TokenService.getRefreshToken(),
-    });
+    ApiResponse response = await Api.send(
+      EndPoints.refreshToken,
+      body: {'refresh': await TokenService.getRefreshToken()},
+    );
 
     try {
       await TokenService.saveTokens(response.data);
@@ -49,11 +42,10 @@ class AuthProvider extends ChangeNotifier {
     required String password,
     required String username,
   }) async {
-    ApiResponse response = await Api.send(EndPoints.registerProfile, body: {
-      'full_name': username,
-      'password': password,
-      'email': email
-    });
+    ApiResponse response = await Api.send(
+      EndPoints.registerProfile,
+      body: {'password': password, 'email': email},
+    );
 
     return response.success;
   }
@@ -62,4 +54,5 @@ class AuthProvider extends ChangeNotifier {
     await TokenService.removeTokens();
     return true;
   }
+
 }

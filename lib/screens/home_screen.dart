@@ -2,7 +2,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/pages/home_page.dart';
-import 'package:healthai/pages/tasks/my_task.dart';
+import 'package:healthai/pages/patient/data_page.dart';
 import 'package:healthai/pages/settings.dart';
 import 'package:healthai/pages/socket/doctors_page.dart';
 import 'package:healthai/pages/tasks/task_page.dart';

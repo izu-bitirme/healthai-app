@@ -7,15 +7,16 @@ class CustomAppBar extends StatelessWidget {
   final String title;
   final Color bgColor;
   final Color? textColor;
-  final Widget? Icon;
-  final Widget? linkIcon;
+  final Widget? leadingIcon;
+  final Widget? trailingIcon;
+
   const CustomAppBar({
     super.key,
     required this.title,
     required this.bgColor,
     this.textColor,
-    this.Icon,
-    this.linkIcon,
+    this.leadingIcon,
+    this.trailingIcon,
   });
 
   @override
@@ -31,35 +32,41 @@ class CustomAppBar extends StatelessWidget {
       height: responsive.heightFactor(0.14),
       color: bgColor,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: const Color.fromARGB(255, 255, 255, 255),
-            ),
-            child:
-                Icon ??
-                HugeIcon(
-                  icon: HugeIcons.strokeRoundedArrowLeft01,
-                  color: AppColors.primaryColor,
-                  size: 24.0,
+          leadingIcon != null
+              ? _iconContainer(child: leadingIcon!)
+              : const SizedBox(width: 40), // boşluk bırakmak için
+
+          Expanded(
+            child: Center(
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: textColor ?? Colors.white,
+                  fontSize: responsive.heightFactor(0.025),
+                  fontWeight: FontWeight.bold,
                 ),
-          ),
-          Text(
-            title,
-            style: TextStyle(
-              color: textColor ?? Colors.white,
-              fontSize: responsive.heightFactor(0.025),
-              fontWeight: FontWeight.bold,
+              ),
             ),
           ),
 
-          linkIcon ?? SizedBox(width: responsive.widthFactor(0.05)),
+          trailingIcon != null
+              ? _iconContainer(child: trailingIcon!)
+              : const SizedBox(width: 40), // boşluk bırakmak için
         ],
       ),
+    );
+  }
+
+  Widget _iconContainer({required Widget child}) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+        color: Colors.white,
+      ),
+      child: child,
     );
   }
 }

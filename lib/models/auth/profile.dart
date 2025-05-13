@@ -1,17 +1,25 @@
 class ProfileModel {
   int? id;
   String? email;
-  String? full_name;
+  String? fullName;
   String? bio;
   String? avatar;
   Map<String, dynamic>? relationships;
 
-  ProfileModel.fromJson(Map json) {
+  ProfileModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     email = json['email'];
-    full_name = json['full_name'];
+    fullName = json['full_name'];
     bio = json['bio'];
     avatar = json['photo'];
     relationships = json['relationships'];
+  }
+
+  static List<ProfileModel> fromJsonList(dynamic list) {
+    List<ProfileModel> result = [];
+    for (var item in list) {
+      result.add(ProfileModel.fromJson(item));
+    }
+    return result;
   }
 }

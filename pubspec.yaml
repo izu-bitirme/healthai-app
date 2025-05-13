@@ -56,6 +56,10 @@ dependencies:
   percent_indicator: ^4.2.4
   fl_chart: ^0.70.2
   syncfusion_flutter_calendar: ^28.2.12
+  web_socket_channel: ^2.4.0
+  zego_uikit_prebuilt_call: ^4.16.28
+  zego_zimkit: ^1.18.16
+
 
 
 
@@ -93,6 +97,7 @@ flutter:
      - assets/images/auth/
      - assets/images/
      - assets/icons/
+     - assets/app-icon.png
      
   #   - images/a_dot_ham.jpeg
 

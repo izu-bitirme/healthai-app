@@ -62,6 +62,7 @@ class CallPage extends StatelessWidget {
             child: ZegoUIKitPrebuiltCall(
               appID: config['app_id'] as int,
               appSign: config['app_sign'] as String,
+              
               userID: userId,
               userName: userName,
               callID: config['call_id'] as String,

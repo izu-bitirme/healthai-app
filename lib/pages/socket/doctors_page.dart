@@ -1,8 +1,10 @@
 // pages/doctors.dart
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
+import 'package:healthai/models/auth/user.dart';
 import 'package:healthai/pages/socket/chat.dart';
 import 'package:healthai/providers/doctor.dart';
+import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/screens/call_screen.dart';
 import 'package:healthai/widgets/custom_app_bar.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -15,6 +17,8 @@ class MyDoctors extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: Column(
@@ -34,16 +38,21 @@ class MyDoctors extends StatelessWidget {
                     itemCount: provider.doctors.length,
                     itemBuilder: (context, index) {
                       final DoctorModel doctor = provider.doctors[index];
-                      final doctorId = doctor.id ?? 0; // Provide default value if null
-                      final doctorName = doctor.fullName ?? doctor.username ?? 'Unknown Doctor';
+                      final doctorId =
+                          doctor.id ?? 0; // Provide default value if null
+                      final doctorName =
+                          doctor.fullName ??
+                          doctor.username ??
+                          'Unknown Doctor';
                       final doctorImage = 'assets/images/doctor.png';
 
                       return ChangeNotifierProvider(
-                        create: (_) => ChatProvider(
-                          userId: 1,
-                          receiverId: doctorId,
-                          roomName: 'room_1_$doctorId',
-                        ),
+                        create:
+                            (_) => ChatProvider(
+                              userId: 1,
+                              receiverId: doctorId,
+                              roomName: 'room_1_$doctorId',
+                            ),
                         child: Container(
                           margin: const EdgeInsets.symmetric(vertical: 8),
                           padding: const EdgeInsets.all(12),
@@ -79,7 +88,8 @@ class MyDoctors extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      doctor.specialty ?? 'General Practitioner',
+                                      doctor.specialty ??
+                                          'General Practitioner',
                                       style: const TextStyle(
                                         color: Colors.grey,
                                         fontSize: 14,
@@ -135,25 +145,32 @@ class MyDoctors extends StatelessWidget {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ChangeNotifierProvider(
-                                                create: (_) => ChatProvider(
-                                                  userId: 1,
-                                                  receiverId: doctorId,
-                                                  roomName: 'room_1_$doctorId',
-                                                ),
-                                                child: ChatPage(
-                                                  doctorId: doctorId,
-                                                  doctorName: doctorName,
-                                                  doctorImage: doctorImage,
-                                                  roomName: doctor.username ?? 'chat_room',
-                                                ),
-                                              ),
+                                              builder:
+                                                  (
+                                                    context,
+                                                  ) => ChangeNotifierProvider(
+                                                    create:
+                                                        (_) => ChatProvider(
+                                                          userId: 1,
+                                                          receiverId: doctorId,
+                                                          roomName:
+                                                              'room_1_$doctorId',
+                                                        ),
+                                                    child: ChatPage(
+                                                      doctorId: doctorId,
+                                                      doctorName: doctorName,
+                                                      doctorImage: doctorImage,
+                                                      roomName:
+                                                          doctor.username ??
+                                                          'chat_room',
+                                                    ),
+                                                  ),
                                             ),
                                           );
                                         },
                                         icon: HugeIcon(
-                                          icon: HugeIcons.strokeRoundedBubbleChat,
+                                          icon:
+                                              HugeIcons.strokeRoundedBubbleChat,
                                           color: AppColors.primaryColor,
                                         ),
                                       ),
@@ -162,12 +179,14 @@ class MyDoctors extends StatelessWidget {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => CallPage(
-                                                doctorId: doctorId.toString(),
-                                                doctorName: doctorName,
-                                                userId: '3',
-                                                userName: 'Patient Name',
-                                              ),
+                                              builder:
+                                                  (context) => CallPage(
+                                                    doctorId:
+                                                        doctorId.toString(),
+                                                    doctorName: doctorName,
+                                                    userId: '3',
+                                                    userName: 'Patient Name',
+                                                  ),
                                             ),
                                           );
                                         },

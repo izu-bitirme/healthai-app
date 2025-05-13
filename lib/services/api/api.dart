@@ -30,7 +30,7 @@ class Api {
   static send(
     Map endpoint, {
     List<dynamic> params = const [],
-    Map<String, dynamic> body = const {},
+    Map<String, dynamic> body = const {}, 
   }) async {
     String method = endpoint.containsKey('method') ? endpoint['method'] : "GET";
     String url = getUrl(endpoint, params);

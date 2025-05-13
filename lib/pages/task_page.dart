@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
+import 'package:healthai/widgets/custom_app_bar.dart';
 
 class TaskPage extends StatelessWidget {
   const TaskPage({super.key});
@@ -14,29 +15,27 @@ class TaskPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () {},
-                  ),
-                  Text(
-                    "Today Task",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(width: 10),
-                ],
+              CustomAppBar(
+                title: "Today Task",
+                bgColor: Colors.white,
+                textColor: Colors.black,
+                leadingIcon: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () {
+                    Navigator.pop(context); // veya özel işlem
+                  },
+                ),
+                trailingIcon: const SizedBox(
+                  width: 10,
+                ), // Sağda boşluk isteniyordu
               ),
+
               SizedBox(height: 10),
               Text(
                 "October, 20 ✍",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-              Text(
-                "15 task today",
-                style: TextStyle(color: Colors.grey),
-              ),
+              Text("15 task today", style: TextStyle(color: Colors.grey)),
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -52,13 +51,27 @@ class TaskPage extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: [
-                    _taskCard("10 am", "Wireframe elements 😌", "10am - 11am", Colors.blue),
-                    _taskCard("12 pm", "Mobile app Design 😍", "11:40am - 12:40pm", Colors.green),
-                    _taskCard("01 pm", "Design Team call 🙋‍♂️", "01:20pm - 02:20pm", Colors.orange),
+                    _taskCard(
+                      "10 am",
+                      "Wireframe elements 😌",
+                      "10am - 11am",
+                      Colors.blue,
+                    ),
+                    _taskCard(
+                      "12 pm",
+                      "Mobile app Design 😍",
+                      "11:40am - 12:40pm",
+                      Colors.green,
+                    ),
+                    _taskCard(
+                      "01 pm",
+                      "Design Team call 🙋‍♂️",
+                      "01:20pm - 02:20pm",
+                      Colors.orange,
+                    ),
                   ],
                 ),
               ),
-              
             ],
           ),
         ),
@@ -75,8 +88,20 @@ class TaskPage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(day, style: TextStyle(fontSize: 18, color: isSelected ? Colors.white : Colors.black)),
-          Text(weekday, style: TextStyle(fontSize: 14, color: isSelected ? Colors.white : Colors.black)),
+          Text(
+            day,
+            style: TextStyle(
+              fontSize: 18,
+              color: isSelected ? Colors.white : Colors.black,
+            ),
+          ),
+          Text(
+            weekday,
+            style: TextStyle(
+              fontSize: 14,
+              color: isSelected ? Colors.white : Colors.black,
+            ),
+          ),
         ],
       ),
     );
@@ -87,7 +112,10 @@ class TaskPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Text(time, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          Text(
+            time,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
           SizedBox(width: 20),
           Expanded(
             child: Container(
@@ -99,8 +127,14 @@ class TaskPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: TextStyle(fontSize: 16, color: Colors.white)),
-                  Text(duration, style: TextStyle(fontSize: 14, color: Colors.white70)),
+                  Text(
+                    title,
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  Text(
+                    duration,
+                    style: TextStyle(fontSize: 14, color: Colors.white70),
+                  ),
                 ],
               ),
             ),

@@ -31,7 +31,9 @@ class WelcomeChat extends StatelessWidget {
                   CustomAppBar(
                     title: "Health AI",
                     bgColor: Colors.white,
-                    Icon: InkWell(
+                    textColor: AppColors.textColor,
+
+                    leadingIcon: InkWell(
                       onTap: () => Navigator.pop(context),
                       child: HugeIcon(
                         icon: HugeIcons.strokeRoundedArrowLeft01,
@@ -39,52 +41,52 @@ class WelcomeChat extends StatelessWidget {
                         size: 28.0,
                       ),
                     ),
-                    textColor: AppColors.textColor,
-                    linkIcon: InkWell(
-                      onTap : (){
+
+                    trailingIcon: InkWell(
+                      onTap: () {
                         CustomModal.show(
-                        context: context,
-                        title: 'Select Your LLM Model ✨',
-                        children: [
-                          for (String chatModel in chatProvider.aiModels)
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 10),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  chatProvider.setAiModel(chatModel);
-                                  Navigator.pop(context);
-                                  Navigator.pushNamed(context, '/chat-ai');
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    side: BorderSide(
-                                      color: AppColors.primaryColor,
+                          context: context,
+                          title: 'Select Your LLM Model ✨',
+                          children: [
+                            for (String chatModel in chatProvider.aiModels)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    chatProvider.setAiModel(chatModel);
+                                    Navigator.pop(context);
+                                    Navigator.pushNamed(context, '/chat-ai');
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      side: BorderSide(
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 14,
+                                      horizontal: 30,
                                     ),
                                   ),
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 14,
-                                    horizontal: 30,
-                                  ),
-                                ),
-                                child: Text(
-                                  chatModel,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black87,
+                                  child: Text(
+                                    chatModel,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black87,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                        ],
-                        buttonText: 'Tamam',
-                        onButtonTap: () {
-                          Navigator.pop(context);
-                        },
-                        isDismissible: false,
-                      );
+                          ],
+                          buttonText: 'Tamam',
+                          onButtonTap: () {
+                            Navigator.pop(context);
+                          },
+                          isDismissible: false,
+                        );
                       },
                       child: HugeIcon(
                         icon: HugeIcons.strokeRoundedChatGpt,
@@ -93,6 +95,7 @@ class WelcomeChat extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   Spacer(),
                   Icon(
                     Icons.auto_awesome,

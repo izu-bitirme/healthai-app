@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:healthai/pages/welcome/welcome_page.dart';
 import 'package:healthai/providers/doctor.dart';
+import 'package:healthai/providers/profile_provider.dart';
+import 'package:healthai/providers/task.dart';
+import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/screens/home_screen.dart';
 import 'package:healthai/services/app_status.dart';
 import 'package:provider/provider.dart';
@@ -16,12 +19,21 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   double _scale = 0.5;
   double _opacity = 0.0;
-  _fetchData() async {
+  
+   Future<void> _fetchInitialData() async {
     try {
-      await Provider.of<DoctorProvider>(context, listen: false).fechDoctors();
+      final profileProvider =
+          Provider.of<ProfileProvider>(context, listen: false);
+      final taskProvider =
+          Provider.of<TaskProvider>(context, listen: false);
+      final doctorProvider =
+          Provider.of<DoctorProvider>(context, listen: false);
+
+      await doctorProvider.fechDoctors();
+      await profileProvider.fetchProfile();
+
     } catch (err) {
-      // Show dialog
-      print(err);
+      print("Hata: $err");
     }
   }
 
@@ -29,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    _fetchData();
+    _fetchInitialData();
 
     Future.delayed(Duration(milliseconds: 500), () {
       setState(() {
@@ -52,6 +64,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<AuthProvider>(context);
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -68,7 +83,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   opacity: _opacity,
                   duration: const Duration(milliseconds: 800),
                   child: Image.asset(
-                    'assets/images/app-icon.png',
+                    'assets/app-icon.png',
                     width: 75,
                     height: 75,
                   ),

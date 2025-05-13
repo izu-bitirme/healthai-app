@@ -6,7 +6,7 @@ class DoctorModel {
   late String? licenseNumber;
 
   DoctorModel.fromJson(json) {
-    id = json['id'];
+    id = json['userId'];
     username = json['username'];
     fullName = json['full_name'];
     specialty = json['specialty'];

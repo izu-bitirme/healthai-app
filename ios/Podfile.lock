@@ -80,6 +80,9 @@ PODS:
   - SwiftyGif (5.4.5)
   - vibration (3.0.0):
     - Flutter
+  - video_player_avfoundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - wakelock_plus (0.0.1):
     - Flutter
   - zego_callkit (1.0.0):
@@ -98,11 +101,17 @@ PODS:
   - zego_zim (2.20.0):
     - Flutter
     - ZIM (= 2.20.0)
+  - zego_zim_audio (1.0.2):
+    - Flutter
+    - ZIMAudio (= 1.0.2)
+  - zego_zimkit (0.0.1):
+    - Flutter
   - zego_zpns (2.6.0):
     - Flutter
     - ZPNs (= 2.6.0)
   - ZegoUIKitReport (0.2.10)
   - ZIM (2.20.0)
+  - ZIMAudio (1.0.2)
   - ZIPFoundation (0.9.19)
   - ZPNs (2.6.0)
 
@@ -126,6 +135,7 @@ DEPENDENCIES:
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
   - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
   - zego_callkit (from `.symlinks/plugins/zego_callkit/ios`)
   - zego_express_engine (from `.symlinks/plugins/zego_express_engine/ios`)
@@ -133,6 +143,8 @@ DEPENDENCIES:
   - zego_uikit_prebuilt_call (from `.symlinks/plugins/zego_uikit_prebuilt_call/ios`)
   - zego_uikit_signaling_plugin (from `.symlinks/plugins/zego_uikit_signaling_plugin/ios`)
   - zego_zim (from `.symlinks/plugins/zego_zim/ios`)
+  - zego_zim_audio (from `.symlinks/plugins/zego_zim_audio/ios`)
+  - zego_zimkit (from `.symlinks/plugins/zego_zimkit/ios`)
   - zego_zpns (from `.symlinks/plugins/zego_zpns/ios`)
 
 SPEC REPOS:
@@ -145,6 +157,7 @@ SPEC REPOS:
     - SwiftyGif
     - ZegoUIKitReport
     - ZIM
+    - ZIMAudio
     - ZIPFoundation
     - ZPNs
 
@@ -187,6 +200,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite_darwin/darwin"
   vibration:
     :path: ".symlinks/plugins/vibration/ios"
+  video_player_avfoundation:
+    :path: ".symlinks/plugins/video_player_avfoundation/darwin"
   wakelock_plus:
     :path: ".symlinks/plugins/wakelock_plus/ios"
   zego_callkit:
@@ -201,6 +216,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/zego_uikit_signaling_plugin/ios"
   zego_zim:
     :path: ".symlinks/plugins/zego_zim/ios"
+  zego_zim_audio:
+    :path: ".symlinks/plugins/zego_zim_audio/ios"
+  zego_zimkit:
+    :path: ".symlinks/plugins/zego_zimkit/ios"
   zego_zpns:
     :path: ".symlinks/plugins/zego_zpns/ios"
 
@@ -230,6 +249,7 @@ SPEC CHECKSUMS:
   sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   vibration: 69774ad57825b11c951ee4c46155f455d7a592ce
+  video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
   wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
   zego_callkit: 8e3bc2e9fc6895cff1b27841b1de1100344d2613
   zego_express_engine: 26f82d16f306eb2522e8329c769f835a997f5338
@@ -237,9 +257,12 @@ SPEC CHECKSUMS:
   zego_uikit_prebuilt_call: 7fe09774f68ec5344fd16378ff2d3bc2de36c6f8
   zego_uikit_signaling_plugin: 89c53a021d449903c6e6a0642383bb7e5791e46e
   zego_zim: 3338aec140fd534f263355b33e2fabb16220013c
+  zego_zim_audio: 93e7b1359ab565cbdf8bc01ef33fb8f2492095cd
+  zego_zimkit: eb898bea1f8b43a1cb814eaab39617ef679b6917
   zego_zpns: e2ef9b972e9b6be00b78b32b71c550c426584752
   ZegoUIKitReport: a993f7ccc5d243998a7e601a60e16fcd6c084417
   ZIM: 1376cbc14e92c31425d91a5bd0874c0b501e4e76
+  ZIMAudio: 8e50c9cffb9a6828294c27828db896f8ef388082
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
   ZPNs: 73bad0046a74e37315201053f9a0e7ac625d9436
 

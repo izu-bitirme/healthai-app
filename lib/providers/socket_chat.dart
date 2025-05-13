@@ -36,7 +36,7 @@ class ChatProvider with ChangeNotifier {
         throw Exception("Authentication token not found");
       }
 
-      final uri = Uri.parse('ws://127.0.0.1:8000/ws/chat/$roomName/?token=$token');
+      final uri = Uri.parse('ws://127.0.0.1:8000/ws/chat/?token=$token');
       _channel = WebSocketChannel.connect(uri);
 
       _channel!.stream.listen(
@@ -101,13 +101,9 @@ class ChatProvider with ChangeNotifier {
       notifyListeners();
 
       final messageJson = {
-        'sender_id': userId,
         'receiver_id': receiverId,
-        'content': content,
-        'image_url': imageUrl,
-        'message_type': messageType,
-        'timestamp': DateTime.now().toIso8601String(),
-        'status': 'sent',
+        'message': content,
+        'type': 'text',
       };
 
       _channel!.sink.add(jsonEncode(messageJson));

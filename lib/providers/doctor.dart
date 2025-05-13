@@ -9,10 +9,7 @@ class DoctorProvider extends ChangeNotifier {
   
   fechDoctors() async {
     ApiResponse response = await Api.send(EndPoints.doctorList);
-    print("-------1---${response.data['result'][0]}");
     doctors = DoctorModel.fromJsonList(response.data['result']);
-    print("------2----${DoctorModel.fromJsonList(response.data['result'])}");
-    print(doctors);
     notifyListeners();
   }
 }

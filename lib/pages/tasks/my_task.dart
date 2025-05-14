@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/pages/tasks/charts/drink_track.dart';
+import 'package:healthai/pages/tasks/charts/health_card.dart';
 import 'package:healthai/pages/tasks/charts/heart_rate.dart';
 import 'package:healthai/pages/tasks/charts/sleep_chart.dart';
 
@@ -27,7 +28,8 @@ class MyTasksPage extends StatelessWidget {
               const SizedBox(height: 16),
               SleepMetricsWidget(sleepHours: 9.1, totalDots: 30, filledDots: 25,),
               DrinkTrackWidget(),
-              HeartRateWidget(),
+   
+              HealthCard(),
               
                
               

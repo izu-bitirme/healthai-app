@@ -41,7 +41,6 @@ dependencies:
   iconsax_plus: ^1.0.0
   page_transition: ^2.2.1
   animate_do: ^4.0.1
-  flutter_svg: ^2.0.9
   heroicons: ^0.11.0
   animated_bottom_navigation_bar: ^1.4.0
   hugeicons: ^0.0.7
@@ -59,12 +58,8 @@ dependencies:
   web_socket_channel: ^2.4.0
   zego_uikit_prebuilt_call: ^4.16.28
   zego_zimkit: ^1.18.16
-
-
-
-
-
-
+  flutter_svg: ^2.1.0
+  carousel_slider: ^5.0.0
   
 dev_dependencies:
   flutter_test:

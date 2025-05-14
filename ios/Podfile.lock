@@ -87,7 +87,7 @@ PODS:
     - Flutter
   - zego_callkit (1.0.0):
     - Flutter
-  - zego_express_engine (3.20.0):
+  - zego_express_engine (3.20.5):
     - Flutter
   - zego_uikit (0.0.1):
     - Flutter
@@ -252,7 +252,7 @@ SPEC CHECKSUMS:
   video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
   wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
   zego_callkit: 8e3bc2e9fc6895cff1b27841b1de1100344d2613
-  zego_express_engine: 26f82d16f306eb2522e8329c769f835a997f5338
+  zego_express_engine: 41c2e925fe071077e0554bdd12b925a73d7b8007
   zego_uikit: 0843069d9d4d0e4845abf0ea9b24efa95c1760fa
   zego_uikit_prebuilt_call: 7fe09774f68ec5344fd16378ff2d3bc2de36c6f8
   zego_uikit_signaling_plugin: 89c53a021d449903c6e6a0642383bb7e5791e46e

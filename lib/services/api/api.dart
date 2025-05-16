@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/services/api/http_request.dart';
+import 'package:healthai/services/token.dart';
 import 'endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'api_response.dart';
@@ -16,21 +18,17 @@ class Api {
     return apiHost + url;
   }
 
-  static Future<String> getToken() async {
-    return await login();
-  }
-
   static Future<Map<String, String>> getHeaders() async {
     return {
       "Content-Type": "application/json",
-      "Authorization": "Bearer ${await getToken()}",
+      "Authorization": "Bearer ${await TokenService.getAccessToken()}",
     };
   }
 
   static send(
     Map endpoint, {
     List<dynamic> params = const [],
-    Map<String, dynamic> body = const {}, 
+    Map<String, dynamic> body = const {},
   }) async {
     String method = endpoint.containsKey('method') ? endpoint['method'] : "GET";
     String url = getUrl(endpoint, params);
@@ -58,6 +56,31 @@ class Api {
           headers: headers,
           body: jsonEncode(body),
         );
+      }
+      if (response.statusCode == 401) {
+        final authProvider = AuthProvider();
+        ApiResponse refreshResponse = await authProvider.refreshToken();
+
+        if (refreshResponse.success) {
+          headers = await getHeaders();
+          if (method == "GET") {
+            response = await http.get(Uri.parse(url), headers: headers);
+          } else if (method == "DELETE") {
+            response = await http.delete(
+              Uri.parse(url),
+              headers: headers,
+              body: jsonEncode(body),
+            );
+          } else {
+            response = await http.post(
+              Uri.parse(url),
+              headers: headers,
+              body: jsonEncode(body),
+            );
+          }
+        } else {
+          return "";
+        }
       }
     } catch (e) {
       return ApiResponse(

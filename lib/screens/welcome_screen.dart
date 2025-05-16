@@ -77,7 +77,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
                  SizedBox(height:screenHeight * 0.05),
-                //login or sing text  "Already have an account? Sign In."
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

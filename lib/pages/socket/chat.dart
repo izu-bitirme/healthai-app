@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/models/chat.dart';
+import 'package:healthai/providers/message_provider.dart';
 import 'package:healthai/providers/socket_chat.dart';
+import 'package:healthai/services/chat.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
@@ -23,9 +27,9 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chatProvider = Provider.of<ChatProvider>(context);
     final scrollController = ScrollController();
     final textController = TextEditingController();
+    final messageProvider = Provider.of<MessageProvider>(context);
 
     void scrollToBottom() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -41,17 +45,17 @@ class ChatPage extends StatelessWidget {
 
     Future<void> sendMessage() async {
       if (textController.text.trim().isEmpty) return;
-      
+
       final message = textController.text;
       textController.clear();
-      
+
       try {
-        await chatProvider.sendMessage(content: message);
+        ChatChannel.sendTextMessage(message: message, receiverId: doctorId);
         scrollToBottom();
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to send message: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Failed to send message: $e')));
         textController.text = message;
       }
     }
@@ -64,27 +68,19 @@ class ChatPage extends StatelessWidget {
           child: Column(
             children: [
               _buildHeader(context),
-              _buildConnectionStatus(chatProvider),
-              if (chatProvider.messages.isEmpty && !chatProvider.isTyping)
+              if (messageProvider.messages.isEmpty)
                 _buildEmptyState()
               else
                 Expanded(
-                  child: Consumer<ChatProvider>(
-                    builder: (context, provider, child) {
-                      scrollToBottom();
-                      return ListView.builder(
-                        controller: scrollController,
-                        itemCount: provider.messages.length + 
-                            (provider.isTyping ? 1 : 0),
-                        itemBuilder: (context, index) {
-                          if (index == provider.messages.length) {
-                            return _buildTypingIndicator();
-                          }
-                          return _buildMessageBubble(
-                            provider.messages[index], 
-                            provider.userId
-                          );
-                        },
+                  child: ListView.builder(
+                    controller: scrollController,
+                    itemCount: messageProvider.messages.length,
+                    itemBuilder: (context, index) {
+                      if (index == messageProvider.messages.length) {
+                        return _buildTypingIndicator();
+                      }
+                      return _buildMessageBubble(
+                        messageProvider.messages[index],
                       );
                     },
                   ),
@@ -130,24 +126,21 @@ class ChatPage extends StatelessWidget {
     return const SizedBox();
   }
 
-  Widget _buildMessageBubble( ChatMessage message, int userId) {
-    final isUser = message.senderId == userId;
-    
+  Widget _buildMessageBubble(ChatMessage message) {
     return Align(
-      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+      alignment:
+          message.isSender ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-       
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         decoration: BoxDecoration(
-          color: isUser 
-              ? AppColors.cardPrimaryColor 
-              : Colors.grey[300],
+          color:
+              message.isSender ? AppColors.cardPrimaryColor : Colors.grey[300],
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),
-            bottomLeft: Radius.circular(isUser ? 12 : 0),
-            bottomRight: Radius.circular(isUser ? 0 : 12),
+            bottomLeft: Radius.circular(message.isSender ? 12 : 0),
+            bottomRight: Radius.circular(message.isSender ? 0 : 12),
           ),
         ),
         child: Column(
@@ -156,14 +149,14 @@ class ChatPage extends StatelessWidget {
             Text(
               message.content,
               style: TextStyle(
-                color: isUser ? Colors.white : Colors.black,
+                color: message.isSender ? Colors.white : Colors.black,
               ),
             ),
             const SizedBox(height: 4),
             Text(
               DateFormat('HH:mm').format(message.timestamp),
               style: TextStyle(
-                color: isUser ? Colors.white70 : Colors.black54,
+                color: message.isSender ? Colors.white70 : Colors.black54,
                 fontSize: 10,
               ),
               textAlign: TextAlign.end,
@@ -199,7 +192,10 @@ class ChatPage extends StatelessWidget {
     );
   }
 
-  Widget _buildInputArea(TextEditingController controller, VoidCallback onSend) {
+  Widget _buildInputArea(
+    TextEditingController controller,
+    VoidCallback onSend,
+  ) {
     return Row(
       children: [
         Expanded(
@@ -237,12 +233,7 @@ class ChatPage extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 0,
-        left: 0,
-        right: 10,
-        bottom: 10,
-      ),
+      padding: const EdgeInsets.only(top: 0, left: 0, right: 10, bottom: 10),
       child: Row(
         children: [
           IconButton(
@@ -282,7 +273,11 @@ class ChatPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          HugeIcon(icon: HugeIcons.strokeRoundedBubbleChat, color: Colors.black54, size: 48.0),
+          HugeIcon(
+            icon: HugeIcons.strokeRoundedBubbleChat,
+            color: Colors.black54,
+            size: 48.0,
+          ),
           const SizedBox(height: 10),
           Text(
             "Start a conversation",
@@ -293,9 +288,18 @@ class ChatPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          _capabilityBox("Ask about your health concerns.", "(Dr. ${doctorName.split(' ')[1]} is here to help!)"),
-          _capabilityBox("Discuss your symptoms.", "(Get advice on what to do next)"),
-          _capabilityBox("Get medical advice.", "(Professional guidance at your fingertips)"),
+          _capabilityBox(
+            "Ask about your health concerns.",
+            "(Dr. ${doctorName.split(' ')[1]} is here to help!)",
+          ),
+          _capabilityBox(
+            "Discuss your symptoms.",
+            "(Get advice on what to do next)",
+          ),
+          _capabilityBox(
+            "Get medical advice.",
+            "(Professional guidance at your fingertips)",
+          ),
           const SizedBox(height: 20),
           Text(
             "Dr. ${doctorName.split(' ')[1]} is ready to assist you.",

@@ -2,11 +2,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:healthai/pages/welcome/welcome_page.dart';
 import 'package:healthai/providers/doctor.dart';
+import 'package:healthai/providers/message_provider.dart';
 import 'package:healthai/providers/profile_provider.dart';
 import 'package:healthai/providers/task.dart';
 import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/screens/home_screen.dart';
 import 'package:healthai/services/app_status.dart';
+import 'package:healthai/services/chat.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,15 +24,19 @@ class _SplashScreenState extends State<SplashScreen> {
   
    Future<void> _fetchInitialData() async {
     try {
+      final MessageProvider messageProvider =
+          Provider.of<MessageProvider>(context, listen: false);
+      await ChatChannel.init();
+      ChatChannel.addListener('chat_message', messageProvider.onMessage);
       final profileProvider =
           Provider.of<ProfileProvider>(context, listen: false);
       final taskProvider =
           Provider.of<TaskProvider>(context, listen: false);
       final doctorProvider =
           Provider.of<DoctorProvider>(context, listen: false);
+      await profileProvider.fetchProfile();
 
       await doctorProvider.fechDoctors();
-      await profileProvider.fetchProfile();
 
     } catch (err) {
       print("Hata: $err");

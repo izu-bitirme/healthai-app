@@ -15,12 +15,14 @@ import 'package:healthai/pages/settings/settings.dart';
 import 'package:healthai/pages/settings/terms.dart';
 import 'package:healthai/providers/ai_chat.dart';
 import 'package:healthai/providers/doctor.dart';
+import 'package:healthai/providers/message_provider.dart';
 import 'package:healthai/providers/profile_provider.dart';
 import 'package:healthai/providers/task.dart';
 import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/providers/widgets_providers.dart';
 import 'package:healthai/screens/home_screen.dart';
 import 'package:healthai/screens/splash_screen.dart';
+import 'package:healthai/services/chat.dart';
 import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 
@@ -34,7 +36,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => DoctorProvider()),
         ChangeNotifierProvider(create: (_) => TaskProvider()),
-
+        ChangeNotifierProvider(create: (_) => MessageProvider()),
       ],
       child: ToastificationWrapper(child: App()),
     ),

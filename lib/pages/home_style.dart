@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:healthai/constants/app_colors.dart';
+import 'package:healthai/pages/tasks/my_task.dart';
 import 'package:healthai/providers/profile_provider.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -9,7 +12,7 @@ class HomePage extends StatelessWidget {
   final List<String> notifications = [
     "Your cleaner will arrive at 10:00 AM",
     "You’ve earned a 20% discount!",
-    "New plumbing services added near you"
+    "New plumbing services added near you",
   ];
 
   final List<Map<String, String>> professionals = [
@@ -20,44 +23,86 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
+    final profileProvider = Provider.of<ProfileProvider>(
+      context,
+      listen: false,
+    );
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric( vertical: 20),
+          padding: EdgeInsets.symmetric(vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header
               Padding(
-                padding: const EdgeInsets.symmetric( horizontal: 16.0 , vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        const CircleAvatar(
+                        CircleAvatar(
                           radius: 24,
-                          backgroundImage: AssetImage("assets/images/auth/profile.png"),
+                          backgroundImage: NetworkImage(
+                            profileProvider.profile?.avatar ?? '',
+                          ),
+                          backgroundColor: AppColors.cardPrimaryColor,
                         ),
                         const SizedBox(width: 12),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text("Good Morning 👋", style: TextStyle(fontSize: 14, color: Colors.grey)),
-                            Text("Andrew Ainsley", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                          children: [
+                            Text(
+                              "Welcome Back 👋",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Text(
+                              profileProvider.profile?.username ?? "",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ],
                     ),
                     Row(
-                      children: const [
-                        Icon(Icons.notifications_none),
-                        SizedBox(width: 12),
-                        Icon(Icons.chat_bubble_outline),
+                      children: [
+                        InkWell(
+                          onTap:
+                              () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyTasksPage(),
+                                ),
+                              ),
+
+                          child: HugeIcon(
+                            icon: HugeIcons.strokeRoundedChart01,
+                            color: AppColors.textColor,
+                            size: 28,
+                          ),
+                        ),
+                        Text(
+                          'Health AI',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        HugeIcon(
+                          icon: HugeIcons.strokeRoundedNotification01,
+                          color: AppColors.textColor,
+                          size: 26,
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -73,31 +118,46 @@ class HomePage extends StatelessWidget {
                     enableInfiniteScroll: true,
                     viewportFraction: 1.0,
                   ),
-                  items: notifications.map((msg) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            decoration: BoxDecoration(
-                              color: Colors.deepPurple.shade50,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            alignment: Alignment.centerLeft,
-                            child: Row(
-                              children: [
-                                const Icon(Icons.notifications, color: Colors.deepPurple),
-                                const SizedBox(width: 10),
-                                Expanded(child: Text(msg, style: const TextStyle(color: Colors.deepPurple))),
-                              ],
-                            ),
-                          ),
+                  items:
+                      notifications.map((msg) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.deepPurple.shade50,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                alignment: Alignment.centerLeft,
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.notifications,
+                                      color: Colors.deepPurple,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Text(
+                                        msg,
+                                        style: const TextStyle(
+                                          color: Colors.deepPurple,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
                         );
-                      },
-                    );
-                  }).toList(),
+                      }).toList(),
                 ),
               ),
 
@@ -105,25 +165,39 @@ class HomePage extends StatelessWidget {
 
               // Special Offers
               Padding(
-                padding: const EdgeInsets.symmetric( horizontal: 16.0 , vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    Text("Special Offers", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(
+                      "Special Offers",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     Text("See All", style: TextStyle(color: Colors.deepPurple)),
                   ],
                 ),
               ),
               const SizedBox(height: 12),
               Padding(
-                padding: const EdgeInsets.symmetric( horizontal: 16.0 , vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8,
+                ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
                     height: 160,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [Colors.purple.shade400, Colors.deepPurple]),
+                      gradient: LinearGradient(
+                        colors: [Colors.purple.shade400, Colors.deepPurple],
+                      ),
                     ),
                     child: Row(
                       children: [
@@ -134,10 +208,29 @@ class HomePage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("30%", style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white)),
-                                Text("Today's Special!", style: TextStyle(fontSize: 18, color: Colors.white)),
+                                Text(
+                                  "30%",
+                                  style: TextStyle(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  "Today's Special!",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                  ),
+                                ),
                                 SizedBox(height: 8),
-                                Text("Get discount for every order, only valid for today", style: TextStyle(fontSize: 14, color: Colors.white)),
+                                Text(
+                                  "Get discount for every order, only valid for today",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -158,18 +251,30 @@ class HomePage extends StatelessWidget {
 
               // Services
               Padding(
-                padding: const EdgeInsets.symmetric( horizontal: 16.0 , vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    Text("Services", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(
+                      "Services",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     Text("See All", style: TextStyle(color: Colors.deepPurple)),
                   ],
                 ),
               ),
               const SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.symmetric( horizontal: 16.0 , vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8,
+                ),
                 child: GridView.count(
                   crossAxisCount: 4,
                   shrinkWrap: true,

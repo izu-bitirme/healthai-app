@@ -7,9 +7,17 @@ import 'package:healthai/services/api/endpoints.dart';
 class DoctorProvider extends ChangeNotifier {
   List<DoctorModel> doctors = [];
   
-  fechDoctors() async {
+  // Doktorları çekmek için API çağrısı
+  Future<void> fechDoctors() async {
     ApiResponse response = await Api.send(EndPoints.doctorList);
-    doctors = DoctorModel.fromJsonList(response.data['result']);
-    notifyListeners();
+      print("Veri tipi: ${response.data}");
+      if (response.success) {
+      print("Doktorlar çekildi: ${response.data}");
+      doctors = DoctorModel.fromJsonList(response.data['doctors'] as List<dynamic>);
+      print("Doktorlar çekildi: ${doctors.length}");
+      notifyListeners();
+    } else {
+      print("Doktorlar çekilemedi: ${response.message}");
+    }
   }
 }

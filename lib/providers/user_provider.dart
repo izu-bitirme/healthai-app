@@ -9,32 +9,53 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool _isLoggedIn = false;
-  bool get isLoading => _isLoggedIn;
+  bool get isLoggedIn => _isLoggedIn;
+
+  AuthProvider() {
+    checkLoginStatus();
+  }
+
+  Future<void> checkLoginStatus() async {
+    String token = await TokenService.getAccessToken();
+    _isLoggedIn = token.isNotEmpty;
+    notifyListeners();
+  }
 
   Future<ApiResponse> login(String email, String password) async {
     ApiResponse response = await Api.send(
       EndPoints.login,
       body: {'username': email, 'password': password},
     );
-
     if (response.success) {
       await TokenService.saveTokens(response.data);
       _isLoggedIn = true;
+      notifyListeners();
     }
     return response;
   }
-  refreshToken() async {
+
+  Future<ApiResponse> refreshToken() async {
+    String refreshToken = await TokenService.getRefreshToken();
+    if (refreshToken.isEmpty) {
+      return ApiResponse(
+        success: false,
+        message: "Refresh token not found",
+        data: {},
+      );
+    }
+
     ApiResponse response = await Api.send(
       EndPoints.refreshToken,
-      body: {'refresh': await TokenService.getRefreshToken()},
+      body: {'refresh': refreshToken},
     );
 
-    try {
+    if (response.success) {
       await TokenService.saveTokens(response.data);
-      _isLoggedIn = true;
-    } catch (e) {
-      _isLoggedIn = false;
+    } else {
+      await logout();
     }
+
+    return response;
   }
 
   Future<bool> register({
@@ -52,7 +73,8 @@ class AuthProvider extends ChangeNotifier {
 
   Future<bool> logout() async {
     await TokenService.removeTokens();
+    _isLoggedIn = false;
+    notifyListeners();
     return true;
   }
-
 }

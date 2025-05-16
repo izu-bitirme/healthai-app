@@ -12,7 +12,7 @@ class ProfileProvider with ChangeNotifier {
       ApiResponse response = await Api.send(EndPoints.profile);
       print("Veri tipi: ${response.data.runtimeType}");
       print("Veri: ${response.data}");
-      profile = ProfileModel.fromJson(response.data); // ✅ Tekil veri
+      profile = ProfileModel.fromJson(response.data);
       notifyListeners();
       print("Profile loaded: ${profile?.email}");
     } catch (e) {

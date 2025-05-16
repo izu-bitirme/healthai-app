@@ -6,6 +6,7 @@ import 'package:healthai/pages/socket/chat.dart';
 import 'package:healthai/providers/doctor.dart';
 import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/screens/call_screen.dart';
+import 'package:healthai/services/chat.dart';
 import 'package:healthai/widgets/custom_app_bar.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,7 @@ class MyDoctors extends StatelessWidget {
                           doctor.fullName ??
                           doctor.username ??
                           'Unknown Doctor';
-                      final doctorImage = 'assets/images/doctor.png';
+                      final doctorImage = doctor.image ?? "";
 
                       return ChangeNotifierProvider(
                         create:
@@ -72,7 +73,10 @@ class MyDoctors extends StatelessWidget {
                               CircleAvatar(
                                 radius: 30,
                                 backgroundColor: Colors.transparent,
-                                backgroundImage: AssetImage(doctorImage),
+                                backgroundImage: NetworkImage(
+                                  doctorImage,
+                                  scale: 1.5,
+                                ),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
@@ -115,87 +119,53 @@ class MyDoctors extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              Row(
                                 children: [
-                                  ElevatedButton(
+                                  IconButton(
                                     onPressed: () {
-                                      // Randevu sistemi eklenecekse buraya
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:
+                                              (
+                                                context,
+                                              ) => ChangeNotifierProvider(
+                                                create:
+                                                    (_) => ChatProvider(
+                                                      userId: 1,
+                                                      receiverId: doctorId,
+                                                      roomName:
+                                                          'room_1_$doctorId',
+                                                    ),
+                                                child: ChatPage(
+                                                  doctorId: doctorId,
+                                                  doctorName: doctorName,
+                                                  doctorImage: doctorImage,
+                                                  roomName:
+                                                      doctor.username ??
+                                                      'chat_room',
+                                                ),
+                                              ),
+                                        ),
+                                      );
                                     },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors.primaryColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
-                                        vertical: 8,
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      'Appointment',
-                                      style: TextStyle(color: Colors.white),
+                                    icon: HugeIcon(
+                                      icon: HugeIcons.strokeRoundedBubbleChat,
+                                      color: AppColors.primaryColor,
                                     ),
                                   ),
-                                  const SizedBox(height: 8),
-                                  Row(
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder:
-                                                  (
-                                                    context,
-                                                  ) => ChangeNotifierProvider(
-                                                    create:
-                                                        (_) => ChatProvider(
-                                                          userId: 1,
-                                                          receiverId: doctorId,
-                                                          roomName:
-                                                              'room_1_$doctorId',
-                                                        ),
-                                                    child: ChatPage(
-                                                      doctorId: doctorId,
-                                                      doctorName: doctorName,
-                                                      doctorImage: doctorImage,
-                                                      roomName:
-                                                          doctor.username ??
-                                                          'chat_room',
-                                                    ),
-                                                  ),
-                                            ),
-                                          );
-                                        },
-                                        icon: HugeIcon(
-                                          icon:
-                                              HugeIcons.strokeRoundedBubbleChat,
-                                          color: AppColors.primaryColor,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder:
-                                                  (context) => CallPage(
-                                                    doctorId:
-                                                        doctorId.toString(),
-                                                    doctorName: doctorName,
-                                                    userId: '3',
-                                                    userName: 'Patient Name',
-                                                  ),
-                                            ),
-                                          );
-                                        },
-                                        icon: HugeIcon(
-                                          icon: HugeIcons.strokeRoundedCall,
-                                          color: AppColors.primaryColor,
-                                        ),
-                                      ),
-                                    ],
+                                  IconButton(
+                                    onPressed: () {
+                                      ChatChannel.call(
+                                        receiverId: doctorId,
+                                        doctorName: doctorName,
+                                        context: context,
+                                      );
+                                    },
+                                    icon: HugeIcon(
+                                      icon: HugeIcons.strokeRoundedCall,
+                                      color: AppColors.primaryColor,
+                                    ),
                                   ),
                                 ],
                               ),

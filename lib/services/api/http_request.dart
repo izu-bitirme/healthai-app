@@ -15,11 +15,3 @@ Future<String> getLLMChat(String message, {String? selectedModel}) async {
 
 }
 
-Future<String> login() async {
-  ApiResponse response = await Api.send(
-    EndPoints.login,
-    body: {'username': 'a', 'password': '1'},
-  );
-
-  return response.data['access'];
-}

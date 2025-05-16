@@ -28,8 +28,9 @@ class ApiResponse {
     print(response.statusCode);
 
     try {
-      print("cevap: ${response.body}");
+      print("cevap---: ${response.body}");
       data = json.decode(utf8.decode(response.bodyBytes));
+      print("data: $data");
     } catch (e) {
       print(e);
       data = {};

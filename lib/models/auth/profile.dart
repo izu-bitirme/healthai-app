@@ -1,17 +1,17 @@
 class ProfileModel {
   int? id;
   String? email;
-  String? username;
+  late String username;
   String? bio;
-  String? avatar;
+  late String avatar;
   String? role;
 
   ProfileModel({
     this.id,
     this.email,
-    this.username,
+    required this.username,
     this.bio,
-    this.avatar,
+    required this.avatar,
     this.role,
   });
 

@@ -25,72 +25,67 @@ class Api {
     };
   }
 
-  static send(
+  static Future<ApiResponse> send(
     Map endpoint, {
     List<dynamic> params = const [],
     Map<String, dynamic> body = const {},
   }) async {
     String method = endpoint.containsKey('method') ? endpoint['method'] : "GET";
     String url = getUrl(endpoint, params);
+    bool requiresAuth = endpoint['login_required'] ?? false;
+
     Map<String, String> headers =
-        endpoint.containsKey('login_required')
-            ? endpoint['login_required']
-                ? await Api.getHeaders()
-                : {"Content-Type": "application/json"}
+        requiresAuth
+            ? await Api.getHeaders()
             : {"Content-Type": "application/json"};
 
-    late http.Response response;
+    Future<http.Response> performRequest() async {
+      final uri = Uri.parse(url);
+      final encodedBody = jsonEncode(body);
+
+      switch (method) {
+        case "GET":
+          return await http.get(uri, headers: headers);
+        case "DELETE":
+          return await http.delete(uri, headers: headers, body: encodedBody);
+        default:
+          return await http.post(uri, headers: headers, body: encodedBody);
+      }
+    }
+
+    http.Response response;
+    print("Headers------: $headers");
 
     try {
-      if (method == "GET") {
-        response = await http.get(Uri.parse(url), headers: headers);
-      } else if (method == "DELETE") {
-        response = await http.delete(
-          Uri.parse(url),
-          headers: headers,
-          body: jsonEncode(body),
-        );
-      } else {
-        response = await http.post(
-          Uri.parse(url),
-          headers: headers,
-          body: jsonEncode(body),
-        );
-      }
+      response = await performRequest();
       if (response.statusCode == 401) {
-        final authProvider = AuthProvider();
-        ApiResponse refreshResponse = await authProvider.refreshToken();
+        final refreshResponse = await send(
+          EndPoints.refreshToken,
+          body: {'refresh': await TokenService.getRefreshToken()},
+        );
 
         if (refreshResponse.success) {
-          headers = await getHeaders();
-          if (method == "GET") {
-            response = await http.get(Uri.parse(url), headers: headers);
-          } else if (method == "DELETE") {
-            response = await http.delete(
-              Uri.parse(url),
-              headers: headers,
-              body: jsonEncode(body),
-            );
-          } else {
-            response = await http.post(
-              Uri.parse(url),
-              headers: headers,
-              body: jsonEncode(body),
-            );
-          }
+          await TokenService.saveTokens(refreshResponse.data);
+          headers = await Api.getHeaders(); 
+          response = await performRequest(); 
         } else {
-          return "";
+          return ApiResponse(
+            data: {},
+            success: false,
+            title: 'Session expired',
+            message: 'Please login again.',
+          );
         }
       }
+
+      return ApiResponse.fromResponse(response);
     } catch (e) {
       return ApiResponse(
         data: {},
         success: false,
         title: 'Error',
-        message: 'Please  try your internet connection and try again later',
+        message: 'Please check your internet connection and try again later.',
       );
     }
-
-    return ApiResponse.fromResponse(response);
   }
 }

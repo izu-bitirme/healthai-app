@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthai/constants/app_colors.dart';
+import 'package:healthai/providers/profile_provider.dart';
 import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/widgets/auth/modal.dart';
 import 'package:healthai/widgets/custom_app_bar.dart';
@@ -12,6 +13,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
+    ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: SingleChildScrollView(
@@ -29,14 +31,14 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage(
-                      "assets/images/auth/profile.png",
+                    backgroundImage: NetworkImage(
+                      profileProvider.profile?.avatar ?? '',
                     ),
                   ),
 
                   SizedBox(height: 10),
                   Text(
-                    "Tonald Drump",
+                    profileProvider.profile?.username ?? '',
                     style: GoogleFonts.poppins(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -44,7 +46,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Junior Full Stack Developer",
+                    profileProvider.profile?.email ?? '',
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       color: Colors.white70,
@@ -62,12 +64,7 @@ class SettingsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   _buildSection("CONTACT", [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, "/profile");
-                      },
-                      child: _buildListTile(Icons.person_outline, "Profile"),
-                    ),
+                    
                     InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, "/settings");

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:healthai/pages/auth/login_page.dart';
 import 'package:healthai/pages/welcome/welcome_page.dart';
 import 'package:healthai/providers/doctor.dart';
 import 'package:healthai/providers/message_provider.dart';
@@ -21,23 +22,32 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   double _scale = 0.5;
   double _opacity = 0.0;
-  
-   Future<void> _fetchInitialData() async {
+  bool fetched = false;
+  final islogin = AppStatus.isLogin();
+
+  Future<void> _fetchInitialData() async {
     try {
-      final MessageProvider messageProvider =
-          Provider.of<MessageProvider>(context, listen: false);
+      final MessageProvider messageProvider = Provider.of<MessageProvider>(
+        context,
+        listen: false,
+      );
       await ChatChannel.init();
       ChatChannel.addListener('chat_message', messageProvider.onMessage);
-      final profileProvider =
-          Provider.of<ProfileProvider>(context, listen: false);
-      final taskProvider =
-          Provider.of<TaskProvider>(context, listen: false);
-      final doctorProvider =
-          Provider.of<DoctorProvider>(context, listen: false);
+      final profileProvider = Provider.of<ProfileProvider>(
+        context,
+        listen: false,
+      );
+      final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+      final doctorProvider = Provider.of<DoctorProvider>(
+        context,
+        listen: false,
+      );
+      final userProvider = Provider.of<AuthProvider>(context, listen: false);
+
       await profileProvider.fetchProfile();
-
       await doctorProvider.fechDoctors();
-
+      await taskProvider.fetchTasks();
+      fetched = true;
     } catch (err) {
       print("Hata: $err");
     }
@@ -47,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    _fetchInitialData();
+    _fetchInitialData().then((_) => {checkAppStatus()});
 
     Future.delayed(Duration(milliseconds: 500), () {
       setState(() {
@@ -55,23 +65,33 @@ class _SplashScreenState extends State<SplashScreen> {
         _opacity = 1.0;
       });
     });
+  }
 
-    AppStatus.isFirstOpen().then((bool isFirstOpen) {
-      Timer(Duration(seconds: 3), () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => isFirstOpen ? WelcomePage() : HomeScreen(),
-          ),
-        );
-      });
+  void checkAppStatus() async {
+    bool isFirstOpen = await AppStatus.isFirstOpen();
+    bool isLoggedIn = await AppStatus.isLogin();
+
+    Timer(Duration(seconds: 2), () {
+      Widget nextPage;
+
+      if (isFirstOpen) {
+        nextPage = WelcomePage();
+      } else if (isLoggedIn) {
+        nextPage = HomeScreen();
+      } else {
+        nextPage = LoginPage();
+      }
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => nextPage),
+      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<AuthProvider>(context);
-
 
     return Scaffold(
       backgroundColor: Colors.white,

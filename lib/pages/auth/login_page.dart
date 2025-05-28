@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/constants/app_respons.dart';
 import 'package:healthai/providers/user_provider.dart';
+import 'package:healthai/services/app_status.dart';
 import 'package:healthai/widgets/auth/modal.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';

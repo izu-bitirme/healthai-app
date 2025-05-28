@@ -8,8 +8,15 @@ class MessageProvider extends ChangeNotifier {
 
   onMessage(data) {
     var jsonData = jsonDecode(data);
-    if (jsonData['type'] != 'text') return;
+    print("messages: ${jsonData}");
+    if (jsonData['type'] != 'chat_message') return;
     messages.add(ChatMessage.fromJson(jsonData));
     notifyListeners();
   }
+
+  clearChat() {
+    messages.clear();
+    notifyListeners();
+  }
+  
 }

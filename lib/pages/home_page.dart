@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:healthai/constants/app_colors.dart';
+import 'package:healthai/pages/emotion/emotion_page.dart';
+import 'package:healthai/pages/patient/data_page.dart';
+import 'package:healthai/pages/task_page.dart';
+import 'package:healthai/pages/tasks/charts/health_card.dart';
 import 'package:healthai/pages/tasks/my_task.dart';
 import 'package:healthai/pages/tasks/task_statu.dart';
 import 'package:healthai/providers/profile_provider.dart';
@@ -25,7 +29,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+    final profileProvider = Provider.of<ProfileProvider>(
+      context,
+      listen: false,
+    );
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -45,17 +52,28 @@ class HomePage extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 24,
-                          backgroundImage: NetworkImage(profileProvider.profile?.avatar ?? ''),
+                          backgroundImage: NetworkImage(
+                            profileProvider.profile?.avatar ?? '',
+                          ),
                           backgroundColor: AppColors.cardPrimaryColor,
                         ),
                         const SizedBox(width: 12),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Welcome Back 👋", style: TextStyle(fontSize: 14, color: Colors.grey)),
+                            const Text(
+                              "Welcome Back 👋",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                            ),
                             Text(
                               profileProvider.profile?.username ?? "",
-                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
@@ -64,22 +82,31 @@ class HomePage extends StatelessWidget {
                     Row(
                       children: [
                         InkWell(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MyTasksPage()),
+                          onTap:
+                              () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyTasksPage(),
+                                ),
+                              ),
+                          child: HugeIcon(
+                            icon: HugeIcons.strokeRoundedChart01,
+                            color: AppColors.textColor,
+                            size: 28,
                           ),
-                          child: HugeIcon(icon: HugeIcons.strokeRoundedChart01, color: AppColors.textColor, size: 28),
                         ),
                         const SizedBox(width: 12),
-                        HugeIcon(icon: HugeIcons.strokeRoundedNotification01, color: AppColors.textColor, size: 26),
+                        HugeIcon(
+                          icon: HugeIcons.strokeRoundedNotification01,
+                          color: AppColors.textColor,
+                          size: 26,
+                        ),
                       ],
                     ),
                   ],
                 ),
 
-                const SizedBox(height: 24),
-                const Text("Let's make task together 🙌",
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+               
 
                 const SizedBox(height: 24),
                 // NOTIFICATIONS SLIDER
@@ -91,26 +118,37 @@ class HomePage extends StatelessWidget {
                     enableInfiniteScroll: true,
                     viewportFraction: 1.0,
                   ),
-                  items: notifications.map((msg) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(
-                          color: Colors.deepPurple.shade50,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          children: [
-                            const Icon(Icons.notifications, color: Colors.deepPurple),
-                            const SizedBox(width: 10),
-                            Expanded(child: Text(msg, style: const TextStyle(color: Colors.deepPurple))),
-                          ],
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                  items:
+                      notifications.map((msg) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            decoration: BoxDecoration(
+                              color: Colors.deepPurple.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.notifications,
+                                  color: Colors.deepPurple,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    msg,
+                                    style: const TextStyle(
+                                      color: Colors.deepPurple,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
                 ),
 
                 const SizedBox(height: 24),
@@ -125,15 +163,27 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Application Design",
-                          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                      const Text(
+                        "Application Design",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      const Text("UI Design Kit", style: TextStyle(color: Colors.white70, fontSize: 14)),
+                      const Text(
+                        "UI Design Kit",
+                        style: TextStyle(color: Colors.white70, fontSize: 14),
+                      ),
                       const SizedBox(height: 12),
                       Row(
                         children: const [
                           Spacer(),
-                          Text("Progress 50/80", style: TextStyle(color: Colors.white, fontSize: 14)),
+                          Text(
+                            "Progress 50/80",
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 8),
@@ -149,36 +199,71 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 24),
 
                 // SERVICES GRID
-                sectionTitle("Services"),
                 const SizedBox(height: 16),
                 GridView.count(
                   crossAxisCount: 4,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    serviceIcon(Icons.cleaning_services, "Cleaning"),
-                    serviceIcon(Icons.handyman, "Repairing"),
-                    serviceIcon(Icons.format_paint, "Painting"),
-                    serviceIcon(Icons.local_laundry_service, "Laundry"),
-                    serviceIcon(Icons.devices_other, "Appliance"),
-                    serviceIcon(Icons.plumbing, "Plumbing"),
-                    serviceIcon(Icons.local_shipping, "Shifting"),
-                    serviceIcon(Icons.more_horiz, "More"),
+                    serviceIcon(
+                      HugeIcons.strokeRoundedHappy,
+                      "Emotion Mode",
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EmotionPage(),
+                        ),
+                      )
+                    ), // Changed to more appropriate cleaning icon
+                    serviceIcon(
+                      HugeIcons.strokeRoundedAccountSetting03,
+                      "Water Mode",
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TaskProgressPage(),
+                        ),
+                      )
+                    ), // Changed to construction icon for handyman
+                    serviceIcon(
+                      HugeIcons.strokeRoundedAccountSetting03,
+                      "Pain Level",
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TaskCardList(),
+                        ),
+                      )
+                    ), // More appropriate water icon
+                    serviceIcon(
+                      HugeIcons.strokeRoundedZoomSquare,
+                      "Daily Report",
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DataCollectionScreen(),
+                        ),
+                      )
+                    ), //
                   ],
                 ),
 
                 const SizedBox(height: 24),
 
-                // SPECIAL OFFER
-                sectionTitle("Special Offers"),
+                sectionTitle("Body Health"),
                 const SizedBox(height: 12),
+                HealthCard(),
+
+                const SizedBox(height: 24),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
                     height: 160,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [Colors.purple.shade400, Colors.deepPurple]),
+                      gradient: LinearGradient(
+                        colors: [Colors.purple.shade400, Colors.deepPurple],
+                      ),
                     ),
                     child: Row(
                       children: [
@@ -189,21 +274,36 @@ class HomePage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("30%",
-                                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white)),
-                                Text("Today's Special!",
-                                    style: TextStyle(fontSize: 18, color: Colors.white)),
+                                Text(
+                                  "30%",
+                                  style: TextStyle(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  "Today's Reports!",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                  ),
+                                ),
                                 SizedBox(height: 8),
-                                Text("Get discount for every order, only valid for today",
-                                    style: TextStyle(fontSize: 14, color: Colors.white)),
+                                Text(
+                                  "Good health starts with good habits",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                         ),
-                        Image.network(
-                          "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=880&q=80",
-                          width: 100,
-                          height: 100,
+                        Image.asset(
+                          'assets/images/health.png',
+                          height: 150,
                           fit: BoxFit.contain,
                         ),
                       ],
@@ -213,8 +313,7 @@ class HomePage extends StatelessWidget {
 
                 const SizedBox(height: 24),
 
-                // TASK LIST
-                sectionTitle("In Progress"),
+                sectionTitle("Today's Tasks"),
                 const SizedBox(height: 12),
                 TaskCardList(),
               ],
@@ -228,21 +327,33 @@ class HomePage extends StatelessWidget {
   Widget sectionTitle(String title) {
     return Row(
       children: [
-        Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(
+          title,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
         const Spacer(),
-        HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01, color: AppColors.primaryColor, size: 24),
+        HugeIcon(
+          icon: HugeIcons.strokeRoundedArrowRight01,
+          color: AppColors.primaryColor,
+          size: 24,
+        ),
       ],
     );
   }
 
-  Widget serviceIcon(IconData icon, String label) {
+  Widget serviceIcon(IconData icon, String label, VoidCallback callback) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          decoration: BoxDecoration(color: Colors.grey.shade100, shape: BoxShape.circle),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+            shape: BoxShape.circle,
+          ),
           padding: const EdgeInsets.all(12),
-          child: Icon(icon, color: Colors.deepPurple),
+          child:InkWell(
+            onTap: callback,
+            child: HugeIcon(icon: icon, color: AppColors.cardPrimaryColor)),
         ),
         const SizedBox(height: 6),
         Text(label, style: const TextStyle(fontSize: 12)),
@@ -300,6 +411,7 @@ class TaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.white,
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 0.5,
@@ -311,11 +423,23 @@ class TaskCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(subtitle, style: const TextStyle(color: Colors.grey, fontSize: 14)),
+                Text(
+                  subtitle,
+                  style: const TextStyle(color: Colors.grey, fontSize: 14),
+                ),
                 const SizedBox(height: 4),
-                Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 4),
-                Text(time, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                Text(
+                  time,
+                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                ),
               ],
             ),
             CircularPercentIndicator(

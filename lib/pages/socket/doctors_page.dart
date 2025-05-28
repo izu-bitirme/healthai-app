@@ -75,7 +75,6 @@ class MyDoctors extends StatelessWidget {
                                 backgroundColor: Colors.transparent,
                                 backgroundImage: NetworkImage(
                                   doctorImage,
-                                  scale: 1.5,
                                 ),
                               ),
                               const SizedBox(width: 12),

@@ -21,8 +21,14 @@ class EndPoints {
   };
 
   static const Map taskList = {
-    "url": "task/patient/$paramIdentifier/",
+    "url": "task/tasks/",
     "method": "GET",
+    "login_required": true,
+  };
+
+  static const Map taskComplete = {
+    "url": "task/$paramIdentifier/",
+    "method": "POST",
     "login_required": true,
   };
 

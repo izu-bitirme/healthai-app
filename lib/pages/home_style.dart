@@ -217,7 +217,7 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  "Today's Special!",
+                                  "Today's Reports!",
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.white,
@@ -225,7 +225,7 @@ class HomePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  "Get discount for every order, only valid for today",
+                                  "Good health starts with good habits",
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
@@ -236,7 +236,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         Image.network(
-                          "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
+                          "https://w7.pngwing.com/pngs/678/191/png-transparent-stethoscope-healthcare-health-hospital-medicine-care-3d-icon-thumbnail.png",
                           width: 100,
                           height: 100,
                           fit: BoxFit.contain,
@@ -284,10 +284,7 @@ class HomePage extends StatelessWidget {
                     serviceIcon(Icons.handyman, "Repairing"),
                     serviceIcon(Icons.format_paint, "Painting"),
                     serviceIcon(Icons.local_laundry_service, "Laundry"),
-                    serviceIcon(Icons.devices_other, "Appliance"),
-                    serviceIcon(Icons.plumbing, "Plumbing"),
-                    serviceIcon(Icons.local_shipping, "Shifting"),
-                    serviceIcon(Icons.more_horiz, "More"),
+                    
                   ],
                 ),
               ),

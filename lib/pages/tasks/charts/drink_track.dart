@@ -4,15 +4,9 @@ import 'package:healthai/constants/app_colors.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class DrinkTrackWidget extends StatelessWidget {
-  final List<double> hydrationData = [
-    1.8,
-    1.2,
-    1.0,
-    1.3,
-    1.7,
-    1.9,
-    1.4,
-  ]; // Litre cinsinden
+  final List<double> hydrationData = [1.8, 1.2, 1.0, 1.3, 1.7, 1.9, 1.4];
+
+  DrinkTrackWidget({super.key}); // Litre cinsinden
 
   @override
   Widget build(BuildContext context) {

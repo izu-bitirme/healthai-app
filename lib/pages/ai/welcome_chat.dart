@@ -34,7 +34,11 @@ class WelcomeChat extends StatelessWidget {
                     textColor: AppColors.textColor,
 
                     leadingIcon: InkWell(
-                      onTap: () => Navigator.pop(context),
+                      onTap:
+                          () => {
+                            if (Navigator.canPop(context))
+                              Navigator.pop(context),
+                          },
                       child: HugeIcon(
                         icon: HugeIcons.strokeRoundedArrowLeft01,
                         color: AppColors.textColor,
@@ -54,7 +58,9 @@ class WelcomeChat extends StatelessWidget {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     chatProvider.setAiModel(chatModel);
-                                    Navigator.pop(context);
+                                    if (Navigator.canPop(context)) {
+                                      Navigator.pop(context);
+                                    }
                                     Navigator.pushNamed(context, '/chat-ai');
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -83,7 +89,9 @@ class WelcomeChat extends StatelessWidget {
                           ],
                           buttonText: 'Tamam',
                           onButtonTap: () {
-                            Navigator.pop(context);
+                            if (Navigator.canPop(context)) {
+                              Navigator.pop(context);
+                            }
                           },
                           isDismissible: false,
                         );

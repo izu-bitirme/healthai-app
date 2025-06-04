@@ -1,13 +1,11 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
-import 'package:healthai/pages/emotion/emotion_page.dart';
-import 'package:healthai/pages/home_content.dart';
 import 'package:healthai/pages/home_page.dart';
-import 'package:healthai/pages/patient/data_page.dart';
 import 'package:healthai/pages/settings.dart';
 import 'package:healthai/pages/socket/doctors_page.dart';
 import 'package:healthai/pages/tasks/task_page.dart';
+import 'package:healthai/services/token.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -32,6 +30,16 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
       pageController.jumpToPage(index);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    TokenService.getAccessToken().then((accessToken) {
+      if (accessToken.isEmpty) {
+        Navigator.pushReplacementNamed(context, "/login");
+      }
     });
   }
 

@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:healthai/pages/emotion/today_feeling.dart';
 
 class EmotionPage extends StatefulWidget {
+  const EmotionPage({super.key});
+
   @override
   _EmotionPageState createState() => _EmotionPageState();
 }
@@ -16,22 +18,23 @@ class _EmotionPageState extends State<EmotionPage>
   @override
   void initState() {
     super.initState();
-    
+
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 1200), // 1.2 saniye animasyon
     );
-    
+
     _scaleAnimation = Tween<double>(begin: 0.3, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
         curve: Curves.easeOutQuad, // Yumuşak büyüme efekti
       ),
     );
-    
+
     _controller.forward();
-    
-    Future.delayed(Duration(milliseconds: 1500), () { // Toplam 1.5 saniye
+
+    Future.delayed(Duration(milliseconds: 1500), () {
+      // Toplam 1.5 saniye
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MoodSelector()),
@@ -59,7 +62,8 @@ class _EmotionPageState extends State<EmotionPage>
                 'assets/icons/face.svg',
                 width: 100,
                 height: 100,
-                placeholderBuilder: (context) => Container(width: 100, height: 100),
+                placeholderBuilder:
+                    (context) => SizedBox(width: 100, height: 100),
               ),
             );
           },

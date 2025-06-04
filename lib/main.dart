@@ -8,7 +8,7 @@ import 'package:healthai/pages/auth/reset_password.dart';
 import 'package:healthai/pages/auth/signup_page.dart';
 import 'package:healthai/pages/tasks/my_task.dart';
 import 'package:healthai/pages/settings/about.dart';
-import 'package:healthai/pages/settings/faq.dart'; 
+import 'package:healthai/pages/settings/faq.dart';
 import 'package:healthai/pages/settings/privacy.dart';
 import 'package:healthai/pages/settings/profile.dart';
 import 'package:healthai/pages/settings/settings.dart';
@@ -16,13 +16,15 @@ import 'package:healthai/pages/settings/terms.dart';
 import 'package:healthai/providers/ai_chat.dart';
 import 'package:healthai/providers/doctor.dart';
 import 'package:healthai/providers/message_provider.dart';
+import 'package:healthai/providers/notification_provider.dart';
+import 'package:healthai/providers/paition_data.dart';
+import 'package:healthai/providers/patient_provider.dart';
 import 'package:healthai/providers/profile_provider.dart';
 import 'package:healthai/providers/task.dart';
 import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/providers/widgets_providers.dart';
 import 'package:healthai/screens/home_screen.dart';
 import 'package:healthai/screens/splash_screen.dart';
-import 'package:healthai/services/chat.dart';
 import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 
@@ -37,6 +39,9 @@ void main() {
         ChangeNotifierProvider(create: (_) => DoctorProvider()),
         ChangeNotifierProvider(create: (_) => TaskProvider()),
         ChangeNotifierProvider(create: (_) => MessageProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
+        ChangeNotifierProvider(create: (_) => PatientProvider()),
+        ChangeNotifierProvider(create: (context) => DataProvider()),
       ],
       child: ToastificationWrapper(child: App()),
     ),

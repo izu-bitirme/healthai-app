@@ -1,11 +1,9 @@
 // pages/doctors.dart
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
-import 'package:healthai/models/auth/user.dart';
 import 'package:healthai/pages/socket/chat.dart';
 import 'package:healthai/providers/doctor.dart';
 import 'package:healthai/providers/user_provider.dart';
-import 'package:healthai/screens/call_screen.dart';
 import 'package:healthai/services/chat.dart';
 import 'package:healthai/widgets/custom_app_bar.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -73,9 +71,7 @@ class MyDoctors extends StatelessWidget {
                               CircleAvatar(
                                 radius: 30,
                                 backgroundColor: Colors.transparent,
-                                backgroundImage: NetworkImage(
-                                  doctorImage,
-                                ),
+                                backgroundImage: NetworkImage(doctorImage),
                               ),
                               const SizedBox(width: 12),
                               Expanded(

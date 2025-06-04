@@ -54,17 +54,29 @@ class _ChatAiPageState extends State<ChatAiPage> {
                   children: [
                     IconButton(
                       icon: Icon(Icons.arrow_back, color: Colors.black),
-                      onPressed: () => Navigator.pop(context),
+                      onPressed:
+                          () => {
+                            if (Navigator.canPop(context))
+                              Navigator.pop(context),
+                          },
                     ),
                     Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(selectedModel==null ? "assets/images/llama.png" :"assets/images/$selectedModel.png", width: 35, height: 35),
+                          Image.asset(
+                            selectedModel == null
+                                ? "assets/images/llama.png"
+                                : "assets/images/$selectedModel.png",
+                            width: 35,
+                            height: 35,
+                          ),
                           SizedBox(width: 8),
                           Text(
-                            selectedModel==null ? "llamma 3.2" :selectedModel.toString() ,
+                            selectedModel == null
+                                ? "llamma 3.2"
+                                : selectedModel.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 20,
@@ -75,14 +87,12 @@ class _ChatAiPageState extends State<ChatAiPage> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 48), 
+                    SizedBox(width: 48),
                   ],
                 ),
               ),
 
-              if (Provider.of<AiChatProvider>(context)
-                  .messages
-                  .isEmpty)
+              if (Provider.of<AiChatProvider>(context).messages.isEmpty)
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -119,9 +129,7 @@ class _ChatAiPageState extends State<ChatAiPage> {
                   ),
                 ),
 
-              if (Provider.of<AiChatProvider>(context)
-                  .messages
-                  .isNotEmpty) 
+              if (Provider.of<AiChatProvider>(context).messages.isNotEmpty)
                 Expanded(
                   child: Consumer<AiChatProvider>(
                     builder: (context, chatProvider, child) {
@@ -130,27 +138,27 @@ class _ChatAiPageState extends State<ChatAiPage> {
                       });
 
                       return ListView.builder(
-                        controller:
-                            _scrollController, 
+                        controller: _scrollController,
                         itemCount:
                             chatProvider.messages.length +
                             (chatProvider.isTyping ? 1 : 0),
                         itemBuilder: (context, index) {
                           if (index == chatProvider.messages.length &&
                               chatProvider.isTyping) {
-                            return Padding(padding: EdgeInsets.symmetric(vertical: 30.0),
-                            child: ListTile(
-                              key: ValueKey("typing"),
-                              title: SizedBox(
-                                height: 15,
-                                child: LoadingIndicator(
-                                  indicatorType: Indicator.ballPulse,
-                                  colors: [AppColors.primaryColor],
-                                  strokeWidth: 3,
-                                  backgroundColor: Colors.transparent,
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical: 30.0),
+                              child: ListTile(
+                                key: ValueKey("typing"),
+                                title: SizedBox(
+                                  height: 15,
+                                  child: LoadingIndicator(
+                                    indicatorType: Indicator.ballPulse,
+                                    colors: [AppColors.primaryColor],
+                                    strokeWidth: 3,
+                                    backgroundColor: Colors.transparent,
+                                  ),
                                 ),
                               ),
-                            ),
                             );
                           }
 
@@ -182,7 +190,7 @@ class _ChatAiPageState extends State<ChatAiPage> {
                     },
                   ),
                 ),
-             
+
               SizedBox(height: 10),
               Row(
                 children: [

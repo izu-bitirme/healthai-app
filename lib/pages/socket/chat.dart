@@ -18,12 +18,12 @@ class ChatPage extends StatelessWidget {
   final String roomName;
 
   const ChatPage({
-    Key? key,
+    super.key,
     required this.doctorId,
     required this.doctorName,
     required this.doctorImage,
     required this.roomName,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +238,8 @@ class ChatPage extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.pop(context),
+            onPressed:
+                () => {if (Navigator.canPop(context)) Navigator.pop(context)},
           ),
           Expanded(
             child: Row(

@@ -22,7 +22,9 @@ class TaskPage extends StatelessWidget {
                 leadingIcon: IconButton(
                   icon: const Icon(Icons.arrow_back, color: Colors.black),
                   onPressed: () {
-                    Navigator.pop(context); // veya özel işlem
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context); // veya özel işlem
+                    }
                   },
                 ),
                 trailingIcon: const SizedBox(

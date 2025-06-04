@@ -57,8 +57,10 @@ class SignUpPage extends StatelessWidget {
               children: [
                 SizedBox(height: responsive.heightFactor(0.02)),
                 IconButton(
-                  onPressed: () => Navigator.pop(context),
-
+                  onPressed:
+                      () => {
+                        if (Navigator.canPop(context)) {Navigator.pop(context)},
+                      },
                   icon: HugeIcon(
                     icon: HugeIcons.strokeRoundedArrowLeft01,
                     color: AppColors.iconColorGray,

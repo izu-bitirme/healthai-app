@@ -34,7 +34,7 @@ class ChatProvider with ChangeNotifier {
     try {
       final jsonData = json.decode(data);
       final message = ChatMessage.fromJson(jsonData);
-      if(message.type != 'text' || message.type != "chat_message") return;
+      if (message.type != 'text' || message.type != "chat_message") return;
       _messages.add(message);
       notifyListeners();
     } catch (e) {
@@ -60,7 +60,6 @@ class ChatProvider with ChangeNotifier {
     String messageType = 'text',
     String? imageUrl,
   }) async {
-
     try {
       _isTyping = true;
       notifyListeners();
@@ -72,13 +71,13 @@ class ChatProvider with ChangeNotifier {
       };
 
       ChatChannel.channel.sink.add(jsonEncode(messageJson));
-      
+
       final message = ChatMessage.fromJson({
         ...messageJson,
-        'message_id': DateTime.now().millisecondsSinceEpoch, 
+        'message_id': DateTime.now().millisecondsSinceEpoch,
       });
       _messages.add(message);
-      
+
       notifyListeners();
     } catch (e) {
       _handleError("Failed to send message: ${e.toString()}");
@@ -91,10 +90,5 @@ class ChatProvider with ChangeNotifier {
 
   Future<void> reconnect() async {
     await init();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

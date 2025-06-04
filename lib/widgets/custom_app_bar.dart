@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/constants/app_respons.dart';
-import 'package:hugeicons/hugeicons.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String title;

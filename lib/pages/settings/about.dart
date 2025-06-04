@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 
 class AboutUsPage extends StatelessWidget {
+  const AboutUsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +12,7 @@ class AboutUsPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            if (Navigator.canPop(context)) Navigator.pop(context);
           },
         ),
         title: Text(
@@ -27,7 +29,11 @@ class AboutUsPage extends StatelessWidget {
           // Logo ve versiyon bilgisi
           Column(
             children: [
-              Image.asset("assets/images/app-icon.png", width: 100, height: 100),
+              Image.asset(
+                "assets/images/app-icon.png",
+                width: 100,
+                height: 100,
+              ),
               SizedBox(height: 10),
               Text(
                 "Health AI v5.7.8",
@@ -58,9 +64,9 @@ class AboutUsPage extends StatelessWidget {
       trailing: Icon(Icons.arrow_forward_ios, size: 16),
       onTap: () {
         // Buraya sayfa yönlendirmeleri eklenebilir
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("$title clicked")),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("$title clicked")));
       },
     );
   }

@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -12,12 +9,12 @@ class TaskCardItem extends StatelessWidget {
   final double percent;
 
   const TaskCardItem({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     required this.time,
     required this.percent,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

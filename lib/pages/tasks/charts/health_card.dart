@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:healthai/providers/patient_provider.dart';
+import 'package:provider/provider.dart';
 
 class HealthCard extends StatelessWidget {
   const HealthCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final patientProvider = Provider.of<PatientProvider>(context);
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       elevation: 5,
@@ -17,22 +20,25 @@ class HealthCard extends StatelessWidget {
             SizedBox(
               width: 150,
               height: 200,
-              child: Image.asset(
-                'assets/images/body.png',
-                fit: BoxFit.contain,
-              ),
+              child: Image.asset('assets/images/body.png', fit: BoxFit.contain),
             ),
             const SizedBox(width: 20),
             // Sağ taraftaki bilgiler
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Row(
                     children: [
-                      InfoColumn(label: 'Height', value: '178 cm'),
+                      InfoColumn(
+                        label: 'Height',
+                        value: '${patientProvider.patient?.height_before} cm',
+                      ),
                       SizedBox(width: 32),
-                      InfoColumn(label: 'Weight', value: '70 kg'),
+                      InfoColumn(
+                        label: 'Weight',
+                        value: '${patientProvider.patient?.weight} kg',
+                      ),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -57,11 +63,7 @@ class InfoColumn extends StatelessWidget {
   final String label;
   final String value;
 
-  const InfoColumn({
-    super.key,
-    required this.label,
-    required this.value,
-  });
+  const InfoColumn({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,8 @@ class EndPoints {
   static const String model = "__model__";
   //chat-bot api
   static const Map chatBot = {
-    "url": "chat-bot/chat-response/?message=$paramIdentifier&model=$paramIdentifier",
+    "url":
+        "chat-bot/chat-response/?message=$paramIdentifier&model=$paramIdentifier",
     "method": "GET",
     "login_required": true,
   };
@@ -20,6 +21,24 @@ class EndPoints {
     "login_required": true,
   };
 
+  static const Map notificationList = {
+    "url": "user/notifications/",
+    "method": "GET",
+    "login_required": true,
+  };
+
+  static const Map patientDetail = {
+    "url": "user/patient_profile/",
+    "method": "GET",
+    "login_required": true,
+  };
+
+  static const Map submitPatientData = {
+    "url": "user/patient_profile/",
+    "method": "POST",
+    "login_required": true,
+  };
+
   static const Map taskList = {
     "url": "task/tasks/",
     "method": "GET",
@@ -27,20 +46,14 @@ class EndPoints {
   };
 
   static const Map taskComplete = {
-    "url": "task/$paramIdentifier/",
+    "url": "task/tasks/$paramIdentifier/",
     "method": "POST",
     "login_required": true,
   };
 
-  static const Map login = {
-    "url": "auth/token/",
-    "method": "POST",
-  };
+  static const Map login = {"url": "auth/token/", "method": "POST"};
 
-  static const Map appData = {
-    "url": "app-data/",
-    "method": "GET",
-  };
+  static const Map appData = {"url": "app-data/", "method": "GET"};
 
   static const Map refreshToken = {
     "url": "auth/token/refresh/",
@@ -56,9 +69,5 @@ class EndPoints {
     "url": "user/profile/",
     "method": "GET",
     "login_required": true,
-
   };
-
-
-  
 }

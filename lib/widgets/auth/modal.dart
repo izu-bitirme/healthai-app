@@ -13,7 +13,7 @@ class ModalDialog extends StatelessWidget {
     required this.title,
     required this.message,
     required this.imagePath,
-    this.autoCloseSeconds = 2, 
+    this.autoCloseSeconds = 2,
   });
 
   static void show(
@@ -37,7 +37,7 @@ class ModalDialog extends StatelessWidget {
 
     Future.delayed(Duration(seconds: autoCloseSeconds), () {
       if (context.mounted) {
-        Navigator.pop(context);
+        if (Navigator.canPop(context)) Navigator.pop(context);
       }
     });
   }

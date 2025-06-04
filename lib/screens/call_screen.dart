@@ -10,11 +10,11 @@ class CallPage extends StatelessWidget {
   final String callID;
 
   const CallPage({
-    Key? key,
+    super.key,
     required this.doctorId,
     required this.callID,
     required this.doctorName,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

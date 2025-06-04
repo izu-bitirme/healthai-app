@@ -8,7 +8,7 @@ class MessageProvider extends ChangeNotifier {
 
   onMessage(data) {
     var jsonData = jsonDecode(data);
-    print("messages: ${jsonData}");
+    print("messages: $jsonData");
     if (jsonData['type'] != 'chat_message') return;
     messages.add(ChatMessage.fromJson(jsonData));
     notifyListeners();
@@ -18,5 +18,4 @@ class MessageProvider extends ChangeNotifier {
     messages.clear();
     notifyListeners();
   }
-  
 }

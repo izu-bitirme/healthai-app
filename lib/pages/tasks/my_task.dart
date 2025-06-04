@@ -5,6 +5,8 @@ import 'package:healthai/pages/tasks/charts/heart_rate.dart';
 import 'package:healthai/pages/tasks/charts/sleep_chart.dart';
 
 class MyTasksPage extends StatelessWidget {
+  const MyTasksPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,14 +28,14 @@ class MyTasksPage extends StatelessWidget {
               const SizedBox(height: 16),
               Divider(height: 1, color: Colors.grey[300]),
               const SizedBox(height: 16),
-              SleepMetricsWidget(sleepHours: 9.1, totalDots: 30, filledDots: 25,),
+              SleepMetricsWidget(
+                sleepHours: 9.1,
+                totalDots: 30,
+                filledDots: 25,
+              ),
               DrinkTrackWidget(),
-   
+
               HealthCard(),
-              
-               
-              
-              
             ],
           ),
         ),

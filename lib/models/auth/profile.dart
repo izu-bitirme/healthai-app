@@ -5,6 +5,7 @@ class ProfileModel {
   String? bio;
   late String avatar;
   String? role;
+  int daysLeft = 90;
 
   ProfileModel({
     this.id,
@@ -22,5 +23,7 @@ class ProfileModel {
     bio = json['bio'];
     avatar = json['photo'];
     role = json['role'];
+    daysLeft = json['days_left'];
+    if (daysLeft <= 0) daysLeft = 1;
   }
 }

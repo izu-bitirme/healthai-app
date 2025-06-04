@@ -15,10 +15,10 @@ class ChatChannel {
       Uri.parse('ws://127.0.0.1:8000/ws/chat/?token=$token'),
     );
     channel.stream.listen((data) {
-      listeners.forEach((element) {
+      for (var element in listeners) {
         Function func = element.values.first;
         func(data);
-      });
+      }
     });
   }
 

@@ -49,7 +49,11 @@ class CustomModal {
                         ),
                         child: IconButton(
                           icon: Icon(Icons.close, color: Colors.white),
-                          onPressed: () => Navigator.pop(context),
+                          onPressed:
+                              () => {
+                                if (Navigator.canPop(context))
+                                  Navigator.pop(context),
+                              },
                         ),
                       ),
                     ),
@@ -69,7 +73,7 @@ class CustomModal {
                     ),
                     SizedBox(height: 20),
                     ...children,
-                    
+
                     SizedBox(height: 10),
                   ],
                 ),

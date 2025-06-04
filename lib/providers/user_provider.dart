@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:healthai/models/auth/profile.dart';
-import 'package:healthai/models/auth/user.dart';
 import 'package:healthai/services/api/api.dart';
 import 'package:healthai/services/api/api_response.dart';
 import 'package:healthai/services/api/endpoints.dart';
 import 'package:healthai/services/app_status.dart';
 import 'package:healthai/services/token.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
   Future<ApiResponse> login(String email, String password) async {

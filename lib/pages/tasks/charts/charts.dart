@@ -2,8 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 
-
 class AsklepiosScoreWidget extends StatelessWidget {
+  const AsklepiosScoreWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -27,22 +28,37 @@ class AsklepiosScoreWidget extends StatelessWidget {
                         SizedBox(width: 5),
                         Text(
                           '82.5',
-                          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
-                    Text('Your Asklepios Score', style: TextStyle(fontSize: 16, color: Colors.grey)),
+                    Text(
+                      'Your Asklepios Score',
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                    ),
                   ],
                 ),
                 ElevatedButton.icon(
                   onPressed: () {},
-                  icon: Icon(Icons.calendar_today, size: 16, color: AppColors.cardPrimaryColor),
-                  label: Text('Last 7 days', style: TextStyle(color: AppColors.cardPrimaryColor)),
+                  icon: Icon(
+                    Icons.calendar_today,
+                    size: 16,
+                    color: AppColors.cardPrimaryColor,
+                  ),
+                  label: Text(
+                    'Last 7 days',
+                    style: TextStyle(color: AppColors.cardPrimaryColor),
+                  ),
                   style: ElevatedButton.styleFrom(
                     elevation: 0.5,
                     foregroundColor: AppColors.textColorGray,
                     backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                 ),
               ],
@@ -57,7 +73,10 @@ class AsklepiosScoreWidget extends StatelessWidget {
                   children: [
                     Icon(Icons.trending_down, color: Colors.red),
                     SizedBox(width: 5),
-                    Text('-12% vs last week', style: TextStyle(color: Colors.red)),
+                    Text(
+                      '-12% vs last week',
+                      style: TextStyle(color: Colors.red),
+                    ),
                   ],
                 ),
                 Row(
@@ -77,6 +96,8 @@ class AsklepiosScoreWidget extends StatelessWidget {
 }
 
 class AsklepiosBarChart extends StatelessWidget {
+  const AsklepiosBarChart({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BarChart(
@@ -93,7 +114,10 @@ class AsklepiosBarChart extends StatelessWidget {
               showTitles: true,
               getTitlesWidget: (double value, TitleMeta meta) {
                 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-                return Text(days[value.toInt()], style: TextStyle(fontSize: 14));
+                return Text(
+                  days[value.toInt()],
+                  style: TextStyle(fontSize: 14),
+                );
               },
             ),
           ),

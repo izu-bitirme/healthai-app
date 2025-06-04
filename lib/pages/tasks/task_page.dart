@@ -52,7 +52,10 @@ class _TaskPageState extends State<TaskPage> {
                       icon: HugeIcons.strokeRoundedArrowLeft01,
                       color: AppColors.textColor,
                     ),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed:
+                        () => {
+                          if (Navigator.canPop(context)) Navigator.pop(context),
+                        },
                   ),
                   Text(
                     "Today Task",
@@ -245,7 +248,7 @@ class _TaskPageState extends State<TaskPage> {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment:  MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -271,10 +274,10 @@ class _TaskPageState extends State<TaskPage> {
                             listen: false,
                           ).completeTask(task.id, value ?? false);
                         },
-                        fillColor: MaterialStateProperty.resolveWith<Color>((
-                          Set<MaterialState> states,
+                        fillColor: WidgetStateProperty.resolveWith<Color>((
+                          Set<WidgetState> states,
                         ) {
-                          if (states.contains(MaterialState.selected)) {
+                          if (states.contains(WidgetState.selected)) {
                             return Colors.white;
                           }
                           return Colors.transparent;

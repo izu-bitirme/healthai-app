@@ -82,7 +82,7 @@ class _MoodSelectorState extends State<MoodSelector> {
                         });
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       width: 70,
                       height: sliderHeight,
                       child: Stack(
@@ -176,7 +176,7 @@ class _MoodSelectorState extends State<MoodSelector> {
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
                 child: Text(
-                  moods[selectedIndex] + " " + emojis[selectedIndex],
+                  "${moods[selectedIndex]} ${emojis[selectedIndex]}",
                   key: ValueKey<int>(selectedIndex),
                   style: const TextStyle(
                     fontSize: 24,

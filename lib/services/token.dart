@@ -5,7 +5,6 @@ class TokenService {
   static const String _refreshTokenKey = 'refresh';
 
   static Future<bool> saveTokens(Map<dynamic, dynamic> tokens) async {
-    print(tokens);
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_accessTokenKey, tokens[_accessTokenKey]!);
     await prefs.setString(_refreshTokenKey, tokens[_refreshTokenKey]!);

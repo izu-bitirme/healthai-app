@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -7,7 +5,7 @@ import 'package:hugeicons/hugeicons.dart';
 class SectionTitle extends StatelessWidget {
   final String title;
 
-  SectionTitle({required this.title});
+  const SectionTitle({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

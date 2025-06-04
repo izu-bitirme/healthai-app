@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/constants/app_respons.dart';
 import 'package:healthai/providers/user_provider.dart';
-import 'package:healthai/services/app_status.dart';
 import 'package:healthai/widgets/auth/modal.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-   final TextEditingController emailController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   _handleLogin(BuildContext context) {
@@ -19,15 +18,14 @@ class LoginPage extends StatelessWidget {
 
     authProvider.login(email, password).then((response) async {
       if (response.success) {
-       _loginModal(context);
+        _loginModal(context);
         return;
       }
     });
   }
-  
+
   LoginPage({super.key});
- 
-  
+
   void _loginModal(BuildContext context) {
     ModalDialog.show(
       context,
@@ -39,7 +37,7 @@ class LoginPage extends StatelessWidget {
 
     Future.delayed(Duration(seconds: 2), () {
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/');
       }
     });
   }
@@ -55,7 +53,7 @@ class LoginPage extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: responsive.widthFactor(0.08),
-            ), 
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -63,7 +61,10 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: responsive.heightFactor(0.02)),
 
                 IconButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed:
+                      () => {
+                        if (Navigator.canPop(context)) Navigator.pop(context),
+                      },
                   icon: HugeIcon(
                     icon: HugeIcons.strokeRoundedArrowLeft01,
                     color: AppColors.iconColorGray,
@@ -122,7 +123,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: responsive.heightFactor(0.005)),
 
                 SizedBox(
-                  height: responsive.heightFactor(0.07), 
+                  height: responsive.heightFactor(0.07),
                   child: TextField(
                     controller: passwordController,
                     obscureText: true,
@@ -230,9 +231,7 @@ class LoginPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: responsive.heightFactor(
-                        0.06,
-                      ), 
+                      height: responsive.heightFactor(0.06),
                       child: IconButton(
                         icon: Image.asset(
                           'assets/images/auth/google.png',
@@ -257,9 +256,7 @@ class LoginPage extends StatelessWidget {
                     SizedBox(width: responsive.widthFactor(0.05)),
 
                     SizedBox(
-                      height: responsive.heightFactor(
-                        0.06,
-                      ),
+                      height: responsive.heightFactor(0.06),
                       child: IconButton(
                         icon: Image.asset(
                           'assets/images/auth/apple.png',

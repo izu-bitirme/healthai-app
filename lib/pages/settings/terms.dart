@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: TermsConditionsPage(),
-  ));
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: TermsConditionsPage(),
+    ),
+  );
 }
 
 class TermsConditionsPage extends StatelessWidget {
@@ -17,7 +19,8 @@ class TermsConditionsPage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+          onPressed:
+              () => {if (Navigator.canPop(context)) Navigator.pop(context)},
         ),
         title: const Text("Terms & Conditions"),
         centerTitle: true,
@@ -97,10 +100,7 @@ class TermsConditionsPage extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: const Text("•", style: TextStyle(fontSize: 20)),
-      title: Text(
-        title,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(description),
     );
   }

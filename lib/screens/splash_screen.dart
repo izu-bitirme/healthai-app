@@ -1,15 +1,19 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:healthai/pages/auth/login_page.dart';
+import 'package:healthai/pages/patient/data_page.dart';
 import 'package:healthai/pages/welcome/welcome_page.dart';
 import 'package:healthai/providers/doctor.dart';
 import 'package:healthai/providers/message_provider.dart';
+import 'package:healthai/providers/notification_provider.dart';
+import 'package:healthai/providers/patient_provider.dart';
 import 'package:healthai/providers/profile_provider.dart';
 import 'package:healthai/providers/task.dart';
 import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/screens/home_screen.dart';
 import 'package:healthai/services/app_status.dart';
 import 'package:healthai/services/chat.dart';
+import 'package:healthai/services/token.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -43,11 +47,30 @@ class _SplashScreenState extends State<SplashScreen> {
         listen: false,
       );
       final userProvider = Provider.of<AuthProvider>(context, listen: false);
+      final notificationProvider = Provider.of<NotificationProvider>(
+        context,
+        listen: false,
+      );
+
+      final patientProvider = Provider.of<PatientProvider>(
+        context,
+        listen: false,
+      );
 
       await profileProvider.fetchProfile();
       await doctorProvider.fechDoctors();
       await taskProvider.fetchTasks();
-      fetched = true;
+      await notificationProvider.fetchNotifications();
+      final patient = await patientProvider.fetchPatient();
+
+      if (patient?.height_before == null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DataCollectionScreen()),
+        );
+      }
+
+      fetched = patient?.height_before != null;
     } catch (err) {
       print("Hata: $err");
     }
@@ -57,19 +80,33 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    _fetchInitialData().then((_) => {checkAppStatus()});
+    TokenService.getAccessToken().then((accessToken) {
+      if (accessToken.isEmpty) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+        return;
+      }
 
-    Future.delayed(Duration(milliseconds: 500), () {
-      setState(() {
-        _scale = 1.2;
-        _opacity = 1.0;
+      _fetchInitialData().then(
+        (_) => {
+          if (fetched) {checkAppStatus()},
+        },
+      );
+
+      Future.delayed(Duration(milliseconds: 500), () {
+        setState(() {
+          _scale = 1.2;
+          _opacity = 1.0;
+        });
       });
     });
   }
 
   void checkAppStatus() async {
     bool isFirstOpen = await AppStatus.isFirstOpen();
-    bool isLoggedIn = await AppStatus.isLogin();
+    bool isLoggedIn = await TokenService.getAccessToken() == "";
 
     Timer(Duration(seconds: 2), () {
       Widget nextPage;

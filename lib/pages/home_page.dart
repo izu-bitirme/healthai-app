@@ -3,10 +3,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/pages/emotion/emotion_page.dart';
 import 'package:healthai/pages/patient/data_page.dart';
-import 'package:healthai/pages/task_page.dart';
 import 'package:healthai/pages/tasks/charts/health_card.dart';
 import 'package:healthai/pages/tasks/my_task.dart';
 import 'package:healthai/pages/tasks/task_statu.dart';
+import 'package:healthai/providers/notification_provider.dart';
 import 'package:healthai/providers/profile_provider.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -15,24 +15,14 @@ import 'package:provider/provider.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  final List<String> notifications = [
-    "Your cleaner will arrive at 10:00 AM",
-    "You’ve earned a 20% discount!",
-    "New plumbing services added near you",
-  ];
-
-  final List<Map<String, String>> professionals = [
-    {"name": "Alice", "role": "Cleaner"},
-    {"name": "Mark", "role": "Plumber"},
-    {"name": "Lina", "role": "Electrician"},
-  ];
-
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<ProfileProvider>(
       context,
       listen: false,
     );
+
+    final notificationProvider = Provider.of<NotificationProvider>(context);
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -106,8 +96,6 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
 
-               
-
                 const SizedBox(height: 24),
                 // NOTIFICATIONS SLIDER
                 CarouselSlider(
@@ -119,7 +107,7 @@ class HomePage extends StatelessWidget {
                     viewportFraction: 1.0,
                   ),
                   items:
-                      notifications.map((msg) {
+                      notificationProvider.notifications.map((msg) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4.0),
                           child: Container(
@@ -164,7 +152,7 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Application Design",
+                        "Discharge Days Countdown",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -172,23 +160,26 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      const Text(
-                        "UI Design Kit",
+                      Text(
+                        "${90 - profileProvider.profile!.daysLeft} days left to discharge",
                         style: TextStyle(color: Colors.white70, fontSize: 14),
                       ),
                       const SizedBox(height: 12),
                       Row(
-                        children: const [
-                          Spacer(),
+                        children: [
+                          const Spacer(),
                           Text(
-                            "Progress 50/80",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                            "Progress ${profileProvider.profile?.daysLeft}/90",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 8),
-                      const LinearProgressIndicator(
-                        value: 50 / 80,
+                      LinearProgressIndicator(
+                        value: profileProvider.profile!.daysLeft / 90,
                         backgroundColor: Colors.white24,
                         color: Colors.white,
                       ),
@@ -210,10 +201,8 @@ class HomePage extends StatelessWidget {
                       "Emotion Mode",
                       () => Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => EmotionPage(),
-                        ),
-                      )
+                        MaterialPageRoute(builder: (context) => EmotionPage()),
+                      ),
                     ), // Changed to more appropriate cleaning icon
                     serviceIcon(
                       HugeIcons.strokeRoundedAccountSetting03,
@@ -223,17 +212,15 @@ class HomePage extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => TaskProgressPage(),
                         ),
-                      )
+                      ),
                     ), // Changed to construction icon for handyman
                     serviceIcon(
                       HugeIcons.strokeRoundedAccountSetting03,
                       "Pain Level",
                       () => Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => TaskCardList(),
-                        ),
-                      )
+                        MaterialPageRoute(builder: (context) => TaskCardList()),
+                      ),
                     ), // More appropriate water icon
                     serviceIcon(
                       HugeIcons.strokeRoundedZoomSquare,
@@ -243,7 +230,7 @@ class HomePage extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => DataCollectionScreen(),
                         ),
-                      )
+                      ),
                     ), //
                   ],
                 ),
@@ -351,9 +338,10 @@ class HomePage extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           padding: const EdgeInsets.all(12),
-          child:InkWell(
+          child: InkWell(
             onTap: callback,
-            child: HugeIcon(icon: icon, color: AppColors.cardPrimaryColor)),
+            child: HugeIcon(icon: icon, color: AppColors.cardPrimaryColor),
+          ),
         ),
         const SizedBox(height: 6),
         Text(label, style: const TextStyle(fontSize: 12)),
@@ -401,12 +389,12 @@ class TaskCard extends StatelessWidget {
   final double percent;
 
   const TaskCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     required this.time,
     required this.percent,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/pages/tasks/my_task.dart';
+import 'package:healthai/providers/notification_provider.dart';
 import 'package:healthai/providers/profile_provider.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-
-  final List<String> notifications = [
-    "Your cleaner will arrive at 10:00 AM",
-    "You’ve earned a 20% discount!",
-    "New plumbing services added near you",
-  ];
 
   final List<Map<String, String>> professionals = [
     {"name": "Alice", "role": "Cleaner"},
@@ -27,6 +22,8 @@ class HomePage extends StatelessWidget {
       context,
       listen: false,
     );
+    final notificationProvider = Provider.of<NotificationProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -108,7 +105,7 @@ class HomePage extends StatelessWidget {
               ),
 
               const SizedBox(height: 20),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: CarouselSlider(
                   options: CarouselOptions(
@@ -119,7 +116,7 @@ class HomePage extends StatelessWidget {
                     viewportFraction: 1.0,
                   ),
                   items:
-                      notifications.map((msg) {
+                      notificationProvider.notifications.map((msg) {
                         return Builder(
                           builder: (BuildContext context) {
                             return Padding(
@@ -284,7 +281,6 @@ class HomePage extends StatelessWidget {
                     serviceIcon(Icons.handyman, "Repairing"),
                     serviceIcon(Icons.format_paint, "Painting"),
                     serviceIcon(Icons.local_laundry_service, "Laundry"),
-                    
                   ],
                 ),
               ),

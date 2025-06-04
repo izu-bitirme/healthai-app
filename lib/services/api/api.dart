@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'package:healthai/providers/user_provider.dart';
-import 'package:healthai/services/api/http_request.dart';
 import 'package:healthai/services/token.dart';
 import 'endpoints.dart';
 import 'package:http/http.dart' as http;
@@ -66,8 +64,8 @@ class Api {
 
         if (refreshResponse.success) {
           await TokenService.saveTokens(refreshResponse.data);
-          headers = await Api.getHeaders(); 
-          response = await performRequest(); 
+          headers = await Api.getHeaders();
+          response = await performRequest();
         } else {
           return ApiResponse(
             data: {},

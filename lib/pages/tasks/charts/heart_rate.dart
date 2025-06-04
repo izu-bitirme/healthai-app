@@ -12,7 +12,9 @@ class HeartRateWidget extends StatelessWidget {
     FlSpot(4, 76),
     FlSpot(5, 72),
     FlSpot(6, 70),
-  ]; // Kalp atış hızı verileri
+  ];
+
+  HeartRateWidget({super.key}); // Kalp atış hızı verileri
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +140,11 @@ class HeartRateWidget extends StatelessWidget {
 
                       lineTouchData: LineTouchData(
                         touchTooltipData: LineTouchTooltipData(
-                          getTooltipColor: (touchedSpot) => Colors.red.shade300, // Tooltip arka plan rengi
+                          getTooltipColor:
+                              (touchedSpot) =>
+                                  Colors
+                                      .red
+                                      .shade300, // Tooltip arka plan rengi
                           tooltipRoundedRadius: 8, // Kenar yuvarlaklığı
                           tooltipPadding: EdgeInsets.symmetric(
                             horizontal: 10,

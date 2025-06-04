@@ -7,22 +7,20 @@ class SleepMetricsWidget extends StatelessWidget {
   final int totalDots;
 
   const SleepMetricsWidget({
-    Key? key,
+    super.key,
     required this.sleepHours,
     this.totalDots = 24,
     required this.filledDots,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
       elevation: 1.5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12), 
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical:8, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,11 +29,18 @@ class SleepMetricsWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                HugeIcon(icon: HugeIcons.strokeRoundedSleeping, color: Colors.blueAccent, size: 26),
+                HugeIcon(
+                  icon: HugeIcons.strokeRoundedSleeping,
+                  color: Colors.blueAccent,
+                  size: 26,
+                ),
                 const SizedBox(width: 5),
                 Text(
                   sleepHours.toStringAsFixed(1), // 9.1 formatında gösterim
-                  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   " hour",
@@ -52,7 +57,8 @@ class SleepMetricsWidget extends StatelessWidget {
               children: List.generate(totalDots, (index) {
                 return CircleAvatar(
                   radius: 6,
-                  backgroundColor: index < filledDots ? Colors.blueAccent : Colors.grey[300],
+                  backgroundColor:
+                      index < filledDots ? Colors.blueAccent : Colors.grey[300],
                 );
               }),
             ),

@@ -50,9 +50,7 @@ class FAQPage extends StatelessWidget {
                   margin: const EdgeInsets.only(bottom: 10),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    side: const BorderSide(
-                      color: AppColors.primaryColor,
-                    ),
+                    side: const BorderSide(color: AppColors.primaryColor),
                   ),
                   child: ExpansionTile(
                     shape: RoundedRectangleBorder(side: BorderSide.none),
@@ -63,17 +61,17 @@ class FAQPage extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
+                    trailing: HugeIcon(
+                      icon: HugeIcons.strokeRoundedArrowDown01,
+                      color: AppColors.primaryColor,
+                      size: 24.0,
+                    ),
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text(faq["answer"]!),
                       ),
                     ],
-                    trailing: HugeIcon(
-                      icon: HugeIcons.strokeRoundedArrowDown01,
-                      color: AppColors.primaryColor,
-                      size: 24.0,
-                    ),
                   ),
                 );
               }).toList(),

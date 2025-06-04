@@ -57,6 +57,15 @@ class Api {
     try {
       response = await performRequest();
       if (response.statusCode == 401) {
+        if (url.toString().contains('refresh')) {
+          await TokenService.removeTokens();
+          return ApiResponse(
+            data: {},
+            success: false,
+            title: 'Session expired',
+            message: 'Please login again.',
+          );
+        }
         final refreshResponse = await send(
           EndPoints.refreshToken,
           body: {'refresh': await TokenService.getRefreshToken()},
@@ -66,14 +75,7 @@ class Api {
           await TokenService.saveTokens(refreshResponse.data);
           headers = await Api.getHeaders();
           response = await performRequest();
-        } else {
-          return ApiResponse(
-            data: {},
-            success: false,
-            title: 'Session expired',
-            message: 'Please login again.',
-          );
-        }
+        } else {}
       }
 
       return ApiResponse.fromResponse(response);

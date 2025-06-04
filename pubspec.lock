@@ -357,10 +357,10 @@ packages:
     dependency: transitive
     description:
       name: file_picker
-      sha256: ab13ae8ef5580a411c458d6207b6774a6c237d77ac37011b13994879f68a8810
+      sha256: "77f8e81d22d2a07d0dee2c62e1dda71dc1da73bf43bb2d45af09727406167964"
       url: "https://pub.dev"
     source: hosted
-    version: "8.3.7"
+    version: "10.1.9"
   file_selector_linux:
     dependency: transitive
     description:
@@ -373,10 +373,10 @@ packages:
     dependency: transitive
     description:
       name: file_selector_macos
-      sha256: "271ab9986df0c135d45c3cdb6bd0faa5db6f4976d3e4b437cf7d0f258d941bfc"
+      sha256: "8c9250b2bd2d8d4268e39c82543bacbaca0fda7d29e0728c3c4bbb7c820fd711"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.4+2"
+    version: "0.9.4+3"
   file_selector_platform_interface:
     dependency: transitive
     description:
@@ -430,14 +430,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
-  flutter_callkit_incoming_yoer:
+  flutter_callkit_incoming:
     dependency: transitive
     description:
-      name: flutter_callkit_incoming_yoer
-      sha256: c78b31049e4d7c94ad26619c115b2ded893733da34b3b6b0c5a987ec3dd69d54
+      name: flutter_callkit_incoming
+      sha256: "21d645f0bc622c3ab9c113e289abbbd169a0f9143f3eb2a05ef1fb01b729c239"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.4+3"
+    version: "2.5.2"
   flutter_countdown_timer:
     dependency: "direct main"
     description:
@@ -724,10 +724,10 @@ packages:
     dependency: transitive
     description:
       name: just_audio_web
-      sha256: "8c7e779892e180cbc9ffb5a3c52f6e90e1cbbf4a63694cc450972a7edbd2bb6d"
+      sha256: "6ba8a2a7e87d57d32f0f7b42856ade3d6a9fbe0f1a11fabae0a4f00bb73f0663"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.15"
+    version: "0.4.16"
   leak_tracker:
     dependency: transitive
     description:
@@ -768,14 +768,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-  logging:
-    dependency: transitive
-    description:
-      name: logging
-      sha256: c8245ada5f1717ed44271ed1c26b8ce85ca3228fd2ffdb75468ab01979309d61
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.0"
   macos_ui:
     dependency: transitive
     description:
@@ -788,10 +780,10 @@ packages:
     dependency: transitive
     description:
       name: macos_window_utils
-      sha256: "28ebb4e6d5cbaa1330b5f78d13cf9693779830d0ffc64b471f8d384dd73b7b21"
+      sha256: b5832b9a9df1741d78b76ea77811803fbcc944599b3b41950a9f19e822731023
       url: "https://pub.dev"
     source: hosted
-    version: "1.7.1"
+    version: "1.8.1"
   matcher:
     dependency: transitive
     description:
@@ -1321,10 +1313,10 @@ packages:
     dependency: transitive
     description:
       name: vector_graphics_compiler
-      sha256: "1b4b9e706a10294258727674a340ae0d6e64a7231980f9f9a3d12e4b42407aad"
+      sha256: "557a315b7d2a6dbb0aaaff84d857967ce6bdc96a63dc6ee2a57ce5a6ee5d3331"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.16"
+    version: "1.1.17"
   vector_math:
     dependency: transitive
     description:
@@ -1353,18 +1345,18 @@ packages:
     dependency: transitive
     description:
       name: video_player
-      sha256: "7d78f0cfaddc8c19d4cb2d3bebe1bfef11f2103b0a03e5398b303a1bf65eeb14"
+      sha256: "0d55b1f1a31e5ad4c4967bfaa8ade0240b07d20ee4af1dfef5f531056512961a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.9.5"
+    version: "2.10.0"
   video_player_android:
     dependency: transitive
     description:
       name: video_player_android
-      sha256: "1f4e8e0e02403452d699ef7cf73fe9936fac8f6f0605303d111d71acb375d1bc"
+      sha256: "4a5135754a62dbc827a64a42ef1f8ed72c962e191c97e2d48744225c2b9ebb73"
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.3"
+    version: "2.8.7"
   video_player_avfoundation:
     dependency: transitive
     description:
@@ -1505,50 +1497,50 @@ packages:
     dependency: transitive
     description:
       name: zego_uikit
-      sha256: c366fbb3513ed0536664ac17b5c2aebe24c0b57adfd43db947dc2877bcb241e3
+      sha256: d1ee1cc337a34c41dc7445c5c6032c804ff3ab4c29b8a2e6b4b61d97ec9ae9d1
       url: "https://pub.dev"
     source: hosted
-    version: "2.28.14"
+    version: "2.28.18"
   zego_uikit_prebuilt_call:
     dependency: "direct main"
     description:
       name: zego_uikit_prebuilt_call
-      sha256: bd325bb2671f215972c45483beba1ea60d4838ed9df10ab0cbc9056119ecb3fb
+      sha256: cad521d74c1ff3c2a1cafbe84ae05206d0f27e6ca6d7ac58c6b957a2ae3d837c
       url: "https://pub.dev"
     source: hosted
-    version: "4.16.28"
+    version: "4.17.1"
   zego_uikit_signaling_plugin:
     dependency: transitive
     description:
       name: zego_uikit_signaling_plugin
-      sha256: "31a903d3bf1c22ea9281d6979c35446a3cc3ae54964855008b6395f0acc6c422"
+      sha256: "423f4f7eff773bcd830f121da838a86c1694abaf7f4ab810fa0a82289334c049"
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.12"
+    version: "2.8.13"
   zego_zim:
     dependency: transitive
     description:
       name: zego_zim
-      sha256: "7149128e7666e568ba9f1d1dfd154f404e889995962c46f35c11a26562dde397"
+      sha256: "9dbec68412b911dd628f34bc10cd2e4adb74490e638c4223edc109f42e4e5b06"
       url: "https://pub.dev"
     source: hosted
-    version: "2.20.0+1"
+    version: "2.20.0+2"
   zego_zim_audio:
     dependency: transitive
     description:
       name: zego_zim_audio
-      sha256: "0787b40fdbd8b76a0aab92310706087abd3e1e373f065ad6ac9792f4cb629fd3"
+      sha256: a748a0d32edad8d9898960b9d1d1ad2c658581b727e2013d4ac72003e1a51488
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0+6"
+    version: "1.0.0+7"
   zego_zimkit:
     dependency: "direct main"
     description:
       name: zego_zimkit
-      sha256: "55da72f0a22b45202494b42b1540fc92b030be956c7d9dc19ff6a123904790d4"
+      sha256: "84ce8cae2c0b5f204ab4d0331c2803cad813f5a3b6ca32b2a545a852a6db2b01"
       url: "https://pub.dev"
     source: hosted
-    version: "1.18.16"
+    version: "1.19.0"
   zego_zpns:
     dependency: transitive
     description:

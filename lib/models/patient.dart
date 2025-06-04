@@ -6,8 +6,11 @@ class Patient {
 
   factory Patient.fromJson(Map<dynamic, dynamic> json) {
     return Patient(
-      height_before: double.parse(json['height_before']),
-      weight: double.parse(json['weight']),
+      height_before:
+          json['height_before'] != null
+              ? double.parse(json['height_before'])
+              : null,
+      weight: json['weight'] != null ? double.parse(json['weight']) : null,
     );
   }
 }

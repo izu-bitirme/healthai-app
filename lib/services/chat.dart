@@ -11,15 +11,23 @@ class ChatChannel {
 
   static init() async {
     String token = await TokenService.getAccessToken();
-    channel = WebSocketChannel.connect(
-      Uri.parse('ws://127.0.0.1:8000/ws/chat/?token=$token'),
-    );
-    channel.stream.listen((data) {
-      for (var element in listeners) {
-        Function func = element.values.first;
-        func(data);
+    try {
+      if (token.isEmpty) {
+        return;
       }
-    });
+      channel = WebSocketChannel.connect(
+        Uri.parse('ws://127.0.0.1:8000/ws/chat/?token=$token'),
+      );
+      channel.stream.listen((data) {
+        for (var element in listeners) {
+          Function func = element.values.first;
+          func(data);
+        }
+      });
+    } catch (e) {
+      print("WebSocket connection error: $e");
+      return false;
+    }
   }
 
   static addListener(String name, Function listener) {

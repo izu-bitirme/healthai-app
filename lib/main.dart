@@ -15,6 +15,7 @@ import 'package:healthai/pages/settings/settings.dart';
 import 'package:healthai/pages/settings/terms.dart';
 import 'package:healthai/providers/ai_chat.dart';
 import 'package:healthai/providers/doctor.dart';
+import 'package:healthai/providers/kvkk_provider.dart';
 import 'package:healthai/providers/message_provider.dart';
 import 'package:healthai/providers/notification_provider.dart';
 import 'package:healthai/providers/paition_data.dart';
@@ -33,6 +34,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AiChatProvider()),
+        ChangeNotifierProvider(create: (_) => KvkkProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
@@ -41,7 +43,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => MessageProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => PatientProvider()),
-        ChangeNotifierProvider(create: (context) => DataProvider()),
+        ChangeNotifierProvider(create: (_) => DataProvider()),
       ],
       child: ToastificationWrapper(child: App()),
     ),

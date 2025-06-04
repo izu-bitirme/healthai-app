@@ -11,17 +11,21 @@ class DataCollectionScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => DataProvider(),
       child: Scaffold(
-        backgroundColor: Colors.grey[50],
+        backgroundColor: const Color(0xFFF8F9FA),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.black,
           title: const Text(
             'Kişisel Değerlendirme',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+              color: Color(0xFF2D3748),
+            ),
           ),
-          leading: Center(),
-          actions: [],
+          leading: const Center(),
+          actions: const [],
         ),
         body: const StepperBody(),
       ),
@@ -43,23 +47,28 @@ class StepperBody extends StatelessWidget {
         // Progress Bar
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: LinearProgressIndicator(
-            value: (provider.currentStep + 1) / 7,
-            backgroundColor: Colors.grey[200],
-            valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
-            minHeight: 6,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: (provider.currentStep + 1) / 6,
+              backgroundColor: const Color(0xFFE2E8F0),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                Color(0xFF6347EB),
+              ),
+              minHeight: 5,
+            ),
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 16),
 
         // Step Labels
         SizedBox(
-          height: 60,
+          height: 80,
           child: ListView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             children: List.generate(
-              7,
+              6,
               (index) => _buildStepLabel(index, provider.currentStep),
             ),
           ),
@@ -71,7 +80,6 @@ class StepperBody extends StatelessWidget {
             controller: pageController,
             physics: const NeverScrollableScrollPhysics(),
             onPageChanged: (index) {
-              // This ensures the page view stays in sync with the provider's currentStep
               if (index != provider.currentStep) {
                 pageController.jumpToPage(provider.currentStep);
               }
@@ -80,7 +88,6 @@ class StepperBody extends StatelessWidget {
               FullNameForm(),
               HeightInputForm(),
               WeightInputForm(),
-              SiblingsForm(),
               BirthDateForm(),
               BloodTypeInputForm(),
               SleepRatingForm(),
@@ -101,13 +108,17 @@ class StepperBody extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
+                        side: const BorderSide(
+                          color: Color(0xFF6347EB),
+                          width: 1.5,
+                        ),
                       ),
-                      side: BorderSide(color: Colors.blue[600]!),
+                      elevation: 0,
                     ),
-                    child: Text(
+                    child: const Text(
                       'Geri',
                       style: TextStyle(
-                        color: Colors.blue[600],
+                        color: Color(0xFF6347EB),
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
                       ),
@@ -124,11 +135,9 @@ class StepperBody extends StatelessWidget {
                         height_before: provider.height,
                         weight: provider.weight,
                       );
-
                       Navigator.pushReplacementNamed(context, '/');
                     } else {
                       provider.nextStep();
-                      // Animate to the next page
                       pageController.animateToPage(
                         provider.currentStep,
                         duration: const Duration(milliseconds: 300),
@@ -138,11 +147,12 @@ class StepperBody extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: const Color(0xFF6347EB),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     elevation: 0,
+                    shadowColor: Colors.transparent,
                   ),
                   child: Text(
                     provider.currentStep == 6 ? 'Tamamla' : 'İleri',
@@ -163,35 +173,43 @@ class StepperBody extends StatelessWidget {
 
   Widget _buildStepLabel(int stepIndex, int currentStep) {
     final isActive = currentStep >= stepIndex;
-    final labels = ['Ad', 'Boy', 'Kilo', 'Kardeş', 'Doğum', 'Kan', 'Uyku'];
+    final isCurrent = currentStep == stepIndex;
+    final labels = ['Ad', 'Boy', 'Kilo', 'Doğum', 'Kan', 'Uyku'];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 32,
-            height: 32,
+            width: 40,
+            height: 40,
             decoration: BoxDecoration(
-              color: isActive ? Colors.blue : Colors.grey[300],
+              color:
+                  isActive ? const Color(0xFF6347EB) : const Color(0xFFE7E1FF),
               shape: BoxShape.circle,
+              border:
+                  isCurrent
+                      ? Border.all(color: const Color(0xFF6347EB), width: 2)
+                      : null,
             ),
             child: Center(
               child: Text(
                 '${stepIndex + 1}',
                 style: TextStyle(
-                  color: isActive ? Colors.white : Colors.grey[600],
+                  color: isActive ? Colors.white : const Color(0xFF6347EB),
                   fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           Text(
             labels[stepIndex],
             style: TextStyle(
-              color: isActive ? Colors.blue : Colors.grey,
+              color:
+                  isActive ? const Color(0xFF2D3748) : const Color(0xFFA0AEC0),
               fontSize: 12,
               fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
             ),
@@ -223,7 +241,7 @@ class FullNameForm extends StatelessWidget {
             'Adınız nedir?',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
+              color: const Color(0xFF2D3748),
             ),
           ),
           const SizedBox(height: 8),
@@ -231,7 +249,7 @@ class FullNameForm extends StatelessWidget {
             'Resmi belgelerde göründüğü şekilde tam adınızı yazın.',
             style: Theme.of(
               context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+            ).textTheme.bodyMedium?.copyWith(color: const Color(0xFF718096)),
           ),
           const SizedBox(height: 32),
           _buildTextField(label: 'Tam Ad', controller: controller),
@@ -241,49 +259,60 @@ class FullNameForm extends StatelessWidget {
   }
 }
 
-// Update the _buildTextField widget to include onChanged and initialValue
 Widget _buildTextField({
   required String label,
   ValueChanged<String>? onChanged,
   String? initialValue,
   String? suffixText,
   TextInputType? keyboardType,
-  required TextEditingController
-  controller, // This is the only declaration needed
+  required TextEditingController controller,
 }) {
-  return TextFormField(
-    controller: controller,
-    keyboardType: keyboardType,
-    onChanged: onChanged,
-    decoration: InputDecoration(
-      labelText: label,
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-      labelStyle: const TextStyle(
-        color: Colors.blue,
-        fontWeight: FontWeight.w600,
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        label,
+        style: const TextStyle(
+          color: Color(0xFF4A5568),
+          fontWeight: FontWeight.w600,
+          fontSize: 14,
+        ),
       ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.grey[300]!),
+      const SizedBox(height: 8),
+      TextFormField(
+        controller: controller,
+        keyboardType: keyboardType,
+        enabled: true,
+        onChanged: onChanged,
+        decoration: InputDecoration(
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xFF6347EB), width: 2),
+          ),
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 16,
+          ),
+          suffixText: suffixText,
+          suffixStyle: const TextStyle(
+            color: Color(0xFF718096),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        style: const TextStyle(fontSize: 16, color: Color(0xFF2D3748)),
       ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.grey[300]!),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Colors.blue, width: 2),
-      ),
-      filled: true,
-      fillColor: Colors.white,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-      suffixText: suffixText,
-      suffixStyle: TextStyle(
-        color: Colors.grey[600],
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    style: const TextStyle(fontSize: 16, color: Colors.black87),
+    ],
   );
 }
 
@@ -306,7 +335,7 @@ class HeightInputForm extends StatelessWidget {
             'Boyunuz nedir?',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
+              color: const Color(0xFF2D3748),
             ),
           ),
           const SizedBox(height: 8),
@@ -314,7 +343,7 @@ class HeightInputForm extends StatelessWidget {
             'Doğru değerlendirme için boyunuzu girin.',
             style: Theme.of(
               context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+            ).textTheme.bodyMedium?.copyWith(color: const Color(0xFF718096)),
           ),
           const SizedBox(height: 32),
 
@@ -334,13 +363,7 @@ class HeightInputForm extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: const Color(0xFFE2E8F0), width: 1.5),
       ),
       child: Row(
         children: [
@@ -367,9 +390,9 @@ class HeightInputForm extends StatelessWidget {
     return InkWell(
       onTap: () => provider.setHeightUnit(unit),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.white,
+          color: isSelected ? const Color(0xFF6347EB) : Colors.white,
           borderRadius:
               unit == 'cm'
                   ? const BorderRadius.horizontal(left: Radius.circular(12))
@@ -379,8 +402,9 @@ class HeightInputForm extends StatelessWidget {
           child: Text(
             unit,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.grey[600],
+              color: isSelected ? Colors.white : const Color(0xFF4A5568),
               fontWeight: FontWeight.w600,
+              fontSize: 16,
             ),
           ),
         ),
@@ -397,13 +421,7 @@ class HeightInputForm extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: const Color(0xFFE2E8F0), width: 1.5),
       ),
       child: Row(
         children: [
@@ -431,8 +449,8 @@ class HeightInputForm extends StatelessWidget {
                       fontSize: 24,
                       color:
                           height == provider.height
-                              ? Colors.blue
-                              : Colors.grey[600],
+                              ? const Color(0xFF6347EB)
+                              : const Color(0xFFA0AEC0),
                       fontWeight:
                           height == provider.height
                               ? FontWeight.bold
@@ -444,10 +462,14 @@ class HeightInputForm extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.only(right: 24),
             child: Text(
               provider.heightUnit,
-              style: const TextStyle(fontSize: 16, color: Colors.grey),
+              style: const TextStyle(
+                fontSize: 16,
+                color: Color(0xFF718096),
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
@@ -480,7 +502,7 @@ class WeightInputForm extends StatelessWidget {
             'Kilonuz nedir?',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
+              color: const Color(0xFF2D3748),
             ),
           ),
           const SizedBox(height: 8),
@@ -488,7 +510,7 @@ class WeightInputForm extends StatelessWidget {
             'Doğru değerlendirme için güncel kilonuzu girin.',
             style: Theme.of(
               context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+            ).textTheme.bodyMedium?.copyWith(color: const Color(0xFF718096)),
           ),
           const SizedBox(height: 32),
 
@@ -513,13 +535,7 @@ class WeightInputForm extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: const Color(0xFFE2E8F0), width: 1.5),
       ),
       child: Row(
         children: [
@@ -546,9 +562,9 @@ class WeightInputForm extends StatelessWidget {
     return InkWell(
       onTap: () => provider.setWeightUnit(unit),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.white,
+          color: isSelected ? const Color(0xFF6347EB) : Colors.white,
           borderRadius:
               unit == 'kg'
                   ? const BorderRadius.horizontal(left: Radius.circular(12))
@@ -558,57 +574,12 @@ class WeightInputForm extends StatelessWidget {
           child: Text(
             unit,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.grey[600],
+              color: isSelected ? Colors.white : const Color(0xFF4A5568),
               fontWeight: FontWeight.w600,
+              fontSize: 16,
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class SiblingsForm extends StatelessWidget {
-  const SiblingsForm({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<DataProvider>(context);
-    final controller = TextEditingController(
-      text: provider.siblings.toString(),
-    );
-
-    controller.addListener(() {
-      final value = int.tryParse(controller.text) ?? provider.siblings;
-      provider.setSiblings(value);
-    });
-
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Kaç kardeşiniz var?',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Ailenizdeki kardeş sayısını belirtin.',
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-          ),
-          const SizedBox(height: 32),
-          _buildTextField(
-            label: 'Kardeş Sayısı',
-            controller: controller,
-            keyboardType: TextInputType.number,
-          ),
-        ],
       ),
     );
   }
@@ -641,7 +612,7 @@ class BirthDateForm extends StatelessWidget {
             'Doğum tarihiniz nedir?',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
+              color: const Color(0xFF2D3748),
             ),
           ),
           const SizedBox(height: 8),
@@ -649,7 +620,7 @@ class BirthDateForm extends StatelessWidget {
             'Doğru değerlendirme için doğum tarihinizi girin.',
             style: Theme.of(
               context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+            ).textTheme.bodyMedium?.copyWith(color: const Color(0xFF718096)),
           ),
           const SizedBox(height: 32),
 
@@ -658,22 +629,23 @@ class BirthDateForm extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+              border: Border.all(color: const Color(0xFFE2E8F0), width: 1.5),
             ),
             child: ListTile(
               onTap: () => _selectDate(context, provider),
-              leading: const Icon(Icons.calendar_today, color: Colors.blue),
+              leading: const Icon(
+                Icons.calendar_today,
+                color: Color(0xFF6347EB),
+              ),
               title: Text(
                 '${provider.birthDate.day}/${provider.birthDate.month}/${provider.birthDate.year}',
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16, color: Color(0xFF2D3748)),
               ),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+                color: Color(0xFFA0AEC0),
+              ),
             ),
           ),
 
@@ -681,12 +653,19 @@ class BirthDateForm extends StatelessWidget {
 
           // Age Display
           Center(
-            child: Text(
-              'Yaşınız: $adjustedAge',
-              style: const TextStyle(
-                fontSize: 18,
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE7E1FF),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                'Yaşınız: $adjustedAge',
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF6347EB),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -705,7 +684,7 @@ class BirthDateForm extends StatelessWidget {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(
-              primary: Colors.blue,
+              primary: Color(0xFF6347EB),
               onPrimary: Colors.white,
               surface: Colors.white,
               onSurface: Colors.black,
@@ -740,7 +719,7 @@ class BloodTypeInputForm extends StatelessWidget {
             'Kan grubunuz nedir?',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
+              color: const Color(0xFF2D3748),
             ),
           ),
           const SizedBox(height: 8),
@@ -748,7 +727,7 @@ class BloodTypeInputForm extends StatelessWidget {
             'Doğru değerlendirme için kan grubunuzu seçin.',
             style: Theme.of(
               context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+            ).textTheme.bodyMedium?.copyWith(color: const Color(0xFF718096)),
           ),
           const SizedBox(height: 32),
 
@@ -794,30 +773,31 @@ class BloodTypeInputForm extends StatelessWidget {
     return GestureDetector(
       onTap: () => provider.setBloodType(type),
       child: Container(
-        width: 72,
-        height: 72,
+        width: 80,
+        height: 80,
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.white,
+          color: isSelected ? const Color(0xFF6347EB) : Colors.white,
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color:
+                isSelected ? const Color(0xFF6347EB) : const Color(0xFFE2E8F0),
+            width: 1.5,
+          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 6,
-              offset: const Offset(0, 3),
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
             ),
           ],
-          border:
-              isSelected
-                  ? Border.all(color: Colors.blue, width: 2)
-                  : Border.all(color: Colors.grey[300]!),
         ),
         child: Center(
           child: Text(
             type,
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: isSelected ? Colors.white : Colors.grey[800],
+              color: isSelected ? Colors.white : const Color(0xFF2D3748),
             ),
           ),
         ),
@@ -833,28 +813,29 @@ class BloodTypeInputForm extends StatelessWidget {
     return GestureDetector(
       onTap: () => provider.setRhFactor(label == 'Rh+'),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          color: isSelected ? const Color(0xFF6347EB) : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color:
+                isSelected ? const Color(0xFF6347EB) : const Color(0xFFE2E8F0),
+            width: 1.5,
+          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 6,
-              offset: const Offset(0, 3),
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
             ),
           ],
-          border:
-              isSelected
-                  ? Border.all(color: Colors.blue, width: 2)
-                  : Border.all(color: Colors.grey[300]!),
         ),
         child: Text(
           label,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: isSelected ? Colors.white : Colors.grey[800],
+            color: isSelected ? Colors.white : const Color(0xFF2D3748),
           ),
         ),
       ),
@@ -879,7 +860,7 @@ class SleepRatingForm extends StatelessWidget {
             'Uyku kalitenizi nasıl değerlendirirsiniz?',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
+              color: const Color(0xFF2D3748),
             ),
           ),
           const SizedBox(height: 8),
@@ -887,7 +868,7 @@ class SleepRatingForm extends StatelessWidget {
             'Son zamanlardaki uyku düzeninizi değerlendirin.',
             style: Theme.of(
               context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+            ).textTheme.bodyMedium?.copyWith(color: const Color(0xFF718096)),
           ),
           const SizedBox(height: 32),
 
@@ -895,18 +876,32 @@ class SleepRatingForm extends StatelessWidget {
           Center(
             child: Column(
               children: [
-                Text(
-                  '${provider.sleepRating}',
-                  style: const TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE7E1FF),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${provider.sleepRating}',
+                      style: const TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF6347EB),
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
                 Text(
                   ratingLabels[provider.sleepRating - 1],
-                  style: const TextStyle(fontSize: 20, color: Colors.black87),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF2D3748),
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
@@ -917,17 +912,26 @@ class SleepRatingForm extends StatelessWidget {
           // Rating Slider
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Slider(
-              value: provider.sleepRating.toDouble(),
-              min: 1,
-              max: 5,
-              divisions: 4,
-              label: ratingLabels[provider.sleepRating - 1],
-              onChanged: (value) {
-                provider.setSleepRating(value.round());
-              },
-              activeColor: Colors.blue,
-              inactiveColor: Colors.grey[300],
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                activeTrackColor: const Color(0xFF6347EB),
+                inactiveTrackColor: const Color(0xFFE2E8F0),
+                thumbColor: const Color(0xFF6347EB),
+                overlayColor: const Color(0x1A6347EB),
+                valueIndicatorColor: const Color(0xFF6347EB),
+                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
+                overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
+              ),
+              child: Slider(
+                value: provider.sleepRating.toDouble(),
+                min: 1,
+                max: 5,
+                divisions: 4,
+                label: ratingLabels[provider.sleepRating - 1],
+                onChanged: (value) {
+                  provider.setSleepRating(value.round());
+                },
+              ),
             ),
           ),
 
@@ -946,8 +950,8 @@ class SleepRatingForm extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color:
                         provider.sleepRating == index + 1
-                            ? Colors.blue
-                            : Colors.grey,
+                            ? const Color(0xFF6347EB)
+                            : const Color(0xFFA0AEC0),
                   ),
                 );
               }),
@@ -957,13 +961,20 @@ class SleepRatingForm extends StatelessWidget {
           const SizedBox(height: 40),
 
           // Additional Info
-          const Center(
-            child: Text(
-              'Günde 7-8 saat uyku önerilir',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-                fontStyle: FontStyle.italic,
+          Center(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE7E1FF),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Text(
+                'Günde 7-8 saat uyku önerilir',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF6347EB),
+                  fontStyle: FontStyle.italic,
+                ),
               ),
             ),
           ),

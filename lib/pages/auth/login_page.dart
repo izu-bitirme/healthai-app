@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/constants/app_respons.dart';
+import 'package:healthai/pages/kvkk.dart';
+import 'package:healthai/providers/kvkk_provider.dart';
 import 'package:healthai/providers/user_provider.dart';
 import 'package:healthai/widgets/auth/modal.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -10,8 +12,16 @@ class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  _handleLogin(BuildContext context) {
+  void _handleLogin(BuildContext context) {
+    final kvkkProvider = Provider.of<KvkkProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    if (!kvkkProvider.isAccepted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Lütfen KVKK metnini okuyup onaylayınız')),
+      );
+      return;
+    }
 
     final email = emailController.text;
     final password = passwordController.text;
@@ -19,7 +29,6 @@ class LoginPage extends StatelessWidget {
     authProvider.login(email, password).then((response) async {
       if (response.success) {
         _loginModal(context);
-        return;
       }
     });
   }
@@ -45,6 +54,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
+    bool isKVKKAccepted = false;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -153,14 +163,35 @@ class LoginPage extends StatelessWidget {
 
                 Row(
                   children: [
-                    Checkbox(
-                      value: true,
-                      activeColor: AppColors.primaryColor,
-                      checkColor: Colors.white,
-                      side: BorderSide(color: AppColors.primaryColor),
-                      onChanged: (bool? value) {},
+                    Consumer<KvkkProvider>(
+                      builder: (context, provider, child) {
+                        return Checkbox(
+                          value: provider.isAccepted,
+                          activeColor: AppColors.primaryColor,
+                          checkColor: Colors.white,
+                          side: BorderSide(color: AppColors.primaryColor),
+                          onChanged: (bool? value) async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const KVKKPage(),
+                              ),
+                            );
+                          },
+                        );
+                      },
                     ),
-                    const Text("Remember me"),
+                    InkWell(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const KVKKPage(),
+                          ),
+                        );
+                      },
+                      child: const Text("KVKK Kabul Ediyorum"),
+                    ),
                   ],
                 ),
                 SizedBox(height: responsive.heightFactor(0.01)),

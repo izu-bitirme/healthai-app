@@ -106,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void checkAppStatus() async {
     bool isFirstOpen = await AppStatus.isFirstOpen();
-    bool isLoggedIn = await TokenService.getAccessToken() == "";
+    bool isLoggedIn = await AppStatus.isLogin();
 
     Timer(Duration(seconds: 2), () {
       Widget nextPage;

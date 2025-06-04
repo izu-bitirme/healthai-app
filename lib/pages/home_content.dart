@@ -13,31 +13,24 @@ class HomePageContent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. Üst Bilgi ve Arama
             _buildHeader(),
             const SizedBox(height: 24),
-            
-            // 2. Medical Check Banner
+
             _buildMedicalBanner(),
             const SizedBox(height: 28),
-            
-            // 3. Hızlı Erişim Uzmanlıklar
+
             _buildSpecialtyGrid(),
             const SizedBox(height: 28),
-            
-            // 4. AI Öneri Kartı
+
             _buildAIRecommendation(),
             const SizedBox(height: 20),
-            
-            // 5. Sağlık İstatistikleri
+
             _buildHealthStats(),
             const SizedBox(height: 20),
-            
-            // 6. İyileşme Grafiği
+
             _buildHealthChart(),
             const SizedBox(height: 20),
-            
-            // 7. Görevler Listesi
+
             _buildTaskList(),
           ],
         ),
@@ -127,10 +120,7 @@ class HomePageContent extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             "Check your health condition regularly to minimize the incidence of disease.",
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.9),
-              height: 1.4,
-            ),
+            style: TextStyle(color: Colors.white.withOpacity(0.9), height: 1.4),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
@@ -141,7 +131,7 @@ class HomePageContent extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          ),
+            ),
             onPressed: () {},
             child: const Text("Check Now"),
           ),
@@ -152,9 +142,21 @@ class HomePageContent extends StatelessWidget {
 
   Widget _buildSpecialtyGrid() {
     final specialties = [
-      {"icon": Icons.medical_services, "label": "General", "color": Colors.blue},
-      {"icon": Icons.health_and_safety, "label": "Dentist", "color": Colors.green},
-      {"icon": Icons.remove_red_eye, "label": "Ophthal", "color": Colors.purple},
+      {
+        "icon": Icons.medical_services,
+        "label": "General",
+        "color": Colors.blue,
+      },
+      {
+        "icon": Icons.health_and_safety,
+        "label": "Dentist",
+        "color": Colors.green,
+      },
+      {
+        "icon": Icons.remove_red_eye,
+        "label": "Ophthal",
+        "color": Colors.purple,
+      },
       {"icon": Icons.fastfood, "label": "Nutrition", "color": Colors.orange},
     ];
 
@@ -271,10 +273,7 @@ class HomePageContent extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   "Based on your sleep data, we recommend going to bed by 11 PM tonight.",
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(color: Colors.grey[600], fontSize: 14),
                 ),
               ],
             ),
@@ -310,7 +309,12 @@ class HomePageContent extends StatelessWidget {
     );
   }
 
-  Widget _buildStatItem(String title, String value, double progress, Color color) {
+  Widget _buildStatItem(
+    String title,
+    String value,
+    double progress,
+    Color color,
+  ) {
     return Column(
       children: [
         Stack(
@@ -337,13 +341,7 @@ class HomePageContent extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey[600],
-          ),
-        ),
+        Text(title, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
       ],
     );
   }
@@ -446,26 +444,30 @@ class HomePageContent extends StatelessWidget {
           ),
           child: Column(
             children: [
-              ...tasks.map((task) => CheckboxListTile(
-                title: Text(
-                  task["title"] as String,
-                  style: TextStyle(
-                    decoration: task["completed"] as bool
-                        ? TextDecoration.lineThrough
-                        : null,
-                    color: task["completed"] as bool
-                        ? Colors.grey[400]
-                        : Colors.grey[800],
+              ...tasks.map(
+                (task) => CheckboxListTile(
+                  title: Text(
+                    task["title"] as String,
+                    style: TextStyle(
+                      decoration:
+                          task["completed"] as bool
+                              ? TextDecoration.lineThrough
+                              : null,
+                      color:
+                          task["completed"] as bool
+                              ? Colors.grey[400]
+                              : Colors.grey[800],
+                    ),
+                  ),
+                  value: task["completed"] as bool,
+                  onChanged: (value) {},
+                  activeColor: Colors.blue[600],
+                  controlAffinity: ListTileControlAffinity.leading,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                value: task["completed"] as bool,
-                onChanged: (value) {},
-                activeColor: Colors.blue[600],
-                controlAffinity: ListTileControlAffinity.leading,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              )),
+              ),
             ],
           ),
         ),

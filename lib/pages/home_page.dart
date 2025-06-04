@@ -3,7 +3,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:healthai/constants/app_colors.dart';
 import 'package:healthai/pages/emotion/emotion_page.dart';
 import 'package:healthai/pages/patient/data_page.dart';
+import 'package:healthai/pages/tasks/charts/drink_track.dart';
 import 'package:healthai/pages/tasks/charts/health_card.dart';
+import 'package:healthai/pages/tasks/charts/sleep_chart.dart';
 import 'package:healthai/pages/tasks/my_task.dart';
 import 'package:healthai/pages/tasks/task_statu.dart';
 import 'package:healthai/providers/notification_provider.dart';
@@ -69,30 +71,6 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap:
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MyTasksPage(),
-                                ),
-                              ),
-                          child: HugeIcon(
-                            icon: HugeIcons.strokeRoundedChart01,
-                            color: AppColors.textColor,
-                            size: 28,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        HugeIcon(
-                          icon: HugeIcons.strokeRoundedNotification01,
-                          color: AppColors.textColor,
-                          size: 26,
-                        ),
-                      ],
-                    ),
                   ],
                 ),
 
@@ -141,53 +119,237 @@ class HomePage extends StatelessWidget {
 
                 const SizedBox(height: 24),
 
-                // TASK OVERVIEW CARD
                 Container(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      const Text(
-                        "Discharge Days Countdown",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Postoperative Recovery Tracker",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text:
+                                        "${90 - profileProvider.profile!.daysLeft}",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " days remaining",
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.8),
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            LinearProgressIndicator(
+                              value:
+                                  (90 - profileProvider.profile!.daysLeft) / 90,
+                              minHeight: 8,
+                              borderRadius: BorderRadius.circular(10),
+                              backgroundColor: Colors.white24,
+                              color: Colors.white,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.greenAccent.withOpacity(0.8),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Day ${profileProvider.profile?.daysLeft}",
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.7),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                Text(
+                                  "Day 90",
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.7),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        "${90 - profileProvider.profile!.daysLeft} days left to discharge",
-                        style: TextStyle(color: Colors.white70, fontSize: 14),
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          const Spacer(),
-                          Text(
-                            "Progress ${profileProvider.profile?.daysLeft}/90",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      LinearProgressIndicator(
-                        value: profileProvider.profile!.daysLeft / 90,
-                        backgroundColor: Colors.white24,
-                        color: Colors.white,
+                      const SizedBox(width: 20),
+                      // 3D Hasta Modeli için alan
+                      Container(
+                        width: 130,
+                        height: 180,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white.withOpacity(0.1),
+                        ),
+                        child: Center(
+                          child:
+                              Image.asset(
+                                'assets/images/paitions.png',
+                                fit: BoxFit.cover,
+                              ) ??
+                              Icon(
+                                Icons.medical_services,
+                                size: 60,
+                                color: Colors.white.withOpacity(0.3),
+                              ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 24),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primaryColor.withOpacity(0.1),
+                        blurRadius: 20,
+                        spreadRadius: 1,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                    border: Border.all(
+                      color: AppColors.primaryColorLight.withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // AI Avatar
+                      Container(
+                        width: 100,
+                        height: 100,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                        child: ClipOval(
+                          child: Image.asset(
+                            "assets/images/chatbot.png",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 18),
+
+                      // Chat Content
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "AI Recommendation",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.primaryColor,
+                                    fontSize: 16,
+                                    letterSpacing: 0.2,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primaryColorLight,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    "ONLINE",
+                                    style: TextStyle(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              "İyileşme sürecinizde size yardımcı rehberlik edebilirim. Hadi konuşalım! 💬",
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 14,
+                                height: 1.5,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  _buildActionChip(
+                                    "Beslenme Önerileri",
+                                    Icons.restaurant,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  _buildActionChip(
+                                    "Egzersiz Programı",
+                                    Icons.directions_run,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  _buildActionChip(
+                                    "Ağrı Yönetimi",
+                                    Icons.medical_services,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  _buildActionChip(
+                                    "Uyku Düzeni",
+                                    Icons.bedtime,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
                 // SERVICES GRID
                 const SizedBox(height: 16),
@@ -206,7 +368,7 @@ class HomePage extends StatelessWidget {
                     ), // Changed to more appropriate cleaning icon
                     serviceIcon(
                       HugeIcons.strokeRoundedAccountSetting03,
-                      "Water Mode",
+                      "Task Progress",
                       () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -214,23 +376,21 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ), // Changed to construction icon for handyman
-                    serviceIcon(
-                      HugeIcons.strokeRoundedAccountSetting03,
-                      "Pain Level",
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => TaskCardList()),
-                      ),
-                    ), // More appropriate water icon
+
                     serviceIcon(
                       HugeIcons.strokeRoundedZoomSquare,
-                      "Daily Report",
+                      "Data Collection",
                       () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => DataCollectionScreen(),
                         ),
                       ),
+                    ), //
+                    serviceIcon(
+                      HugeIcons.strokeRoundedZoomSquare,
+                      "Task List",
+                      () {},
                     ), //
                   ],
                 ),
@@ -240,69 +400,18 @@ class HomePage extends StatelessWidget {
                 sectionTitle("Body Health"),
                 const SizedBox(height: 12),
                 HealthCard(),
-
-                const SizedBox(height: 24),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Container(
-                    height: 160,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.purple.shade400, Colors.deepPurple],
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        const Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "30%",
-                                  style: TextStyle(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  "Today's Reports!",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  "Good health starts with good habits",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Image.asset(
-                          'assets/images/health.png',
-                          height: 150,
-                          fit: BoxFit.contain,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 24),
-
-                sectionTitle("Today's Tasks"),
                 const SizedBox(height: 12),
-                TaskCardList(),
+                Divider(height: 1, color: Colors.grey[300]),
+                const SizedBox(height: 16),
+                SleepMetricsWidget(
+                  sleepHours: 9.1,
+                  totalDots: 30,
+                  filledDots: 25,
+                ),
+                const SizedBox(height: 24),
+
+                DrinkTrackWidget(),
+                const SizedBox(height: 24),
               ],
             ),
           ),
@@ -345,38 +454,6 @@ class HomePage extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(label, style: const TextStyle(fontSize: 12)),
-      ],
-    );
-  }
-}
-
-class TaskCardList extends StatelessWidget {
-  const TaskCardList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: const [
-        TaskCard(
-          title: 'Create Detail Booking',
-          subtitle: 'Productivity Mobile App',
-          time: '2 min ago',
-          percent: 0.6,
-        ),
-        TaskCard(
-          title: 'Revision Home Page',
-          subtitle: 'Banking Mobile App',
-          time: '5 min ago',
-          percent: 0.7,
-        ),
-        TaskCard(
-          title: 'Working On Landing Page',
-          subtitle: 'Online Course',
-          time: '7 min ago',
-          percent: 0.8,
-        ),
       ],
     );
   }
@@ -443,4 +520,25 @@ class TaskCard extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildActionChip(String text, IconData icon) {
+  return Chip(
+    avatar: Icon(icon, size: 18, color: AppColors.primaryColor),
+    label: Text(text),
+    labelStyle: TextStyle(
+      color: AppColors.primaryColor,
+      fontSize: 12,
+      fontWeight: FontWeight.w500,
+    ),
+    backgroundColor: AppColors.primaryColorLight,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+      side: BorderSide(
+        color: AppColors.primaryColor.withOpacity(0.1),
+        width: 1,
+      ),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+  );
 }

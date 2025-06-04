@@ -1,6 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:healthai/constants/app_colors.dart';
+import 'package:healthai/pages/home_content.dart';
 import 'package:healthai/pages/home_page.dart';
 import 'package:healthai/pages/settings.dart';
 import 'package:healthai/pages/socket/doctors_page.dart';
